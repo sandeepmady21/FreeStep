@@ -18,12 +18,12 @@
   <rect x="20" y="20" width="1160" height="780" fill="url(#grid100)" stroke="#38bdf8" stroke-width="2"/>
   <!-- Title Block Header -->
   <rect x="20" y="20" width="1160" height="58" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
-  <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 05: 180° SPLIT-SADDLE PIVOT HINGE & N52 CONICAL SHEAR LATCH</text>
-  <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">Top-Down Kinematic View: Open Entry Mode (180° Flush) vs. Latched Perch/Transfer Mode (12 kN Stainless Conical Shear Lock)</text>
+  <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 05: 180° SPLIT-SADDLE, 90° KNEE-SCOOTER DETENT & N52 SHEAR LATCH</text>
+  <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">Top-Down Kinematic View: 180° Open Walk-In vs. 90° Single-Leg Ankle-Fracture Knee-Scooter vs. 0° Latched Perch/Transfer</text>
   <text x="1160" y="46" fill="#22c55e" font-family="monospace" font-size="16" font-weight="bold" text-anchor="end">SHEET 5 OF 6</text>
-  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
+  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.65 kg | ₹54,250 CLINICAL MASTERY EDITION) | UNITS: MM</text>
 
-  <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] TOP-DOWN VIEW: 180° SPLIT-SADDLE HINGE + SELF-CENTERING N52 CONICAL SHEAR LATCH</text>
+  <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] TOP-DOWN VIEW: 3-MODE SPLIT-SADDLE (0° SEATED | 90° KNEE-SCOOTER | 180° OPEN WALK-IN)</text>
 
   <!-- Left & Right ø30mm Inner Carbon Columns -->
   <circle cx="220" cy="310" r="34" fill="#0284c7" stroke="#ffffff" stroke-width="2.5"/>
@@ -32,18 +32,19 @@
   <circle cx="980" cy="310" r="34" fill="#0284c7" stroke="#ffffff" stroke-width="2.5"/>
   <text x="980" y="314" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">RIGHT ø30</text>
 
-  <!-- CNC 7075-T6 Pivot Hinge Clamps (saddle_180_pivot_hinge.dxf) -->
+  <!-- CNC 7075-T6 Pivot Hinge Clamps (saddle_180_pivot_hinge.dxf) with 0°/90°/180° Detents -->
   <rect x="240" y="275" width="85" height="70" rx="10" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
   <circle cx="300" cy="310" r="16" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
-  <text x="282" y="260" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[1] 608RS PIVOT HINGE</text>
+  <text x="282" y="260" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[1] 0°/90°/180° HINGE</text>
 
   <rect x="875" y="275" width="85" height="70" rx="10" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
   <circle cx="900" cy="310" r="16" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
-  <text x="918" y="260" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[1] 608RS PIVOT HINGE</text>
+  <text x="918" y="260" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[1] 0°/90°/180° HINGE</text>
 
   <!-- Left & Right Cushioned Split-Saddle Halves (CLOSED / LATCHED POSITION) -->
   <rect x="310" y="265" width="275" height="90" rx="22" fill="#f59e0b" stroke="#fef08a" stroke-width="2.5"/>
-  <text x="445" y="315" fill="#0f172a" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">[2] LEFT SADDLE PAD (CLOSED)</text>
+  <text x="445" y="308" fill="#0f172a" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">[2] LEFT PAD (0° SEATED OR</text>
+  <text x="445" y="326" fill="#0f172a" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">90° ANKLE KNEE-SCOOTER)</text>
 
   <rect x="615" y="265" width="275" height="90" rx="22" fill="#f59e0b" stroke="#fef08a" stroke-width="2.5"/>
   <text x="755" y="315" fill="#0f172a" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">[2] RIGHT SADDLE PAD (CLOSED)</text>
@@ -64,16 +65,16 @@
 
   <!-- CALLOUT TABLE -->
   <rect x="50" y="550" width="1100" height="170" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
-  <text x="70" y="578" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">SUB-ASSEMBLY 05 HOW THE SPLIT-SADDLE HINGE & LATCH WORK:</text>
-  <text x="70" y="604" fill="#e2e8f0" font-family="monospace" font-size="12">[1] CNC Hinge Brackets (saddle_180_pivot_hinge.dxf) clamp directly onto the ø30mm inner carbon tubes so the seat rises with the lift.</text>
-  <text x="70" y="628" fill="#fef08a" font-family="monospace" font-size="12">[2] During walking or backing up to the toilet, both saddle halves swing 180° flush against the side tubes (430mm unobstructed hip entry).</text>
-  <text x="70" y="652" fill="#22c55e" font-family="monospace" font-size="12">[3] When Grandma wants to sit or transfer, swing the two halves inward: the N52 magnets (20x5mm) pull the twin 10mm 304-stainless conical</text>
-  <text x="70" y="676" fill="#22c55e" font-family="monospace" font-size="12">    shear pins into mating tapered sockets (1,200 kgf vertical shear capacity) and trigger the reed switch so firmware knows the seat is locked.</text>
+  <text x="70" y="578" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">SUB-ASSEMBLY 05 3-MODE SPLIT-SADDLE & ANKLE-FRACTURE KNEE-SCOOTER DETENT:</text>
+  <text x="70" y="604" fill="#e2e8f0" font-family="monospace" font-size="12">[1] CNC Hinge Brackets (saddle_180_pivot_hinge.dxf) machine 3 precision pin-detent pockets at 0°, 90°, and 180° on the ø30mm inner column.</text>
+  <text x="70" y="628" fill="#fef08a" font-family="monospace" font-size="12">[2] Mode A (180° Open): Both pads fold flush for walking/toilet. Mode B (90° Knee-Scooter): Lock ONE pad at 450mm height to rest fractured ankle</text>
+  <text x="70" y="652" fill="#fef08a" font-family="monospace" font-size="12">    100% off the floor while propelling with her healthy leg! Mode C (0° Latched): Both pads snap together via N52 + 10mm SS conical pins (12 kN).</text>
+  <text x="70" y="676" fill="#22c55e" font-family="monospace" font-size="12">[3] Waterproof Seat Cushion Micro-Switch + Reed Switch + Retractable Pelvic Safety Belt: Zero fragile wires flexing across hinges!</text>
   <!-- Engineering Title Block Footer -->
   <rect x="20" y="745" width="1160" height="55" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
   <line x1="620" y1="745" x2="620" y2="800" stroke="#38bdf8" stroke-width="1"/>
-  <text x="35" y="768" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold">HYGIENE & TRANSFER ADVANTAGE: Zero Canvas Slings or Leg Straps to Thread</text>
-  <text x="35" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Wipe-clean antibacterial marine vinyl over closed-cell EVA foam; takes 2 seconds to swing closed.</text>
-  <text x="635" y="768" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">SAFETY INTERLOCK: Reed Switch + 4x 50kg Strain Gauges (HX711)</text>
-  <text x="635" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Firmware verifies latch closure and detects >15kg seated weight to auto-lock rear wheels.</text>
+  <text x="35" y="768" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold">ANKLE FRACTURE GAME-CHANGER: 90° Single-Leg Knee-Scooter Mode Built In</text>
+  <text x="35" y="788" fill="#94a3b8" font-family="monospace" font-size="11">During Weeks 1-4 (0% weight-bearing), Grandma kneels her injured leg on one pad and scoots safely inside the 4-wheel frame.</text>
+  <text x="635" y="768" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">RELIABLE SEAT SENSING: Waterproof Micro-Switch + Center Latch Reed Switch</text>
+  <text x="635" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Replaced delicate 4-wire HX711 strain gauges across moving hinges with 100% bulletproof industrial switches.</text>
 </svg>

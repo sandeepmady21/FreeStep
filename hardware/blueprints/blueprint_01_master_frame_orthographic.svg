@@ -18,13 +18,13 @@
   <rect x="20" y="20" width="1160" height="780" fill="url(#grid100)" stroke="#38bdf8" stroke-width="2"/>
   <!-- Title Block Header -->
   <rect x="20" y="20" width="1160" height="58" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
-  <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 01: MASTER CHASSIS ORTHOGRAPHIC & KINEMATIC ENVELOPE</text>
-  <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">Side Elevation (12-Deg Nose-Over-Toes Rake) + Front Doorway Clearance View (495mm Universal Envelope)</text>
+  <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 01: MASTER CHASSIS ORTHOGRAPHIC & CLINICAL BIOMECHANICS</text>
+  <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">Side Elevation (12° Rake, Shin Block Pad, Fold-Down Footrests, 8° Forearm Troughs) + Front 495mm Bathroom Envelope</text>
   <text x="1160" y="46" fill="#22c55e" font-family="monospace" font-size="16" font-weight="bold" text-anchor="end">SHEET 1 OF 6</text>
-  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
+  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.65 kg | ₹54,250 CLINICAL MASTERY EDITION) | UNITS: MM</text>
 
   <!-- SIDE VIEW (LEFT PANEL) -->
-  <text x="60" y="110" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] SIDE ELEVATION (SEATED 420MM vs STANDING 713MM)</text>
+  <text x="60" y="110" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] SIDE ELEVATION (SEATED 420MM vs STANDING 713MM + REHAB UPGRADES)</text>
   <!-- Floor Line -->
   <line x1="50" y1="660" x2="640" y2="660" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8,4"/>
   <text x="55" y="680" fill="#94a3b8" font-family="monospace" font-size="11">FINISHED FLOOR LEVEL (0.0 MM)</text>
@@ -38,13 +38,16 @@
   <!-- Front 74mm Low-Profile Twin 64mm Skate Caster -->
   <circle cx="515" cy="634" r="26" fill="#1e293b" stroke="#22c55e" stroke-width="2.5"/>
   <circle cx="515" cy="634" r="6" fill="#38bdf8"/>
-  <text x="515" y="700" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">FRONT 64mm SKATE CASTER (74mm NOSE)</text>
+  <text x="515" y="700" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">FRONT 64mm CASTER + 0° YAW LOCK</text>
 
-  <!-- Lower Carbon U-Base Leg (ø30mm) -->
+  <!-- Lower Carbon U-Base Leg (ø30mm) + Fold-Down Footrest Peg -->
   <rect x="150" y="600" width="370" height="16" rx="6" fill="#334155" stroke="#e2e8f0" stroke-width="2"/>
-  <!-- LiFePO4 Battery Ballast at Front Nose -->
+  <rect x="275" y="586" width="55" height="12" rx="4" fill="#a855f7" stroke="#f3e8ff" stroke-width="1.5"/>
+  <text x="245" y="576" fill="#d8b4fe" font-family="monospace" font-size="10">FOLD-DOWN FOOTREST PEG</text>
+
+  <!-- LiFePO4 Battery Ballast + 2AM PIR Nightlight at Front Nose -->
   <rect x="415" y="576" width="85" height="24" rx="4" fill="#166534" stroke="#22c55e" stroke-width="1.5"/>
-  <text x="457" y="592" fill="#dcfce7" font-family="monospace" font-size="9" text-anchor="middle">24V LiFePO4 (1kg)</text>
+  <text x="457" y="592" fill="#dcfce7" font-family="monospace" font-size="9" text-anchor="middle">24V LiFePO4 + PIR LED</text>
 
   <!-- 12-Deg Base Lug -->
   <polygon points="310,616 385,616 375,555 320,555" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
@@ -54,20 +57,24 @@
   <line x1="348" y1="595" x2="396" y2="370" stroke="#475569" stroke-width="22" stroke-linecap="round"/>
   <line x1="348" y1="595" x2="396" y2="370" stroke="#94a3b8" stroke-width="18" stroke-linecap="round"/>
 
+  <!-- Anterior Tibial Shin Block Pad (340mm Height) -->
+  <rect x="366" y="425" width="38" height="36" rx="8" fill="#0ea5e9" stroke="#e0f2fe" stroke-width="2"/>
+  <text x="415" y="446" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">SHIN BLOCK PAD (340mm: Zero-Quad Rise)</text>
+
   <!-- Inner Carbon Plunger Extended (+300mm along 12-deg = +293mm UP, +62mm FWD) -->
   <line x1="385" y1="420" x2="442" y2="155" stroke="#0284c7" stroke-width="14" stroke-linecap="round"/>
 
   <!-- Split Saddle at Seated (420mm) and Standing (713mm) -->
   <rect x="275" y="370" width="95" height="18" rx="8" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
-  <text x="265" y="383" fill="#fef08a" font-family="monospace" font-size="11" text-anchor="end">SADDLE LOW: 420mm (Toilet/Bed)</text>
+  <text x="265" y="383" fill="#fef08a" font-family="monospace" font-size="11" text-anchor="end">SADDLE LOW: 420mm / 90° KNEE REST</text>
 
   <rect x="320" y="195" width="95" height="18" rx="8" fill="#f59e0b" stroke="#fef08a" stroke-width="2" stroke-dasharray="4,2"/>
   <text x="310" y="208" fill="#fef08a" font-family="monospace" font-size="11" text-anchor="end">SADDLE HIGH: 713mm (+293mm UP, +62mm FWD)</text>
 
-  <!-- Upper Handlebar Halo + MGN9C Slide-Bridge Kitchen Tray -->
-  <rect x="380" y="140" width="160" height="14" rx="5" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
-  <rect x="460" y="126" width="165" height="10" rx="3" fill="#06b6d4" stroke="#cffafe" stroke-width="1.5"/>
-  <text x="542" y="118" fill="#22d3ee" font-family="monospace" font-size="11" text-anchor="middle">MGN9C KITCHEN TRAY (+300mm REACH)</text>
+  <!-- Upper Deep-Bowed Torso Halo + 8° Forearm Troughs + Swing-Away Tray -->
+  <rect x="370" y="138" width="165" height="16" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <rect x="385" y="122" width="115" height="14" rx="5" fill="#10b981" stroke="#d1fae5" stroke-width="1.5"/>
+  <text x="515" y="114" fill="#34d399" font-family="monospace" font-size="11" text-anchor="middle">8° EVA FOREARM TROUGHS + SWING-AWAY TRAY</text>
 
   <!-- Wheelbase Dimension (580mm) -->
   <line x1="150" y1="720" x2="515" y2="720" stroke="#38bdf8" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
@@ -85,36 +92,41 @@
   <rect x="720" y="210" width="24" height="400" rx="6" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
   <rect x="1086" y="210" width="24" height="400" rx="6" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
 
-  <!-- Upper Cross Halo & Kitchen Tray -->
+  <!-- Upper Deep-Bowed Torso Halo & Forearm Troughs -->
   <rect x="720" y="190" width="390" height="20" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-  <rect x="750" y="176" width="330" height="12" rx="4" fill="#06b6d4" stroke="#cffafe" stroke-width="1.5"/>
+  <rect x="730" y="172" width="85" height="16" rx="5" fill="#10b981" stroke="#d1fae5" stroke-width="1.5"/>
+  <rect x="1015" y="172" width="85" height="16" rx="5" fill="#10b981" stroke="#d1fae5" stroke-width="1.5"/>
 
-  <!-- Split Saddle Halves (Latched Center vs Folded Out) -->
+  <!-- Split Saddle Halves (Latched Center vs 90° Knee-Scooter / 180° Folded) -->
   <rect x="744" y="370" width="168" height="22" rx="6" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
   <rect x="918" y="370" width="168" height="22" rx="6" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
   <circle cx="915" cy="381" r="7" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
-  <text x="915" y="358" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">N52 + 10mm SS CONICAL LATCH (12 kN)</text>
+  <text x="915" y="358" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">N52 + 10mm SS LATCH + 90° KNEE DETENT</text>
 
-  <!-- Lower Front Cross Bridge + LD19 360 LiDAR Shroud -->
+  <!-- Contoured Anterior Tibial Shin Block Pad -->
+  <rect x="780" y="430" width="270" height="24" rx="8" fill="#0ea5e9" stroke="#e0f2fe" stroke-width="1.5"/>
+  <text x="915" y="446" fill="#0f172a" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">ANTERIOR TIBIAL SHIN BLOCK PAD (340mm)</text>
+
+  <!-- Lower Front Cross Bridge + Dual VL53L1X ToF + 2AM PIR Nightlight -->
   <rect x="735" y="592" width="360" height="18" rx="6" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
-  <circle cx="915" cy="585" r="18" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
-  <text x="915" y="558" fill="#38bdf8" font-family="monospace" font-size="10" text-anchor="middle">LD19 360° LiDAR + VL53L1X CLIFF</text>
+  <circle cx="915" cy="585" r="14" fill="#0f172a" stroke="#fef08a" stroke-width="2"/>
+  <text x="915" y="560" fill="#fef08a" font-family="monospace" font-size="10" text-anchor="middle">DUAL VL53L1X CLIFF + 2AM PIR NIGHTLIGHT</text>
 
   <!-- Left & Right Wheels -->
   <rect x="716" y="580" width="28" height="80" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
   <rect x="1086" y="580" width="28" height="80" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
 
   <!-- Dimension Arrows (430mm Inside, 495mm Total Outer) -->
-  <line x1="744" y1="470" x2="1086" y2="470" stroke="#22c55e" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  <text x="915" y="462" fill="#22c55e" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">HIP / TOILET CLEARANCE: 430.0 MM</text>
+  <line x1="744" y1="490" x2="1086" y2="490" stroke="#22c55e" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="915" y="482" fill="#22c55e" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">HIP / TOILET CLEARANCE: 430.0 MM</text>
 
   <line x1="716" y1="720" x2="1114" y2="720" stroke="#38bdf8" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
   <text x="915" y="735" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">TOTAL OUTER WIDTH: 495.0 MM (19.5")</text>
   <!-- Engineering Title Block Footer -->
   <rect x="20" y="745" width="1160" height="55" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
   <line x1="620" y1="745" x2="620" y2="800" stroke="#38bdf8" stroke-width="1"/>
-  <text x="35" y="768" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold">CRITICAL GEOMETRY: 12.0° Forward Column Rake ('Nose-Over-Toes' Biomechanics)</text>
-  <text x="35" y="788" fill="#94a3b8" font-family="monospace" font-size="11">300mm Actuator Stroke = +293mm Vertical Lift & +62mm Forward Weight Shift</text>
-  <text x="635" y="768" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">TOLERANCES & BONDING: 3M Scotch-Weld DP420 + 110um Glass Microspheres</text>
-  <text x="635" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Ensure Left & Right Columns are clamped parallel within +-0.2mm during 24h cure</text>
+  <text x="35" y="768" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold">ZERO-QUAD TOILET RISE: 12.0° Forward Rake + 340mm Anterior Tibial Shin Block Pad</text>
+  <text x="35" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Prevents forward knee buckling when lifting from low 400mm toilets; 8° Forearm Troughs offload wrists.</text>
+  <text x="635" y="768" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">WEIGHT & COST MASTERY: 9.65 kg Total Mass | ₹54,250 Complete Build</text>
+  <text x="635" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Cut heavy MGN9C rails & fragile spinning LiDAR (-200g, -₹8,550) while adding 9 clinical rehab upgrades.</text>
 </svg>

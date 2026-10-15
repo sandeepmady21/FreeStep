@@ -18,12 +18,12 @@
   <rect x="20" y="20" width="1160" height="780" fill="url(#grid100)" stroke="#38bdf8" stroke-width="2"/>
   <!-- Title Block Header -->
   <rect x="20" y="20" width="1160" height="58" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
-  <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 04: ULTRA-LOW 74MM FRONT TWIN-SKATE CASTER ASSEMBLY</text>
-  <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">CNC 7075-T6 Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) + SKF 51104 Thrust Bearing + Twin 64mm 82A PU Skate Wheels</text>
+  <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 04: ULTRA-LOW 74MM FRONT CASTER + 0° YAW DETENT & ANTI-HAIR SHIELD</text>
+  <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">CNC 7075-T6 Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) + 0° Directional Lock + Labyrinth Hair Shields + 64mm 82A PU Wheels</text>
   <text x="1160" y="46" fill="#22c55e" font-family="monospace" font-size="16" font-weight="bold" text-anchor="end">SHEET 4 OF 6</text>
-  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
+  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.65 kg | ₹54,250 CLINICAL MASTERY EDITION) | UNITS: MM</text>
 
-  <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] VERTICAL STACK & FRONT SECTION: ACHIEVING THE 74.0 MM (2.9") UNDER-BED NOSE HEIGHT</text>
+  <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] VERTICAL STACK & FRONT SECTION: 74.0 MM NOSE + 0° ANTI-YAW DETENT + ANTI-HAIR SHIELDS</text>
 
   <!-- Front Nose of Carbon Tube -->
   <rect x="140" y="180" width="280" height="48" rx="8" fill="#334155" stroke="#e2e8f0" stroke-width="2"/>
@@ -31,7 +31,7 @@
 
   <!-- SKF 51104 Axial Thrust Ball Bearing (20mm ID x 35mm OD x 10mm) -->
   <rect x="215" y="245" width="130" height="26" rx="4" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
-  <text x="460" y="263" fill="#fef08a" font-family="monospace" font-size="12" font-weight="bold">[2] SKF 51104 AXIAL THRUST BEARING (20x35x10mm)</text>
+  <text x="460" y="263" fill="#fef08a" font-family="monospace" font-size="12" font-weight="bold">[2] SKF 51104 AXIAL THRUST BEARING + 0° BALL-PLUNGER YAW DETENT</text>
 
   <!-- CNC 7075-T6 Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) -->
   <polygon points="170,285 390,285 410,480 375,480 375,325 185,325 185,480 150,480" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2.5"/>
@@ -44,12 +44,12 @@
   <!-- Twin 64mm 82A Decathlon Inline Skate PU Wheels + ABEC-9 608RS Bearings -->
   <rect x="195" y="345" width="72" height="190" rx="18" fill="#22c55e" stroke="#dcfce7" stroke-width="2.5"/>
   <rect x="293" y="345" width="72" height="190" rx="18" fill="#22c55e" stroke="#dcfce7" stroke-width="2.5"/>
-  <!-- 8mm Center Spacer -->
+  <!-- 8mm Center Spacer + Labyrinth Anti-Hair Caps -->
   <rect x="267" y="425" width="26" height="30" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/>
 
   <!-- M8x75mm Stainless Axle Bolt -->
   <line x1="130" y1="440" x2="430" y2="440" stroke="#fef08a" stroke-width="8"/>
-  <text x="460" y="445" fill="#fef08a" font-family="monospace" font-size="12" font-weight="bold">[5] M8x75mm AXLE + TWIN 64mm 82A SKATE WHEELS (ABEC-9 608RS)</text>
+  <text x="460" y="445" fill="#fef08a" font-family="monospace" font-size="12" font-weight="bold">[5] M8x75mm AXLE + TWIN 64mm 82A WHEELS + LABYRINTH HAIR SHIELDS</text>
 
   <!-- Floor Line & Total 74mm Height Dimension -->
   <line x1="80" y1="535" x2="550" y2="535" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8,4"/>
@@ -59,14 +59,14 @@
   <!-- CALLOUT TABLE -->
   <rect x="50" y="565" width="1100" height="155" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
   <text x="70" y="592" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">SUB-ASSEMBLY 04 STEP-BY-STEP ASSEMBLY (BUILD 2X - FRONT LEFT & RIGHT):</text>
-  <text x="70" y="618" fill="#e2e8f0" font-family="monospace" font-size="12">1. Seat the SKF 51104 axial thrust bearing [2] into the top 35mm pocket of the CNC Caster Fork [3] and bolt to front nose [1] with M10 kingpin [4].</text>
-  <text x="70" y="642" fill="#22c55e" font-family="monospace" font-size="12">2. Slide M8x75mm stainless bolt [5] through Left Fork Leg -> 64mm 82A Skate Wheel -> 8mm Spacer -> Second 64mm Skate Wheel -> Right Fork Leg.</text>
-  <text x="70" y="666" fill="#fef08a" font-family="monospace" font-size="12">3. Why Twin 64mm 82A Wheels? Half the floor scrubbing torque when swiveling on bathroom tiles, silent over grout lines, and 74mm low clearance.</text>
+  <text x="70" y="618" fill="#e2e8f0" font-family="monospace" font-size="12">1. Seat SKF 51104 bearing [2] + M6 spring ball-plunger (0° anti-yaw detent) into CNC Caster Fork [3] and bolt to nose [1] with M10 kingpin [4].</text>
+  <text x="70" y="642" fill="#22c55e" font-family="monospace" font-size="12">2. Slide M8x75mm bolt [5] through Left Fork -> Labyrinth Shield -> 64mm Skate Wheel -> 8mm Spacer -> 64mm Wheel -> Labyrinth Shield -> Right Fork.</text>
+  <text x="70" y="666" fill="#fef08a" font-family="monospace" font-size="12">3. Why 0° Yaw Detent + Labyrinth Shields? Prevents sideways fishtailing on sloped wet Indian bathroom tiles and stops floor hair jamming bearings!</text>
   <!-- Engineering Title Block Footer -->
   <rect x="20" y="745" width="1160" height="55" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
   <line x1="620" y1="745" x2="620" y2="800" stroke="#38bdf8" stroke-width="1"/>
-  <text x="35" y="768" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold">STANDARD COTS PARTS: Decathlon Oxelo 64mm 82A PU Wheels + Standard 608RS & 51104 Bearings</text>
-  <text x="35" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Available off the shelf across India for ₹1,400 total.</text>
+  <text x="35" y="768" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold">ANTI-YAW & ANTI-HAIR UPGRADE: Solves #1 Arjo Sara & Home Caster Complaint</text>
+  <text x="35" y="788" fill="#94a3b8" font-family="monospace" font-size="11">0° ball-plunger tracks straight down hallways/ramps; breaks out smoothly above 18 N lateral turn force.</text>
   <text x="635" y="768" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">THRESHOLD CLIMBING: 64mm Wheel Diameter + 18mm Trail Angle</text>
   <text x="635" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Climbs 15-40mm Indian bathroom marble door thresholds smoothly without caster flutter.</text>
 </svg>

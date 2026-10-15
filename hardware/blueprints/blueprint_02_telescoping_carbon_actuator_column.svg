@@ -21,7 +21,7 @@
   <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 02: TELESCOPING CARBON COLUMN & STANDARD ACTUATOR CARTRIDGE</text>
   <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">Cross-Section of ø35x31mm Outer Carbon Barrel + ø30x26mm Inner Plunger + Standard 24V 300mm IP65 Inline Actuator</text>
   <text x="1160" y="46" fill="#22c55e" font-family="monospace" font-size="16" font-weight="bold" text-anchor="end">SHEET 2 OF 6</text>
-  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
+  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.65 kg | ₹54,250 CLINICAL MASTERY EDITION) | UNITS: MM</text>
 
   <!-- CROSS-SECTION DIAGRAM (HORIZONTAL EXPLODED / SECTIONED VIEW) -->
   <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] FULL SECTION VIEW: HOW THE STANDARD 24V ACTUATOR DROPS INSIDE THE CARBON TUBES</text>
@@ -33,7 +33,7 @@
   <!-- Outer Carbon Tube (ø35mm OD x ø31mm ID x 460mm) -->
   <rect x="130" y="250" width="460" height="22" fill="#334155" stroke="#e2e8f0" stroke-width="1.5"/>
   <rect x="130" y="408" width="460" height="22" fill="#334155" stroke="#e2e8f0" stroke-width="1.5"/>
-  <text x="360" y="240" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">[2] OUTER CARBON BARREL: ø35mm OD x ø31mm ID x 460mm (CF-01)</text>
+  <text x="360" y="240" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">[2] OUTER CARBON BARREL: ø35mm OD x ø31mm ID x 460mm + CANE QUIVER CLIPS</text>
 
   <!-- Lathe-Turned POM (Delrin) Sleeve Bushings (x2 per column) -->
   <rect x="530" y="272" width="60" height="16" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>

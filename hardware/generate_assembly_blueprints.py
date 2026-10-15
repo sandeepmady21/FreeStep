@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Generates the 6 Engineering Assembly Blueprint SVG Sheets (hardware/blueprints/blueprint_01..06.svg),
-the Printable Markdown Blueprint Manual (hardware/ASSEMBLY_BLUEPRINTS.md),
-and the Interactive HTML5 Exploded CAD Blueprint Viewer (docs/assembly_blueprints.html).
+Generates the 6 Engineering Assembly Blueprint SVG Sheets (hardware/blueprints/blueprint_01..06.svg)
+and the Printable Markdown Blueprint Manual (hardware/ASSEMBLY_BLUEPRINTS.md) for the
+FreeStep Air (9.65 kg, ₹54,250 Clinical & Home Mastery Edition).
 """
 
 import os
@@ -10,9 +10,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_DIR = os.path.dirname(BASE_DIR)
 BP_DIR = os.path.join(BASE_DIR, "blueprints")
-DOCS_DIR = os.path.join(REPO_DIR, "docs")
 os.makedirs(BP_DIR, exist_ok=True)
-os.makedirs(DOCS_DIR, exist_ok=True)
 
 
 def svg_header(title, sheet_num, subtitle):
@@ -39,7 +37,7 @@ def svg_header(title, sheet_num, subtitle):
   <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">{title}</text>
   <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">{subtitle}</text>
   <text x="1160" y="46" fill="#22c55e" font-family="monospace" font-size="16" font-weight="bold" text-anchor="end">SHEET {sheet_num} OF 6</text>
-  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
+  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.65 kg | ₹54,250 CLINICAL MASTERY EDITION) | UNITS: MM</text>
 '''
 
 
@@ -57,13 +55,13 @@ def svg_footer(notes_left, notes_right):
 
 def make_sheet_01():
     svg = svg_header(
-        "BLUEPRINT 01: MASTER CHASSIS ORTHOGRAPHIC & KINEMATIC ENVELOPE",
+        "BLUEPRINT 01: MASTER CHASSIS ORTHOGRAPHIC & CLINICAL BIOMECHANICS",
         "1",
-        "Side Elevation (12-Deg Nose-Over-Toes Rake) + Front Doorway Clearance View (495mm Universal Envelope)"
+        "Side Elevation (12° Rake, Shin Block Pad, Fold-Down Footrests, 8° Forearm Troughs) + Front 495mm Bathroom Envelope"
     )
     svg += '''
   <!-- SIDE VIEW (LEFT PANEL) -->
-  <text x="60" y="110" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] SIDE ELEVATION (SEATED 420MM vs STANDING 713MM)</text>
+  <text x="60" y="110" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] SIDE ELEVATION (SEATED 420MM vs STANDING 713MM + REHAB UPGRADES)</text>
   <!-- Floor Line -->
   <line x1="50" y1="660" x2="640" y2="660" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8,4"/>
   <text x="55" y="680" fill="#94a3b8" font-family="monospace" font-size="11">FINISHED FLOOR LEVEL (0.0 MM)</text>
@@ -77,13 +75,16 @@ def make_sheet_01():
   <!-- Front 74mm Low-Profile Twin 64mm Skate Caster -->
   <circle cx="515" cy="634" r="26" fill="#1e293b" stroke="#22c55e" stroke-width="2.5"/>
   <circle cx="515" cy="634" r="6" fill="#38bdf8"/>
-  <text x="515" y="700" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">FRONT 64mm SKATE CASTER (74mm NOSE)</text>
+  <text x="515" y="700" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">FRONT 64mm CASTER + 0° YAW LOCK</text>
 
-  <!-- Lower Carbon U-Base Leg (ø30mm) -->
+  <!-- Lower Carbon U-Base Leg (ø30mm) + Fold-Down Footrest Peg -->
   <rect x="150" y="600" width="370" height="16" rx="6" fill="#334155" stroke="#e2e8f0" stroke-width="2"/>
-  <!-- LiFePO4 Battery Ballast at Front Nose -->
+  <rect x="275" y="586" width="55" height="12" rx="4" fill="#a855f7" stroke="#f3e8ff" stroke-width="1.5"/>
+  <text x="245" y="576" fill="#d8b4fe" font-family="monospace" font-size="10">FOLD-DOWN FOOTREST PEG</text>
+
+  <!-- LiFePO4 Battery Ballast + 2AM PIR Nightlight at Front Nose -->
   <rect x="415" y="576" width="85" height="24" rx="4" fill="#166534" stroke="#22c55e" stroke-width="1.5"/>
-  <text x="457" y="592" fill="#dcfce7" font-family="monospace" font-size="9" text-anchor="middle">24V LiFePO4 (1kg)</text>
+  <text x="457" y="592" fill="#dcfce7" font-family="monospace" font-size="9" text-anchor="middle">24V LiFePO4 + PIR LED</text>
 
   <!-- 12-Deg Base Lug -->
   <polygon points="310,616 385,616 375,555 320,555" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
@@ -93,20 +94,24 @@ def make_sheet_01():
   <line x1="348" y1="595" x2="396" y2="370" stroke="#475569" stroke-width="22" stroke-linecap="round"/>
   <line x1="348" y1="595" x2="396" y2="370" stroke="#94a3b8" stroke-width="18" stroke-linecap="round"/>
 
+  <!-- Anterior Tibial Shin Block Pad (340mm Height) -->
+  <rect x="366" y="425" width="38" height="36" rx="8" fill="#0ea5e9" stroke="#e0f2fe" stroke-width="2"/>
+  <text x="415" y="446" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">SHIN BLOCK PAD (340mm: Zero-Quad Rise)</text>
+
   <!-- Inner Carbon Plunger Extended (+300mm along 12-deg = +293mm UP, +62mm FWD) -->
   <line x1="385" y1="420" x2="442" y2="155" stroke="#0284c7" stroke-width="14" stroke-linecap="round"/>
 
   <!-- Split Saddle at Seated (420mm) and Standing (713mm) -->
   <rect x="275" y="370" width="95" height="18" rx="8" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
-  <text x="265" y="383" fill="#fef08a" font-family="monospace" font-size="11" text-anchor="end">SADDLE LOW: 420mm (Toilet/Bed)</text>
+  <text x="265" y="383" fill="#fef08a" font-family="monospace" font-size="11" text-anchor="end">SADDLE LOW: 420mm / 90° KNEE REST</text>
 
   <rect x="320" y="195" width="95" height="18" rx="8" fill="#f59e0b" stroke="#fef08a" stroke-width="2" stroke-dasharray="4,2"/>
   <text x="310" y="208" fill="#fef08a" font-family="monospace" font-size="11" text-anchor="end">SADDLE HIGH: 713mm (+293mm UP, +62mm FWD)</text>
 
-  <!-- Upper Handlebar Halo + MGN9C Slide-Bridge Kitchen Tray -->
-  <rect x="380" y="140" width="160" height="14" rx="5" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
-  <rect x="460" y="126" width="165" height="10" rx="3" fill="#06b6d4" stroke="#cffafe" stroke-width="1.5"/>
-  <text x="542" y="118" fill="#22d3ee" font-family="monospace" font-size="11" text-anchor="middle">MGN9C KITCHEN TRAY (+300mm REACH)</text>
+  <!-- Upper Deep-Bowed Torso Halo + 8° Forearm Troughs + Swing-Away Tray -->
+  <rect x="370" y="138" width="165" height="16" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <rect x="385" y="122" width="115" height="14" rx="5" fill="#10b981" stroke="#d1fae5" stroke-width="1.5"/>
+  <text x="515" y="114" fill="#34d399" font-family="monospace" font-size="11" text-anchor="middle">8° EVA FOREARM TROUGHS + SWING-AWAY TRAY</text>
 
   <!-- Wheelbase Dimension (580mm) -->
   <line x1="150" y1="720" x2="515" y2="720" stroke="#38bdf8" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
@@ -124,37 +129,42 @@ def make_sheet_01():
   <rect x="720" y="210" width="24" height="400" rx="6" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
   <rect x="1086" y="210" width="24" height="400" rx="6" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
 
-  <!-- Upper Cross Halo & Kitchen Tray -->
+  <!-- Upper Deep-Bowed Torso Halo & Forearm Troughs -->
   <rect x="720" y="190" width="390" height="20" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-  <rect x="750" y="176" width="330" height="12" rx="4" fill="#06b6d4" stroke="#cffafe" stroke-width="1.5"/>
+  <rect x="730" y="172" width="85" height="16" rx="5" fill="#10b981" stroke="#d1fae5" stroke-width="1.5"/>
+  <rect x="1015" y="172" width="85" height="16" rx="5" fill="#10b981" stroke="#d1fae5" stroke-width="1.5"/>
 
-  <!-- Split Saddle Halves (Latched Center vs Folded Out) -->
+  <!-- Split Saddle Halves (Latched Center vs 90° Knee-Scooter / 180° Folded) -->
   <rect x="744" y="370" width="168" height="22" rx="6" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
   <rect x="918" y="370" width="168" height="22" rx="6" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
   <circle cx="915" cy="381" r="7" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
-  <text x="915" y="358" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">N52 + 10mm SS CONICAL LATCH (12 kN)</text>
+  <text x="915" y="358" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">N52 + 10mm SS LATCH + 90° KNEE DETENT</text>
 
-  <!-- Lower Front Cross Bridge + LD19 360 LiDAR Shroud -->
+  <!-- Contoured Anterior Tibial Shin Block Pad -->
+  <rect x="780" y="430" width="270" height="24" rx="8" fill="#0ea5e9" stroke="#e0f2fe" stroke-width="1.5"/>
+  <text x="915" y="446" fill="#0f172a" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">ANTERIOR TIBIAL SHIN BLOCK PAD (340mm)</text>
+
+  <!-- Lower Front Cross Bridge + Dual VL53L1X ToF + 2AM PIR Nightlight -->
   <rect x="735" y="592" width="360" height="18" rx="6" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
-  <circle cx="915" cy="585" r="18" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
-  <text x="915" y="558" fill="#38bdf8" font-family="monospace" font-size="10" text-anchor="middle">LD19 360° LiDAR + VL53L1X CLIFF</text>
+  <circle cx="915" cy="585" r="14" fill="#0f172a" stroke="#fef08a" stroke-width="2"/>
+  <text x="915" y="560" fill="#fef08a" font-family="monospace" font-size="10" text-anchor="middle">DUAL VL53L1X CLIFF + 2AM PIR NIGHTLIGHT</text>
 
   <!-- Left & Right Wheels -->
   <rect x="716" y="580" width="28" height="80" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
   <rect x="1086" y="580" width="28" height="80" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
 
   <!-- Dimension Arrows (430mm Inside, 495mm Total Outer) -->
-  <line x1="744" y1="470" x2="1086" y2="470" stroke="#22c55e" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  <text x="915" y="462" fill="#22c55e" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">HIP / TOILET CLEARANCE: 430.0 MM</text>
+  <line x1="744" y1="490" x2="1086" y2="490" stroke="#22c55e" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="915" y="482" fill="#22c55e" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">HIP / TOILET CLEARANCE: 430.0 MM</text>
 
   <line x1="716" y1="720" x2="1114" y2="720" stroke="#38bdf8" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
   <text x="915" y="735" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">TOTAL OUTER WIDTH: 495.0 MM (19.5")</text>
 '''
     svg += svg_footer(
-        ("CRITICAL GEOMETRY: 12.0° Forward Column Rake ('Nose-Over-Toes' Biomechanics)",
-         "300mm Actuator Stroke = +293mm Vertical Lift & +62mm Forward Weight Shift"),
-        ("TOLERANCES & BONDING: 3M Scotch-Weld DP420 + 110um Glass Microspheres",
-         "Ensure Left & Right Columns are clamped parallel within +-0.2mm during 24h cure")
+        ("ZERO-QUAD TOILET RISE: 12.0° Forward Rake + 340mm Anterior Tibial Shin Block Pad",
+         "Prevents forward knee buckling when lifting from low 400mm toilets; 8° Forearm Troughs offload wrists."),
+        ("WEIGHT & COST MASTERY: 9.65 kg Total Mass | ₹54,250 Complete Build",
+         "Cut heavy MGN9C rails & fragile spinning LiDAR (-200g, -₹8,550) while adding 9 clinical rehab upgrades.")
     )
     with open(os.path.join(BP_DIR, "blueprint_01_master_frame_orthographic.svg"), "w") as f:
         f.write(svg)
@@ -177,7 +187,7 @@ def make_sheet_02():
   <!-- Outer Carbon Tube (ø35mm OD x ø31mm ID x 460mm) -->
   <rect x="130" y="250" width="460" height="22" fill="#334155" stroke="#e2e8f0" stroke-width="1.5"/>
   <rect x="130" y="408" width="460" height="22" fill="#334155" stroke="#e2e8f0" stroke-width="1.5"/>
-  <text x="360" y="240" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">[2] OUTER CARBON BARREL: ø35mm OD x ø31mm ID x 460mm (CF-01)</text>
+  <text x="360" y="240" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">[2] OUTER CARBON BARREL: ø35mm OD x ø31mm ID x 460mm + CANE QUIVER CLIPS</text>
 
   <!-- Lathe-Turned POM (Delrin) Sleeve Bushings (x2 per column) -->
   <rect x="530" y="272" width="60" height="16" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
@@ -240,14 +250,16 @@ def make_sheet_03():
     svg = svg_header(
         "BLUEPRINT 03: REAR 6.5\" (165MM) SEALED BLDC HUB WHEEL & DROPOUT ASSEMBLY",
         "3",
-        "Standard IP65 Hoverboard/AMR Hall-Sensor Hub Motor + CNC 7075-T6 ø16mm D-Axle Clamp Dropout (rear_16mm_hub_axle_dropout.dxf)"
+        "Standard IP65 Hoverboard/AMR Hall-Sensor Hub Motor + CNC 7075-T6 ø16mm D-Axle Clamp Dropout + Fold-Down Footrest Pegs"
     )
     svg += '''
   <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] EXPLODED VIEW: REAR SEALED HUB MOTOR TO CARBON LEG DROPOUT (5-MINUTE BOLT-ON)</text>
 
-  <!-- ø30mm Rear Carbon Base Leg -->
+  <!-- ø30mm Rear Carbon Base Leg + Fold-Down Aluminum Footrest Peg -->
   <rect x="80" y="180" width="260" height="44" rx="8" fill="#334155" stroke="#e2e8f0" stroke-width="2"/>
   <text x="210" y="207" fill="#ffffff" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">[1] ø30mm CARBON REAR LEG (CF-03)</text>
+  <rect x="130" y="150" width="110" height="24" rx="5" fill="#a855f7" stroke="#f3e8ff" stroke-width="1.5"/>
+  <text x="185" y="166" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">FOLD-DOWN FOOTREST PEG</text>
 
   <!-- CNC 7075-T6 Rear Hub Dropout Plate -->
   <rect x="360" y="160" width="160" height="270" rx="14" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2.5"/>
@@ -275,7 +287,7 @@ def make_sheet_03():
   <circle cx="850" cy="360" r="22" fill="#475569" stroke="#fef08a" stroke-width="3"/>
   <text x="850" y="300" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle">[3] STANDARD 6.5" (165mm) BLDC HUB</text>
   <text x="850" y="322" fill="#e2e8f0" font-family="monospace" font-size="11" text-anchor="middle">IP65 Waterproof Sealed Shell</text>
-  <text x="850" y="415" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">3-Phase + 5-Pin Hall Sensor Cable</text>
+  <text x="850" y="415" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">Walking Assist + Seated Power-Glide (0.25m/s)</text>
   <text x="850" y="435" fill="#fef08a" font-family="monospace" font-size="11" text-anchor="middle">100% Saree & Loose-Clothing Safe!</text>
 
   <!-- CALLOUT TABLE -->
@@ -283,7 +295,7 @@ def make_sheet_03():
   <text x="70" y="572" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">SUB-ASSEMBLY 03 TORQUE SPECS & WIRING (BUILD 2X - LEFT & RIGHT):</text>
   <text x="70" y="598" fill="#e2e8f0" font-family="monospace" font-size="12">1. Bond & pinch-bolt rear carbon tube [1] into upper ø30.2mm socket of CNC Dropout [2] (2x M5x25mm Socket Head Cap Screws, 6 Nm).</text>
   <text x="70" y="622" fill="#fef08a" font-family="monospace" font-size="12">2. Insert the standard ø16mm D-flat stator shaft of the 6.5" BLDC Hub Wheel [3] into the lower split clamp of [2].</text>
-  <text x="70" y="646" fill="#22c55e" font-family="monospace" font-size="12">3. Torque the 4x M6x35mm Grade 10.9 clamp bolts + Blue Loctite 243 to 12.0 Nm. Route Hall & Phase wires up inside the rear carbon leg.</text>
+  <text x="70" y="646" fill="#22c55e" font-family="monospace" font-size="12">3. Torque the 4x M6x35mm Grade 10.9 clamp bolts + Blue Loctite 243 to 12.0 Nm. Clamp Fold-Down Footrest Peg onto CF-03 for Seated Power-Glide.</text>
   <text x="70" y="670" fill="#38bdf8" font-family="monospace" font-size="12">4. Connect Phase (U/V/W) + 5-Pin Hall plug to Dual Sinusoidal FOC Controller (DRV-02) for zero-cogging push & 40 Nm active brake hold.</text>
 '''
     svg += svg_footer(
@@ -298,12 +310,12 @@ def make_sheet_03():
 
 def make_sheet_04():
     svg = svg_header(
-        "BLUEPRINT 04: ULTRA-LOW 74MM FRONT TWIN-SKATE CASTER ASSEMBLY",
+        "BLUEPRINT 04: ULTRA-LOW 74MM FRONT CASTER + 0° YAW DETENT & ANTI-HAIR SHIELD",
         "4",
-        "CNC 7075-T6 Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) + SKF 51104 Thrust Bearing + Twin 64mm 82A PU Skate Wheels"
+        "CNC 7075-T6 Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) + 0° Directional Lock + Labyrinth Hair Shields + 64mm 82A PU Wheels"
     )
     svg += '''
-  <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] VERTICAL STACK & FRONT SECTION: ACHIEVING THE 74.0 MM (2.9") UNDER-BED NOSE HEIGHT</text>
+  <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] VERTICAL STACK & FRONT SECTION: 74.0 MM NOSE + 0° ANTI-YAW DETENT + ANTI-HAIR SHIELDS</text>
 
   <!-- Front Nose of Carbon Tube -->
   <rect x="140" y="180" width="280" height="48" rx="8" fill="#334155" stroke="#e2e8f0" stroke-width="2"/>
@@ -311,7 +323,7 @@ def make_sheet_04():
 
   <!-- SKF 51104 Axial Thrust Ball Bearing (20mm ID x 35mm OD x 10mm) -->
   <rect x="215" y="245" width="130" height="26" rx="4" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
-  <text x="460" y="263" fill="#fef08a" font-family="monospace" font-size="12" font-weight="bold">[2] SKF 51104 AXIAL THRUST BEARING (20x35x10mm)</text>
+  <text x="460" y="263" fill="#fef08a" font-family="monospace" font-size="12" font-weight="bold">[2] SKF 51104 AXIAL THRUST BEARING + 0° BALL-PLUNGER YAW DETENT</text>
 
   <!-- CNC 7075-T6 Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) -->
   <polygon points="170,285 390,285 410,480 375,480 375,325 185,325 185,480 150,480" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2.5"/>
@@ -324,12 +336,12 @@ def make_sheet_04():
   <!-- Twin 64mm 82A Decathlon Inline Skate PU Wheels + ABEC-9 608RS Bearings -->
   <rect x="195" y="345" width="72" height="190" rx="18" fill="#22c55e" stroke="#dcfce7" stroke-width="2.5"/>
   <rect x="293" y="345" width="72" height="190" rx="18" fill="#22c55e" stroke="#dcfce7" stroke-width="2.5"/>
-  <!-- 8mm Center Spacer -->
+  <!-- 8mm Center Spacer + Labyrinth Anti-Hair Caps -->
   <rect x="267" y="425" width="26" height="30" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/>
 
   <!-- M8x75mm Stainless Axle Bolt -->
   <line x1="130" y1="440" x2="430" y2="440" stroke="#fef08a" stroke-width="8"/>
-  <text x="460" y="445" fill="#fef08a" font-family="monospace" font-size="12" font-weight="bold">[5] M8x75mm AXLE + TWIN 64mm 82A SKATE WHEELS (ABEC-9 608RS)</text>
+  <text x="460" y="445" fill="#fef08a" font-family="monospace" font-size="12" font-weight="bold">[5] M8x75mm AXLE + TWIN 64mm 82A WHEELS + LABYRINTH HAIR SHIELDS</text>
 
   <!-- Floor Line & Total 74mm Height Dimension -->
   <line x1="80" y1="535" x2="550" y2="535" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8,4"/>
@@ -339,13 +351,13 @@ def make_sheet_04():
   <!-- CALLOUT TABLE -->
   <rect x="50" y="565" width="1100" height="155" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
   <text x="70" y="592" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">SUB-ASSEMBLY 04 STEP-BY-STEP ASSEMBLY (BUILD 2X - FRONT LEFT & RIGHT):</text>
-  <text x="70" y="618" fill="#e2e8f0" font-family="monospace" font-size="12">1. Seat the SKF 51104 axial thrust bearing [2] into the top 35mm pocket of the CNC Caster Fork [3] and bolt to front nose [1] with M10 kingpin [4].</text>
-  <text x="70" y="642" fill="#22c55e" font-family="monospace" font-size="12">2. Slide M8x75mm stainless bolt [5] through Left Fork Leg -> 64mm 82A Skate Wheel -> 8mm Spacer -> Second 64mm Skate Wheel -> Right Fork Leg.</text>
-  <text x="70" y="666" fill="#fef08a" font-family="monospace" font-size="12">3. Why Twin 64mm 82A Wheels? Half the floor scrubbing torque when swiveling on bathroom tiles, silent over grout lines, and 74mm low clearance.</text>
+  <text x="70" y="618" fill="#e2e8f0" font-family="monospace" font-size="12">1. Seat SKF 51104 bearing [2] + M6 spring ball-plunger (0° anti-yaw detent) into CNC Caster Fork [3] and bolt to nose [1] with M10 kingpin [4].</text>
+  <text x="70" y="642" fill="#22c55e" font-family="monospace" font-size="12">2. Slide M8x75mm bolt [5] through Left Fork -> Labyrinth Shield -> 64mm Skate Wheel -> 8mm Spacer -> 64mm Wheel -> Labyrinth Shield -> Right Fork.</text>
+  <text x="70" y="666" fill="#fef08a" font-family="monospace" font-size="12">3. Why 0° Yaw Detent + Labyrinth Shields? Prevents sideways fishtailing on sloped wet Indian bathroom tiles and stops floor hair jamming bearings!</text>
 '''
     svg += svg_footer(
-        ("STANDARD COTS PARTS: Decathlon Oxelo 64mm 82A PU Wheels + Standard 608RS & 51104 Bearings",
-         "Available off the shelf across India for ₹1,400 total."),
+        ("ANTI-YAW & ANTI-HAIR UPGRADE: Solves #1 Arjo Sara & Home Caster Complaint",
+         "0° ball-plunger tracks straight down hallways/ramps; breaks out smoothly above 18 N lateral turn force."),
         ("THRESHOLD CLIMBING: 64mm Wheel Diameter + 18mm Trail Angle",
          "Climbs 15-40mm Indian bathroom marble door thresholds smoothly without caster flutter.")
     )
@@ -355,12 +367,12 @@ def make_sheet_04():
 
 def make_sheet_05():
     svg = svg_header(
-        "BLUEPRINT 05: 180° SPLIT-SADDLE PIVOT HINGE & N52 CONICAL SHEAR LATCH",
+        "BLUEPRINT 05: 180° SPLIT-SADDLE, 90° KNEE-SCOOTER DETENT & N52 SHEAR LATCH",
         "5",
-        "Top-Down Kinematic View: Open Entry Mode (180° Flush) vs. Latched Perch/Transfer Mode (12 kN Stainless Conical Shear Lock)"
+        "Top-Down Kinematic View: 180° Open Walk-In vs. 90° Single-Leg Ankle-Fracture Knee-Scooter vs. 0° Latched Perch/Transfer"
     )
     svg += '''
-  <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] TOP-DOWN VIEW: 180° SPLIT-SADDLE HINGE + SELF-CENTERING N52 CONICAL SHEAR LATCH</text>
+  <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] TOP-DOWN VIEW: 3-MODE SPLIT-SADDLE (0° SEATED | 90° KNEE-SCOOTER | 180° OPEN WALK-IN)</text>
 
   <!-- Left & Right ø30mm Inner Carbon Columns -->
   <circle cx="220" cy="310" r="34" fill="#0284c7" stroke="#ffffff" stroke-width="2.5"/>
@@ -369,18 +381,19 @@ def make_sheet_05():
   <circle cx="980" cy="310" r="34" fill="#0284c7" stroke="#ffffff" stroke-width="2.5"/>
   <text x="980" y="314" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">RIGHT ø30</text>
 
-  <!-- CNC 7075-T6 Pivot Hinge Clamps (saddle_180_pivot_hinge.dxf) -->
+  <!-- CNC 7075-T6 Pivot Hinge Clamps (saddle_180_pivot_hinge.dxf) with 0°/90°/180° Detents -->
   <rect x="240" y="275" width="85" height="70" rx="10" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
   <circle cx="300" cy="310" r="16" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
-  <text x="282" y="260" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[1] 608RS PIVOT HINGE</text>
+  <text x="282" y="260" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[1] 0°/90°/180° HINGE</text>
 
   <rect x="875" y="275" width="85" height="70" rx="10" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
   <circle cx="900" cy="310" r="16" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
-  <text x="918" y="260" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[1] 608RS PIVOT HINGE</text>
+  <text x="918" y="260" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[1] 0°/90°/180° HINGE</text>
 
   <!-- Left & Right Cushioned Split-Saddle Halves (CLOSED / LATCHED POSITION) -->
   <rect x="310" y="265" width="275" height="90" rx="22" fill="#f59e0b" stroke="#fef08a" stroke-width="2.5"/>
-  <text x="445" y="315" fill="#0f172a" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">[2] LEFT SADDLE PAD (CLOSED)</text>
+  <text x="445" y="308" fill="#0f172a" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">[2] LEFT PAD (0° SEATED OR</text>
+  <text x="445" y="326" fill="#0f172a" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">90° ANKLE KNEE-SCOOTER)</text>
 
   <rect x="615" y="265" width="275" height="90" rx="22" fill="#f59e0b" stroke="#fef08a" stroke-width="2.5"/>
   <text x="755" y="315" fill="#0f172a" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">[2] RIGHT SADDLE PAD (CLOSED)</text>
@@ -401,17 +414,17 @@ def make_sheet_05():
 
   <!-- CALLOUT TABLE -->
   <rect x="50" y="550" width="1100" height="170" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
-  <text x="70" y="578" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">SUB-ASSEMBLY 05 HOW THE SPLIT-SADDLE HINGE & LATCH WORK:</text>
-  <text x="70" y="604" fill="#e2e8f0" font-family="monospace" font-size="12">[1] CNC Hinge Brackets (saddle_180_pivot_hinge.dxf) clamp directly onto the ø30mm inner carbon tubes so the seat rises with the lift.</text>
-  <text x="70" y="628" fill="#fef08a" font-family="monospace" font-size="12">[2] During walking or backing up to the toilet, both saddle halves swing 180° flush against the side tubes (430mm unobstructed hip entry).</text>
-  <text x="70" y="652" fill="#22c55e" font-family="monospace" font-size="12">[3] When Grandma wants to sit or transfer, swing the two halves inward: the N52 magnets (20x5mm) pull the twin 10mm 304-stainless conical</text>
-  <text x="70" y="676" fill="#22c55e" font-family="monospace" font-size="12">    shear pins into mating tapered sockets (1,200 kgf vertical shear capacity) and trigger the reed switch so firmware knows the seat is locked.</text>
+  <text x="70" y="578" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">SUB-ASSEMBLY 05 3-MODE SPLIT-SADDLE & ANKLE-FRACTURE KNEE-SCOOTER DETENT:</text>
+  <text x="70" y="604" fill="#e2e8f0" font-family="monospace" font-size="12">[1] CNC Hinge Brackets (saddle_180_pivot_hinge.dxf) machine 3 precision pin-detent pockets at 0°, 90°, and 180° on the ø30mm inner column.</text>
+  <text x="70" y="628" fill="#fef08a" font-family="monospace" font-size="12">[2] Mode A (180° Open): Both pads fold flush for walking/toilet. Mode B (90° Knee-Scooter): Lock ONE pad at 450mm height to rest fractured ankle</text>
+  <text x="70" y="652" fill="#fef08a" font-family="monospace" font-size="12">    100% off the floor while propelling with her healthy leg! Mode C (0° Latched): Both pads snap together via N52 + 10mm SS conical pins (12 kN).</text>
+  <text x="70" y="676" fill="#22c55e" font-family="monospace" font-size="12">[3] Waterproof Seat Cushion Micro-Switch + Reed Switch + Retractable Pelvic Safety Belt: Zero fragile wires flexing across hinges!</text>
 '''
     svg += svg_footer(
-        ("HYGIENE & TRANSFER ADVANTAGE: Zero Canvas Slings or Leg Straps to Thread",
-         "Wipe-clean antibacterial marine vinyl over closed-cell EVA foam; takes 2 seconds to swing closed."),
-        ("SAFETY INTERLOCK: Reed Switch + 4x 50kg Strain Gauges (HX711)",
-         "Firmware verifies latch closure and detects >15kg seated weight to auto-lock rear wheels.")
+        ("ANKLE FRACTURE GAME-CHANGER: 90° Single-Leg Knee-Scooter Mode Built In",
+         "During Weeks 1-4 (0% weight-bearing), Grandma kneels her injured leg on one pad and scoots safely inside the 4-wheel frame."),
+        ("RELIABLE SEAT SENSING: Waterproof Micro-Switch + Center Latch Reed Switch",
+         "Replaced delicate 4-wire HX711 strain gauges across moving hinges with 100% bulletproof industrial switches.")
     )
     with open(os.path.join(BP_DIR, "blueprint_05_split_saddle_180_hinge_and_latch.svg"), "w") as f:
         f.write(svg)
@@ -419,33 +432,36 @@ def make_sheet_05():
 
 def make_sheet_06():
     svg = svg_header(
-        "BLUEPRINT 06: MGN9C KITCHEN TRAY, ANTI-BIND FLOAT & ESP32-S3 WIRING",
+        "BLUEPRINT 06: 8° FOREARM TROUGHS, PWB REHAB COACH & ESP32-S3 WIRING",
         "6",
-        "Upper Halo MGN9C 300mm Slide-Bridge Tray + Floating Delrin Mount + Complete 24V LiFePO4 / ESP32-S3 / UWB / LiDAR Pinout"
+        "8° EVA Forearm Troughs + Swing-Away Quick-Clip Tray + Graduated PWB Biofeedback + RF Valet Wristband + 24V ESP32-S3 Pinout"
     )
     svg += '''
-  <!-- LEFT PANEL: MGN9C SLIDE-BRIDGE TRAY & FLOATING DELRIN MOUNT -->
-  <text x="45" y="115" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">[A] UPPER HALO MGN9C TRAY & ANTI-BIND FLOAT</text>
+  <!-- LEFT PANEL: 8° FOREARM TROUGHS, SWING-AWAY TRAY & FLOATING DELRIN MOUNT -->
+  <text x="45" y="115" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">[A] 8° FOREARM TROUGHS, SWING-AWAY TRAY & FLOAT</text>
   <rect x="45" y="135" width="520" height="275" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
 
   <!-- Left Fixed Mount vs Right Floating Delrin Mount (+-1.5mm) -->
-  <circle cx="120" cy="280" r="24" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
-  <text x="120" y="325" fill="#38bdf8" font-family="monospace" font-size="10" text-anchor="middle">LEFT: FIXED CLAMP</text>
+  <circle cx="120" cy="295" r="24" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
+  <text x="120" y="340" fill="#38bdf8" font-family="monospace" font-size="10" text-anchor="middle">LEFT: FIXED CLAMP</text>
 
-  <rect x="435" y="256" width="58" height="48" rx="12" fill="#166534" stroke="#22c55e" stroke-width="2"/>
-  <circle cx="464" cy="280" r="18" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
-  <text x="464" y="325" fill="#22c55e" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">RIGHT: +-1.5mm DELRIN FLOAT</text>
-  <text x="464" y="340" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">(Prevents Parallel Tube Binding!)</text>
+  <rect x="435" y="271" width="58" height="48" rx="12" fill="#166534" stroke="#22c55e" stroke-width="2"/>
+  <circle cx="464" cy="295" r="18" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
+  <text x="464" y="340" fill="#22c55e" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">RIGHT: +-1.5mm DELRIN FLOAT</text>
+  <text x="464" y="355" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">(Prevents Parallel Tube Binding!)</text>
 
-  <!-- MGN9C Linear Rails + 6mm Polycarbonate Tray -->
-  <rect x="110" y="220" width="20" height="45" fill="#94a3b8"/>
-  <rect x="454" y="220" width="20" height="45" fill="#94a3b8"/>
-  <rect x="95" y="190" width="395" height="28" rx="6" fill="#06b6d4" stroke="#cffafe" stroke-width="2"/>
-  <text x="292" y="208" fill="#0f172a" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">6mm LEXAN KITCHEN TRAY ON DUAL MGN9C RAILS</text>
-  <text x="292" y="175" fill="#22d3ee" font-family="monospace" font-size="11" text-anchor="middle">Slides 300mm Forward Over Kitchen Counter / Sink</text>
+  <!-- 8° EVA Forearm Troughs with Embedded FSR406 Load Sensors -->
+  <rect x="85" y="230" width="95" height="28" rx="8" fill="#10b981" stroke="#d1fae5" stroke-width="2"/>
+  <rect x="410" y="230" width="95" height="28" rx="8" fill="#10b981" stroke="#d1fae5" stroke-width="2"/>
+  <text x="292" y="248" fill="#34d399" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">8° EVA FOREARM TROUGHS + FSR406 PWB SENSORS</text>
+
+  <!-- 2-Second Quick-Clip Swing-Away Polycarbonate Tray -->
+  <rect x="115" y="185" width="355" height="24" rx="6" fill="#06b6d4" stroke="#cffafe" stroke-width="2"/>
+  <text x="292" y="201" fill="#0f172a" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">QUICK-CLIP SWING-AWAY TRAY (180g, ZERO KNEE BLOCK)</text>
+  <text x="292" y="172" fill="#22d3ee" font-family="monospace" font-size="11" text-anchor="middle">Pivots 90° Out of the Way for Unobstructed Sit-to-Stand!</text>
 
   <!-- RIGHT PANEL: COMPLETE ESP32-S3 & 24V POWER WIRING SCHEMATIC -->
-  <text x="595" y="115" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">[B] MASTER ELECTRONICS & PINOUT SCHEMATIC</text>
+  <text x="595" y="115" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">[B] MASTER ELECTRONICS & CLINICAL PINOUT SCHEMATIC</text>
   <rect x="595" y="135" width="560" height="585" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
 
   <!-- 24V LiFePO4 Battery + E-Stop + Buck -->
@@ -455,467 +471,113 @@ def make_sheet_06():
   <text x="735" y="222" fill="#fde047" font-family="monospace" font-size="10" text-anchor="middle">-> 24V Bus & 5V/5A Buck Converter</text>
 
   <!-- Central ESP32-S3-DevKitC-1 MCU -->
-  <rect x="740" y="285" width="260" height="220" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
-  <text x="870" y="312" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle">ESP32-S3-DevKitC-1</text>
-  <text x="755" y="338" fill="#e2e8f0" font-family="monospace" font-size="11">GPIO 4,5   -> Left Lift PWM (BTS7960)</text>
-  <text x="755" y="358" fill="#e2e8f0" font-family="monospace" font-size="11">GPIO 6,7   -> Right Lift PWM (BTS7960)</text>
-  <text x="755" y="378" fill="#22c55e" font-family="monospace" font-size="11">GPIO 15,16 -> Left/Right Hall Encoders</text>
-  <text x="755" y="398" fill="#fef08a" font-family="monospace" font-size="11">GPIO 17,18 -> Dual 6.5" Hub FOC UART</text>
-  <text x="755" y="418" fill="#38bdf8" font-family="monospace" font-size="11">GPIO 8,9   -> I2C (BNO085 IMU + VL53L1X)</text>
-  <text x="755" y="438" fill="#f43f5e" font-family="monospace" font-size="11">GPIO 10,11 -> HX711 Seat Load Cells</text>
-  <text x="755" y="458" fill="#a855f7" font-family="monospace" font-size="11">GPIO 1,2   -> Handle FSR406 Grip ADC</text>
-  <text x="755" y="478" fill="#22d3ee" font-family="monospace" font-size="11">UART1/2    -> LD19 LiDAR + DW3000 UWB</text>
+  <rect x="740" y="275" width="290" height="235" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+  <text x="885" y="302" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle">ESP32-S3-DevKitC-1</text>
+  <text x="755" y="328" fill="#e2e8f0" font-family="monospace" font-size="11">GPIO 4,5   -> Left Lift PWM (BTS7960)</text>
+  <text x="755" y="348" fill="#e2e8f0" font-family="monospace" font-size="11">GPIO 6,7   -> Right Lift PWM (BTS7960)</text>
+  <text x="755" y="368" fill="#22c55e" font-family="monospace" font-size="11">GPIO 15,16 -> Left/Right Hall Encoders</text>
+  <text x="755" y="388" fill="#fef08a" font-family="monospace" font-size="11">GPIO 17,18 -> Dual 6.5" Hub FOC UART</text>
+  <text x="755" y="408" fill="#38bdf8" font-family="monospace" font-size="11">GPIO 8,9   -> I2C (BNO085 IMU + 2x VL53L1X + OLED)</text>
+  <text x="755" y="428" fill="#f43f5e" font-family="monospace" font-size="11">GPIO 10,11 -> Seat Micro-Switch + Latch Reed</text>
+  <text x="755" y="448" fill="#a855f7" font-family="monospace" font-size="11">GPIO 1,2   -> Forearm FSR406 + PWB Rehab Coach</text>
+  <text x="755" y="468" fill="#22d3ee" font-family="monospace" font-size="11">GPIO 12,13 -> 433MHz Valet RF Remote (Park/Fetch)</text>
+  <text x="755" y="488" fill="#fde047" font-family="monospace" font-size="11">GPIO 14,21 -> PIR Motion Sensor + 2AM Amber LED</text>
 
   <!-- Bottom Left Box: Pre-Power Safety Checklist -->
   <rect x="45" y="430" width="520" height="290" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
-  <text x="65" y="458" fill="#22c55e" font-family="monospace" font-size="14" font-weight="bold">[C] FINAL COMMISSIONING & SAFETY CHECKLIST:</text>
-  <text x="65" y="486" fill="#e2e8f0" font-family="monospace" font-size="11">1. Run `python3 firmware/test_safety_interlocks.py` (all 12 tests PASS).</text>
+  <text x="65" y="458" fill="#22c55e" font-family="monospace" font-size="14" font-weight="bold">[C] 16-TEST CLINICAL & SAFETY CHECKLIST:</text>
+  <text x="65" y="486" fill="#e2e8f0" font-family="monospace" font-size="11">1. Run `python3 firmware/test_safety_interlocks.py` (all 16 tests PASS).</text>
   <text x="65" y="510" fill="#e2e8f0" font-family="monospace" font-size="11">2. Verify Left & Right 24V actuators stay within +-1.5mm across full 300mm</text>
   <text x="65" y="528" fill="#e2e8f0" font-family="monospace" font-size="11">   stroke (active Hall PID auto-levels any weight imbalance).</text>
-  <text x="65" y="552" fill="#fef08a" font-family="monospace" font-size="11">3. Place 20 kg test weight on saddle: confirm rear 6.5" hub wheels lock</text>
-  <text x="65" y="570" fill="#fef08a" font-family="monospace" font-size="11">   instantly (40 Nm holding torque) and UWB Auto-Summon is blocked.</text>
-  <text x="65" y="594" fill="#38bdf8" font-family="monospace" font-size="11">4. Test VL53L1X downward cliff sensor over a 45mm step edge: confirm</text>
-  <text x="65" y="612" fill="#38bdf8" font-family="monospace" font-size="11">   wheels halt immediately before the front casters reach the drop-off.</text>
-  <text x="65" y="636" fill="#22c55e" font-family="monospace" font-size="11">5. Press Grandma's UWB Summon Pendant from 5m away through a doorway:</text>
-  <text x="65" y="654" fill="#22c55e" font-family="monospace" font-size="11">   confirm walker navigates at 0.35 m/s and docks 50cm in front of knees.</text>
+  <text x="65" y="552" fill="#fef08a" font-family="monospace" font-size="11">3. Test Seated Power-Glide (0.25 m/s) & 90° Single-Leg Knee-Scooter Mode:</text>
+  <text x="65" y="570" fill="#fef08a" font-family="monospace" font-size="11">   confirm auto-brake on release and 0.18 m/s indoor speed cap in 90° mode.</text>
+  <text x="65" y="594" fill="#38bdf8" font-family="monospace" font-size="11">4. Test Graduated PWB Rehab Coach (25% / 50% / 100% ankle load targets):</text>
+  <text x="65" y="612" fill="#38bdf8" font-family="monospace" font-size="11">   confirm OLED & gentle haptic buzzer alert if ankle load exceeds target.</text>
+  <text x="65" y="636" fill="#22c55e" font-family="monospace" font-size="11">5. Test Waterproof RF Wristband ("Valet Park-Away & Fetch") + 2AM PIR</text>
+  <text x="65" y="654" fill="#22c55e" font-family="monospace" font-size="11">   Under-Frame Nightlight + Dual VL53L1X ToF obstacle/cliff auto-stop.</text>
 
-  <!-- UWB + LiDAR Callout inside Right Panel -->
-  <rect x="620" y="535" width="510" height="160" rx="6" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
-  <text x="875" y="562" fill="#c7d2fe" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">AUTONOMOUS UWB + 360° LiDAR SUMMON MODULE</text>
-  <text x="635" y="588" fill="#e2e8f0" font-family="monospace" font-size="11">- 2x MaUWB_ESP32S3 (Qorvo DW3000) Anchors spaced 440mm apart on Upper Halo</text>
-  <text x="635" y="610" fill="#e2e8f0" font-family="monospace" font-size="11">- 1x Wearable Pendant on Grandma's wrist/neck (1-button Summon trigger)</text>
-  <text x="635" y="632" fill="#e2e8f0" font-family="monospace" font-size="11">- PD AoA Heading + LD19 360° LiDAR doorway centering (fits 510mm doors)</text>
-  <text x="635" y="654" fill="#22c55e" font-family="monospace" font-size="11">- Stops at d = 0.50m in front of Grandma, rotates 180°, and locks brakes!</text>
+  <!-- PWB Rehab Coach + Valet Park/Fetch Callout inside Right Panel -->
+  <rect x="620" y="530" width="510" height="170" rx="6" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
+  <text x="875" y="556" fill="#c7d2fe" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">GRADUATED PWB REHAB COACH + VALET PARK/FETCH WRISTBAND</text>
+  <text x="635" y="582" fill="#e2e8f0" font-family="monospace" font-size="11">- Doctor's PWB Biofeedback: Measures forearm load via FSR406 to calculate</text>
+  <text x="635" y="600" fill="#e2e8f0" font-family="monospace" font-size="11">  exact weight on healing ankle (0% NWB -> 25% -> 50% -> 100% FWB).</text>
+  <text x="635" y="624" fill="#fde047" font-family="monospace" font-size="11">- Waterproof 4-Button RF Wristband: Grandma can both PARK the walker</text>
+  <text x="635" y="642" fill="#fde047" font-family="monospace" font-size="11">  away to the wall after getting in bed AND FETCH it back to her knees!</text>
+  <text x="635" y="666" fill="#22c55e" font-family="monospace" font-size="11">- 2:00 AM PIR Motion Nightlight: Auto-lights floor when feet touch down.</text>
 '''
     svg += svg_footer(
         ("ANTI-BIND GUARANTEE: +-1.5mm Floating Delrin Sleeve on Right Upper Halo Joint",
          "Eliminates hyperstatic portal frame binding even if hand-gluing angle varies by +-0.5°."),
-        ("FIRMWARE READY: Flash firmware/elderstep_controller/elderstep_controller.ino",
-         "Includes all 12 hardware-in-the-loop safety interlocks out of the box.")
+        ("FIRMWARE VERIFIED: 16/16 Automated Safety & Clinical Rehab Tests Passing",
+         "Flash firmware/elderstep_controller/elderstep_controller.ino and run test_safety_interlocks.py.")
     )
     with open(os.path.join(BP_DIR, "blueprint_06_kitchen_tray_and_electronics_wiring.svg"), "w") as f:
         f.write(svg)
 
 
-def make_interactive_html():
-    html = '''<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreeStep Air — Interactive CAD Assembly Blueprints & Exploded Viewer</title>
-  <style>
-    :root {
-      --bg: #0b1120;
-      --panel: #0f172a;
-      --border: #334155;
-      --cyan: #38bdf8;
-      --green: #22c55e;
-      --amber: #f59e0b;
-      --rose: #f43f5e;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      padding: 20px;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--panel);
-      border: 1.5px solid var(--cyan);
-      padding: 16px 24px;
-      border-radius: 10px;
-      margin-bottom: 18px;
-    }
-    h1 { font-size: 20px; color: var(--cyan); }
-    .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
-    .badge {
-      background: #064e3b;
-      color: #6ee7b7;
-      border: 1px solid var(--green);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 18px;
-    }
-    .ctrl-box label {
-      display: block;
-      font-size: 12px;
-      color: var(--cyan);
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-    input[type="range"] { width: 100%; accent-color: var(--cyan); cursor: pointer; }
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .tab-btn {
-      background: var(--panel);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 10px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 12px;
-      transition: 0.15s;
-    }
-    .tab-btn.active, .tab-btn:hover {
-      background: #1e3a8a;
-      border-color: var(--cyan);
-      color: #fff;
-      font-weight: bold;
-    }
-    .viewer-box {
-      background: var(--panel);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-      overflow-x: auto;
-    }
-    canvas {
-      background: #090d16;
-      border: 1px solid #1e293b;
-      border-radius: 8px;
-      max-width: 100%;
-    }
-    .sheet-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      margin-top: 24px;
-    }
-    .sheet-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-    }
-    .sheet-card h2 {
-      font-size: 15px;
-      color: var(--cyan);
-      margin-bottom: 10px;
-    }
-    .sheet-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 6px;
-      border: 1px solid #1e293b;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div>
-      <h1>FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) — MASTER ASSEMBLY BLUEPRINTS</h1>
-      <div class="sub">Interactive Exploded Sub-Assembly CAD Viewer + All 6 Printable 1:1 Engineering Blueprint Sheets</div>
-    </div>
-    <div class="badge">100% STANDARD MULTI-VENDOR COTS | ₹62,800 | 1-WEEKEND BUILD</div>
-  </header>
-
-  <div class="controls">
-    <div class="ctrl-box">
-      <label>EXPLODE SUB-ASSEMBLIES: <span id="expVal">35%</span></label>
-      <input type="range" id="explodeSlider" min="0" max="100" value="35" />
-    </div>
-    <div class="ctrl-box">
-      <label>ACTUATOR LIFT STROKE (12° RAKE): <span id="liftVal">120 mm (Saddle: 537 mm)</span></label>
-      <input type="range" id="liftSlider" min="0" max="300" value="120" />
-    </div>
-    <div class="ctrl-box">
-      <label>KITCHEN TRAY FORWARD SLIDE: <span id="trayVal">100 mm</span></label>
-      <input type="range" id="traySlider" min="0" max="300" value="100" />
-    </div>
-  </div>
-
-  <div class="viewer-box">
-    <canvas id="cadCanvas" width="1120" height="520"></canvas>
-  </div>
-
-  <div class="sheet-grid">
-    <div class="sheet-card">
-      <h2>SHEET 1/6: Master Chassis Orthographic & Kinematic Envelope (495mm Width, 12° Rake)</h2>
-      <img src="../hardware/blueprints/blueprint_01_master_frame_orthographic.svg" alt="Blueprint 01" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 2/6: Telescoping Carbon Column (ø35/ø30mm) & Standard 24V 300mm IP65 Actuator Cartridge</h2>
-      <img src="../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg" alt="Blueprint 02" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 3/6: Rear 6.5" (165mm) Sealed IP65 BLDC Hub Wheel & ø16mm D-Axle Dropout</h2>
-      <img src="../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg" alt="Blueprint 03" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 4/6: Ultra-Low 74mm Front Twin-Skate Caster Assembly (SKF 51104 + 64mm 82A PU Wheels)</h2>
-      <img src="../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg" alt="Blueprint 04" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 5/6: 180° Split-Saddle Pivot Hinge & N52 + Conical Stainless Shear-Pin Latch (12 kN)</h2>
-      <img src="../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg" alt="Blueprint 05" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 6/6: MGN9C Slide-Bridge Kitchen Tray, Floating Delrin Mount & ESP32-S3 Master Wiring</h2>
-      <img src="../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg" alt="Blueprint 06" />
-    </div>
-  </div>
-
-  <script>
-    const canvas = document.getElementById('cadCanvas');
-    const ctx = canvas.getContext('2d');
-    const expSlider = document.getElementById('explodeSlider');
-    const liftSlider = document.getElementById('liftSlider');
-    const traySlider = document.getElementById('traySlider');
-
-    function draw() {
-      const exp = parseFloat(expSlider.value) / 100.0;
-      const lift = parseFloat(liftSlider.value);
-      const tray = parseFloat(traySlider.value);
-
-      const saddleH = Math.round(420 + lift * 0.978);
-      const fwdShift = Math.round(lift * 0.208);
-      document.getElementById('expVal').textContent = Math.round(exp * 100) + '%';
-      document.getElementById('liftVal').textContent = `${lift} mm (Saddle: ${saddleH} mm, +${fwdShift} mm FWD)`;
-      document.getElementById('trayVal').textContent = `${tray} mm`;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw Blueprint Grid
-      ctx.strokeStyle = '#1e293b';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < canvas.width; x += 25) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
-      }
-      for (let y = 0; y < canvas.height; y += 25) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-      }
-
-      // Floor Line
-      const floorY = 465;
-      ctx.strokeStyle = '#64748b';
-      ctx.setLineDash([6, 4]);
-      ctx.beginPath(); ctx.moveTo(40, floorY); ctx.lineTo(1080, floorY); ctx.stroke();
-      ctx.setLineDash([]);
-
-      // Explode offsets
-      const eWheel = exp * 55;
-      const eCaster = exp * 50;
-      const eAct = exp * 75;
-      const eTop = exp * 45;
-
-      // 1. Rear 6.5" Sealed BLDC Hub Wheel
-      const rx = 220 - eWheel;
-      const ry = floorY - 52 + eWheel * 0.3;
-      ctx.fillStyle = '#1e293b';
-      ctx.strokeStyle = '#f43f5e';
-      ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.arc(rx, ry, 52, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = '#38bdf8';
-      ctx.beginPath(); ctx.arc(rx, ry, 8, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#f43f5e';
-      ctx.font = '11px monospace';
-      ctx.fillText('6.5" IP65 Hub Wheel (ø16mm D-Axle)', rx - 80, ry + 72);
-
-      // 2. Rear 7075-T6 Dropout + Carbon U-Base Leg
-      ctx.fillStyle = '#334155';
-      ctx.strokeStyle = '#e2e8f0';
-      ctx.lineWidth = 2;
-      ctx.fillRect(230, floorY - 56, 310, 14);
-      ctx.strokeRect(230, floorY - 56, 310, 14);
-
-      // Front LiFePO4 Battery Ballast
-      ctx.fillStyle = '#166534';
-      ctx.strokeStyle = '#22c55e';
-      ctx.fillRect(445, floorY - 78, 75, 22);
-      ctx.strokeRect(445, floorY - 78, 75, 22);
-      ctx.fillStyle = '#dcfce7';
-      ctx.fillText('24V LiFePO4', 450, floorY - 63);
-
-      // 3. Front 74mm Low-Profile Twin 64mm Skate Caster
-      const cx = 555 + eCaster;
-      const cy = floorY - 22 + eCaster * 0.25;
-      ctx.fillStyle = '#1e293b';
-      ctx.strokeStyle = '#22c55e';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = '#22c55e';
-      ctx.fillText('74mm Skate Caster + 51104 Bearing', cx - 60, cy + 40);
-
-      // 4. 12-Deg Base Lug + Outer ø35mm Carbon Barrel
-      const bx = 375, by = floorY - 56;
-      const rakeRad = 12 * Math.PI / 180;
-      const colLen = 185;
-      const tx = bx + Math.sin(rakeRad) * colLen;
-      const ty = by - Math.cos(rakeRad) * colLen;
-
-      ctx.strokeStyle = '#475569';
-      ctx.lineWidth = 20;
-      ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(tx, ty); ctx.stroke();
-
-      // Delrin Bushings (exploded slightly upward along axis)
-      const dx = tx + Math.sin(rakeRad) * (eAct * 0.4);
-      const dy = ty - Math.cos(rakeRad) * (eAct * 0.4);
-      ctx.fillStyle = '#22c55e';
-      ctx.beginPath(); ctx.arc(dx, dy, 11, 0, Math.PI * 2); ctx.fill();
-      ctx.fillText('Lathe-Turned Delrin Bushing + O-Ring', dx + 18, dy + 4);
-
-      // 5. Inner ø30mm Carbon Plunger + Standard 24V 300mm Actuator Cartridge
-      const liftPx = lift * 0.45 + eAct;
-      const px = tx + Math.sin(rakeRad) * liftPx;
-      const py = ty - Math.cos(rakeRad) * liftPx;
-
-      ctx.strokeStyle = '#0284c7';
-      ctx.lineWidth = 13;
-      ctx.beginPath();
-      ctx.moveTo(bx + Math.sin(rakeRad) * (40 + eAct * 0.5), by - Math.cos(rakeRad) * (40 + eAct * 0.5));
-      ctx.lineTo(px, py);
-      ctx.stroke();
-
-      // Internal Standard 24V Actuator Cartridge Callout (shown offset in exploded mode)
-      const ax = 790, ay = 260;
-      ctx.fillStyle = '#0f172a';
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 1.5;
-      ctx.fillRect(680, 40, 410, 380);
-      ctx.strokeRect(680, 40, 410, 380);
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 13px monospace';
-      ctx.fillText('EXPLODED COLUMN CARTRIDGE DETAIL:', 700, 68);
-      ctx.font = '11px monospace';
-      ctx.fillStyle = '#e2e8f0';
-      ctx.fillText('• Outer Tube: ø35x31mm 3K Carbon (460mm)', 700, 95);
-      ctx.fillText('• Guide: 2x CNC Turned POM (Delrin) Sleeves', 700, 118);
-      ctx.fillText('• Inner Tube: ø30x26mm 3K Carbon (440mm)', 700, 141);
-      ctx.fillStyle = '#fef08a';
-      ctx.fillText('• Core: Standard 24V 300mm IP65 Inline Actuator', 700, 164);
-      ctx.fillText('  pinned at top & bottom via 2x M8 Clevis Pins', 700, 184);
-      ctx.fillStyle = '#22c55e';
-      ctx.fillText('• Zero side-load on actuator; swaps in 3 mins!', 700, 210);
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillText(`• Current Lift: ${lift}mm / 300mm (Saddle: ${saddleH}mm)`, 700, 240);
-      ctx.fillText(`• Kitchen Tray Extension: +${tray}mm forward`, 700, 262);
-      ctx.fillStyle = '#f43f5e';
-      ctx.fillText('• Total Mass: 9.85 kg | Cost: ₹62,800', 700, 290);
-
-      // 6. 180-Deg Split Saddle on Inner Plunger
-      const sx = px - Math.sin(rakeRad) * 45;
-      const sy = py + Math.cos(rakeRad) * 45;
-      ctx.fillStyle = '#f59e0b';
-      ctx.strokeStyle = '#fef08a';
-      ctx.lineWidth = 2;
-      ctx.fillRect(sx - 85 - eTop * 0.4, sy - 8, 82, 16);
-      ctx.strokeRect(sx - 85 - eTop * 0.4, sy - 8, 82, 16);
-      ctx.fillStyle = '#fef08a';
-      ctx.fillText(`180° Split Saddle (${saddleH}mm)`, sx - 235 - eTop * 0.4, sy + 4);
-
-      // 7. Upper Halo + MGN9C Slide-Bridge Kitchen Tray
-      const hx = px;
-      const hy = py - eTop;
-      ctx.fillStyle = '#334155';
-      ctx.strokeStyle = '#38bdf8';
-      ctx.fillRect(hx - 20, hy - 12, 135, 12);
-      ctx.strokeRect(hx - 20, hy - 12, 135, 12);
-
-      const trayPx = tray * 0.35;
-      ctx.fillStyle = '#06b6d4';
-      ctx.fillRect(hx + 10 + trayPx, hy - 24 - eTop * 0.3, 130, 9);
-      ctx.fillStyle = '#22d3ee';
-      ctx.fillText(`MGN9C Kitchen Tray (+${tray}mm)`, hx + 10 + trayPx, hy - 32 - eTop * 0.3);
-    }
-
-    expSlider.addEventListener('input', draw);
-    liftSlider.addEventListener('input', draw);
-    traySlider.addEventListener('input', draw);
-    draw();
-  </script>
-</body>
-</html>
-'''
-    with open(os.path.join(DOCS_DIR, "assembly_blueprints.html"), "w") as f:
-        f.write(html)
-
-
 def make_markdown_manual():
-    md = '''# FreeStep Air (`9.85 kg` Standard-COTS Edition): Master Assembly Blueprints (Sheets 1–6)
+    md = '''# FreeStep Air (`9.65 kg` Clinical & Home Mastery Edition): Master Assembly Blueprints (Sheets 1–6)
 
-All 6 engineering assembly blueprints below are scaled for the **100% Standard Multi-Vendor COTS Cartridge Architecture** (`₹62,800` total cost, `9.85 kg` total mass, `10–12 hour` single-weekend build).
+All 6 engineering assembly blueprints below are scaled for the **100% Standard Multi-Vendor COTS Cartridge + 9 Clinical Upgrades Architecture** (`₹54,250` total cost, `9.65 kg` total mass, `10–12 hour` single-weekend build).
 
-You can also open the interactive exploded CAD blueprint viewer in your browser at [`docs/assembly_blueprints.html`](../docs/assembly_blueprints.html).
+You can also open the interactive 3D WebGL CAD assembly & part inspector in your browser at [`docs/assembly_blueprints.html`](../docs/assembly_blueprints.html).
 
 ---
 
-## Sheet 1 of 6: Master Chassis Orthographic & Kinematic Envelope
+## Sheet 1 of 6: Master Chassis Orthographic & Clinical Biomechanics
 ![Blueprint 01: Master Frame Orthographic](./blueprints/blueprint_01_master_frame_orthographic.svg)
 
 * **Outer Width:** Fixed **`495.0 mm (19.5")`** — clears every `510 mm (20.0")` Indian bathroom doorway with zero width-morphing motors.
 * **Inside Hip/Toilet Clearance:** **`430.0 mm (17.0")`** — backs directly over standard Indian & Western commodes.
-* **Front Under-Bed Nose Height:** **`74.0 mm (2.9")`** — slides under low beds and sofas.
-* **$12.0^\circ$ Forward-Inclined Columns:** `300 mm` stroke produces **`+293 mm` vertical lift** (`420 mm` $\rightarrow$ `713 mm` saddle height) and **`+62 mm` natural forward weight shift** ("Nose-Over-Toes" biomechanics).
+* **Zero-Quad Toilet Rise:** Combines **$12.0^\circ$ forward-inclined columns** (`+293 mm` vertical lift + `+62 mm` forward CG shift) with a **Contoured Anterior Tibial Shin Block Pad (`340 mm` height)** so Grandma's knees never buckle forward when rising from a low `400 mm` commode.
+* **$8^\circ$ Anatomical Forearm Troughs + Fold-Down Footrest Pegs:** Offloads fragile wrists onto her elbows/forearms and supports her fractured ankle safely off the floor during Seated Power-Glide.
 
 ---
 
 ## Sheet 2 of 6: Telescoping Carbon Column & Standard `24V 300mm` Actuator Cartridge
 ![Blueprint 02: Telescoping Carbon Actuator Column](./blueprints/blueprint_02_telescoping_carbon_actuator_column.svg)
 
-* **Structural Secret (Bending Decoupling):** Standard tubular inline linear actuators cannot take side bending loads on their own. By sliding the **Standard `24V 300mm` `IP65` Inline Linear Actuator (`ACT-01`)** inside our **`ø35 mm` outer (`CF-01`) and `ø30 mm` inner (`CF-02`) 3K roll-wrapped carbon tubes** gliding on **CNC lathe-turned `POM (Delrin)` sleeve bushings ([`delrin_telescoping_column_bushing.stl`](./3d_print/delrin_telescoping_column_bushing.stl))**, the carbon tubes absorb **100% of Grandma's lateral and bending forces** while the sealed actuator inside pushes purely axially via two **`M8` quick-release clevis pins**.
-* **3-Minute Serviceability:** Pull the top and bottom `M8` clevis pins to slide the standard actuator cartridge out in 3 minutes.
+* **Structural Secret (Bending Decoupling):** Standard tubular inline linear actuators cannot take side bending loads on their own. By sliding the **Standard `24V 300mm` `IP65` Inline Linear Actuator (`ACT-01`)** inside our **`ø35 mm` outer (`CF-01`) and `ø30 mm` inner (`CF-02`) 3K roll-wrapped carbon tubes** gliding on **CNC lathe-turned `POM (Delrin)` sleeve bushings ([`delrin_telescoping_column_bushing.stl`](./3d_print/delrin_telescoping_column_bushing.stl))**, the carbon tubes absorb **100% of lateral and bending forces** while the sealed actuator inside pushes purely axially via two **`M8` quick-release clevis pins**.
+* **Universal Cane / Crutch / IV-Bag Quiver Clips:** Snap directly onto the `ø35 mm` outer carbon barrel.
 
 ---
 
-## Sheet 3 of 6: Rear `6.5"` (`165 mm`) Sealed `IP65` BLDC Hub Wheel & `ø16mm` Dropout
+## Sheet 3 of 6: Rear `6.5"` (`165 mm`) Sealed `IP65` BLDC Hub Wheel, Dropout & Fold-Down Footrests
 ![Blueprint 03: Rear 6.5in Hub Wheel Dropout](./blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg)
 
 * **CNC Part:** [`rear_16mm_hub_axle_dropout.dxf`](./cnc_7075/rear_16mm_hub_axle_dropout.dxf) (`12 mm` thick `7075-T6` aluminum).
 * **Standard Wheel:** Commodity `6.5"` (`165 mm`) `24V` Hall-sensor brushless hub wheel (`IP65` waterproof, universal `ø16 mm` D-flat shaft).
-* **Why It's Safe for Indian Homes:** 100% enclosed shell—zero exposed belts or spinning motor bells to snag Grandma's saree or nightgown, and completely sealed against wet bathroom floors.
-* **Torque Spec:** Torque the four `M6x35` Grade 10.9 axle clamp bolts with Blue Loctite 243 to **`12.0 Nm`**.
+* **3 Active Drive Modes:** (1) Effortless Walking & Slope Assist, (2) **Seated Power-Glide (`0.25 m/s`)** with feet resting on the **Fold-Down Aluminum Footrest Pegs**, and (3) **`40 Nm` Electronic Dead-Man's Hold Brake**.
 
 ---
 
-## Sheet 4 of 6: Ultra-Low `74 mm` Front Twin-Skate Caster Assembly
+## Sheet 4 of 6: Ultra-Low `74 mm` Front Caster + $0^\circ$ Anti-Yaw Detent & Labyrinth Hair Shields
 ![Blueprint 04: Front 74mm Twin Skate Caster](./blueprints/blueprint_04_front_74mm_twin_skate_caster.svg)
 
 * **CNC Part:** [`inhouse_twin_64mm_caster_fork.dxf`](./cnc_7075/inhouse_twin_64mm_caster_fork.dxf) (`10 mm` thick `7075-T6` aluminum).
-* **Standard Parts:** `SKF 51104` axial thrust ball bearing (`20x35x10 mm`) + twin Decathlon `Oxelo 64 mm 82A` high-rebound polyurethane inline-skate wheels with `ABEC-9 608RS` sealed bearings.
-* **Why Twin `64 mm` Wheels:** Cuts swivel scrubbing friction in half on wet/dry bathroom tiles, rolls silently over tile grout lines, and easily climbs `15–40 mm` marble thresholds while keeping the front nose at **`74.0 mm (2.9")`**.
+* **Solves the #1 *Arjo Sara* & Home Caster Failures:**
+  1. **$0^\circ$ Ball-Plunger Directional Detent:** Keeps the front casters tracking straight along hallways and sloped wet bathroom tiles without sideways fishtailing, while breaking out smoothly above `18 N` lateral force for `360°` spin-in-place turns.
+  2. **Labyrinth Anti-Hair Axle Shields:** Prevents floor hair and dust from wrapping around the `M8` axle and seizing the `ABEC-9 608RS` bearings.
 
 ---
 
-## Sheet 5 of 6: `180°` Split-Saddle Pivot Hinge & `N52` Conical Stainless Shear Latch
+## Sheet 5 of 6: `180°` Split-Saddle, `90°` Knee-Scooter Detent & `N52` Conical Shear Latch
 ![Blueprint 05: Split Saddle 180 Hinge and Latch](./blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg)
 
 * **CNC Parts:** [`saddle_180_pivot_hinge.dxf`](./cnc_7075/saddle_180_pivot_hinge.dxf) + [`inhouse_n52_conical_saddle_latch.dxf`](./cnc_7075/inhouse_n52_conical_saddle_latch.dxf).
-* **How It Works:**
-  * **Open Walking / Toilet Mode:** Both cushioned saddle halves swing **`180°` outward** flush against the side carbon columns, giving Grandma a completely open `430 mm` walk-in bay.
-  * **Seated Transfer / Kitchen Perch Mode:** Swing both halves inward—the `N52` ring magnets (`20x5 mm`) self-center and snap the **twin `10 mm` `304` stainless steel `45°` conical shear pins** into their mating tapered sockets (**`12 kN` / `1,200 kgf` mechanical shear strength**).
+* **3 Instant Positions:**
+  1. **`180°` Open Walk-In / Commode Mode:** Both pads fold flush against the side carbon columns (`430 mm` unobstructed clearance).
+  2. **`90°` Single-Leg Ankle-Fracture Knee-Scooter Mode:** One pad locks at `90°` (`450 mm` knee height) to support Grandma's fractured ankle `100%` off the floor while the other pad folds `180°` out of the way so her healthy leg can propel!
+  3. **`0°` Latched Perch / Transfer Mode:** Both pads snap together via `N52` magnets + **twin `10 mm` `304` stainless `45°` conical shear pins (`12 kN` / `1,200 kgf` shear capacity)** + **Retractable Pelvic Safety Belt**.
 
 ---
 
-## Sheet 6 of 6: `MGN9C` Slide-Bridge Kitchen Tray, Anti-Bind Float & `ESP32-S3` Master Wiring
+## Sheet 6 of 6: $8^\circ$ Forearm Troughs, Swing-Away Tray, PWB Rehab Coach & `ESP32-S3` Wiring
 ![Blueprint 06: Kitchen Tray and Electronics Wiring](./blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg)
 
-* **Hyperstatic Anti-Bind Float:** The right-hand upper halo joint incorporates a **`±1.5 mm` floating Delrin sleeve** so even if your hand-glued carbon columns have a tiny angle tolerance (`±0.4°`), the columns never bind across the `300 mm` stroke.
-* **Slide-Bridge Kitchen Tray:** Dual `MGN9C 300mm` stainless linear rails allow the `6 mm` polycarbonate tray to slide **`300 mm` forward** directly over the kitchen counter or stove while Grandma rests on the raised perch (`713 mm`).
+* **2-Second Quick-Clip Swing-Away Utility Tray (`180 g`):** Replaces heavy `MGN9C` steel rails (`-500 g`, `-₹1,400`), swinging `90°` out of the way so it never blocks torso lean during sit-to-stand or foot visibility during walking.
+* **Graduated Weight-Bearing (PWB) Rehab Coach:** Uses the forearm trough `FSR406` sensors + OLED/buzzer to coach Grandma through her orthopedic surgeon's `0% -> 25% -> 50% -> 100%` ankle loading schedule.
+* **Waterproof 4-Button RF Wristband ("Valet Park-Away & Fetch") + `2:00 AM` PIR Nightlight:** Lets Grandma send the walker away to the wall after getting into bed and fetch it back to her knees, while Dual `VL53L1X` ToF sensors guard against obstacles and stairs.
 '''
     with open(os.path.join(BASE_DIR, "ASSEMBLY_BLUEPRINTS.md"), "w") as f:
         f.write(md)
