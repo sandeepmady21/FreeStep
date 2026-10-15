@@ -1,0 +1,86 @@
+solid delrin_telescoping_column_bushing
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 35.0000 35.0000 0.0000
+      vertex 35.0000 0.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 35.0000 0.0000
+      vertex 35.0000 35.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 40.0000
+      vertex 35.0000 0.0000 40.0000
+      vertex 35.0000 35.0000 40.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 40.0000
+      vertex 35.0000 35.0000 40.0000
+      vertex 0.0000 35.0000 40.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 35.0000 0.0000 0.0000
+      vertex 35.0000 0.0000 40.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 35.0000 0.0000 40.0000
+      vertex 0.0000 0.0000 40.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 35.0000 35.0000 0.0000
+      vertex 0.0000 35.0000 0.0000
+      vertex 0.0000 35.0000 40.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 35.0000 35.0000 0.0000
+      vertex 0.0000 35.0000 40.0000
+      vertex 35.0000 35.0000 40.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 0.0000 40.0000
+      vertex 0.0000 35.0000 40.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 35.0000 40.0000
+      vertex 0.0000 35.0000 0.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 35.0000 0.0000 0.0000
+      vertex 35.0000 35.0000 0.0000
+      vertex 35.0000 35.0000 40.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 35.0000 0.0000 0.0000
+      vertex 35.0000 35.0000 40.0000
+      vertex 35.0000 0.0000 40.0000
+    endloop
+  endfacet
+endsolid delrin_telescoping_column_bushing

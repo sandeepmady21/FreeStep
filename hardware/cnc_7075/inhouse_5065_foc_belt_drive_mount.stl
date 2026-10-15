@@ -1,0 +1,86 @@
+solid inhouse_5065_foc_belt_drive_mount
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 165.0000 105.0000 0.0000
+      vertex 165.0000 0.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 105.0000 0.0000
+      vertex 165.0000 105.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 14.0000
+      vertex 165.0000 0.0000 14.0000
+      vertex 165.0000 105.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 14.0000
+      vertex 165.0000 105.0000 14.0000
+      vertex 0.0000 105.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 165.0000 0.0000 0.0000
+      vertex 165.0000 0.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 165.0000 0.0000 14.0000
+      vertex 0.0000 0.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 165.0000 105.0000 0.0000
+      vertex 0.0000 105.0000 0.0000
+      vertex 0.0000 105.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 165.0000 105.0000 0.0000
+      vertex 0.0000 105.0000 14.0000
+      vertex 165.0000 105.0000 14.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 0.0000 14.0000
+      vertex 0.0000 105.0000 14.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 105.0000 14.0000
+      vertex 0.0000 105.0000 0.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 165.0000 0.0000 0.0000
+      vertex 165.0000 105.0000 0.0000
+      vertex 165.0000 105.0000 14.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 165.0000 0.0000 0.0000
+      vertex 165.0000 105.0000 14.0000
+      vertex 165.0000 0.0000 14.0000
+    endloop
+  endfacet
+endsolid inhouse_5065_foc_belt_drive_mount

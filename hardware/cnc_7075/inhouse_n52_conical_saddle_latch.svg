@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="154.0mm" height="114.0mm" viewBox="-12.0 -12.0 154.0 114.0">
+  <title>In-House N52 Magnet + Conical Shear-Pin Split-Saddle Hinge</title>
+  <g fill="none" stroke="#0055ff" stroke-width="0.5">
+    <polygon points="0.000,90.000 105.000,90.000 130.000,68.000 130.000,22.000 105.000,0.000 0.000,0.000" />
+  </g>
+  <g fill="none" stroke="#e60000" stroke-width="0.4">
+    <circle cx="26.000" cy="45.000" r="15.100" />
+    <circle cx="100.000" cy="45.000" r="5.000" />
+    <circle cx="68.000" cy="45.000" r="6.000" />
+    <circle cx="100.000" cy="13.000" r="6.000" />
+  </g>
+</svg>

@@ -1,7 +1,9 @@
 Part ID,Component / Tube Name,Material & Spec,Outer Dia / Profile (mm),Wall (mm),Exact Cut Length (mm),Qty,Target Subsystem & Notes
-CF-01,Rear Lower Chassis Tubes (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø30.0,2.5,420.0,2,Connects rear ZLTECH hub dropouts to 75mm low-profile under-bed front nose rails
+CF-01,Rear Lower Chassis Tubes (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø30.0,2.5,420.0,2,Connects rear 5065 belt-drive dropouts to 75mm under-bed front nose rails
 CF-02,Fixed 495mm Front Lower Cross-Beam,3K Roll-Wrapped Autoclave Carbon Tube,Ø30.0,3.0,435.0,1,Sets outer frame width to 495mm (19.5in) -> clears every 20in+ Indian bathroom door
-CF-03,Fixed 495mm Front Upper Cockpit Bridge,3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,2.5,435.0,1,Links tops of left & right TiMOTION/LINAK columns; carries Slide-Bridge Kitchen Tray
-CF-04,Upper Forearm Cockpit & Waist Bolster Tubes (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,2.5,420.0,2,"Supports 24-bit Load-Cell Forearm Troughs, Bi-Level Rise Grips & MIT E-BAR Waist Bolsters"
-CF-05,Split-Saddle Cantilever Arms (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,3.0,230.0,2,Pivots 90-deg on Fidlock 7075-T6 Hinge Block behind user's pelvis
-LK-01,12-Deg Inclined Telescoping Medical Columns,TiMOTION TL18 / LINAK LC1 Factory Column,Anodized Extruded Al,IPX6,300.0 Stroke (440mm Retracted),2,Mounted at 12-deg forward incline (+293mm UP & +62mm FORWARD nose-over-toes trajectory)
+CF-03,In-House Outer Telescoping Columns (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø35.0,2.0,440.0,2,Houses SFU1204 ballscrew + CNC Delrin top bushing (tilted 12-deg forward)
+CF-04,In-House Inner Telescoping Columns (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø30.0,2.5,430.0,2,Driven by SFU1204 ballscrew nut; 300mm stroke (+293mm UP & +62mm FORWARD)
+CF-05,Fixed 495mm Front Upper Cockpit Bridge,3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,2.5,435.0,1,Links tops of left & right inner columns; carries Slide-Bridge Kitchen Tray
+CF-06,Upper Forearm Cockpit & Waist Bolster Tubes (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,2.5,420.0,2,"Supports 24-bit Load-Cell Forearm Troughs, Bi-Level Rise Grips & Waist Bolsters"
+CF-07,Split-Saddle Cantilever Arms (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,3.0,230.0,2,Pivots 90-deg on In-House N52 Conical Shear-Pin Hinge behind user's pelvis
+BS-01,Internal Column Drive Ballscrews (L & R),C7 Rolled Ball Screw + Flanged Ball Nut,"SFU1204 (Ø12mm, 4mm lead)",Solid,360.0 Machined,2,"In stock on Robu.in; 92% efficiency, <38 dB silent, 173 kgf lift per column"
