@@ -928,6 +928,5 @@ if __name__ == "__main__":
     make_sheet_04()
     make_sheet_05()
     make_sheet_06()
-    make_interactive_html()
     make_markdown_manual()
-    print("Generated all 6 SVG Assembly Blueprints, Interactive HTML5 Viewer, and Markdown Manual successfully!")
+    print("Generated all 6 SVG Assembly Blueprints and Markdown Manual successfully!")

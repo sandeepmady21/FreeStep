@@ -325,8 +325,8 @@
     </div>
     <div class="badges">
       <div class="badge cyan">495 mm (19.5") Universal Width</div>
-      <div class="badge">9.85 kg Featherweight</div>
-      <div class="badge">₹62,800 Full COTS Build</div>
+      <div class="badge">9.65 kg Featherweight</div>
+      <div class="badge">₹54,250 Clinical & Home Mastery</div>
     </div>
   </header>
 
@@ -346,11 +346,11 @@
         <button class="btn active" onclick="setCameraView('iso')">3D Isometric</button>
         <button class="btn" onclick="setCameraView('front')">Front (495mm Doorway)</button>
         <button class="btn" onclick="setCameraView('side')">Side (12° Rake)</button>
-        <button class="btn" onclick="setCameraView('top')">Top (180° Saddle)</button>
-        <button class="btn" onclick="setCameraView('caster')">Zoom: 74mm Front Caster</button>
+        <button class="btn" onclick="setCameraView('top')">Top (Saddle & Troughs)</button>
+        <button class="btn" onclick="setCameraView('caster')">Zoom: 74mm Anti-Yaw Caster</button>
         <button class="btn" onclick="setCameraView('column')">Zoom: Actuator Column</button>
-        <button class="btn" onclick="setCameraView('hub')">Zoom: 6.5" Rear Hub</button>
-        <button class="btn amber" id="xrayBtn" onclick="toggleXray()">X-Ray Carbon Tubes: OFF</button>
+        <button class="btn amber" id="kneeBtn" onclick="toggleKneeScooterMode()">Mode: 90° Knee-Scooter</button>
+        <button class="btn amber" id="xrayBtn" onclick="toggleXray()">X-Ray Carbon: OFF</button>
         <button class="btn green" id="glideBtn" onclick="toggleGlideDemo()">Demo: Seated Power-Glide</button>
       </div>
 
@@ -1021,45 +1021,57 @@
       latchParts.push({ group: lGroup, x, sign });
     });
 
-    // 15. UPPER_HALO: ø25mm Carbon Support Halo & Ergonomic Handlebar Grip Pods
+    // 15. UPPER_HALO: ø25mm Carbon Support Halo, Contoured 8° EVA Forearm Support Troughs & Upright Grip Posts
     const haloGroup = new THREE.Group();
     [-COL_X, COL_X].forEach(x => {
       const sideArm = new THREE.Mesh(new THREE.CylinderGeometry(12.5, 12.5, 360, 24), mats.carbon);
       sideArm.rotation.x = Math.PI / 2;
       sideArm.position.set(x, 0, -40);
       sideArm.userData.partId = "UPPER_HALO";
-      const gripPod = new THREE.Mesh(new THREE.CylinderGeometry(17, 15, 135, 24), mats.hubShell);
-      gripPod.rotation.x = Math.PI / 2;
-      gripPod.position.set(x, 4, -170);
-      gripPod.userData.partId = "UPPER_HALO";
-      haloGroup.add(sideArm, gripPod);
+      // Contoured 8-Deg EVA Forearm Support Gutter Trough
+      const trough = new THREE.Mesh(new THREE.BoxGeometry(74, 18, 220), mats.saddlePad);
+      trough.rotation.x = -0.14; // 8-deg upward anatomical forearm tilt
+      trough.position.set(x, 18, -110);
+      trough.userData.partId = "UPPER_HALO";
+      // Upright Hand Grip Post with FSR406 PWB Rehab Coach Sensor
+      const gripPost = new THREE.Mesh(new THREE.CylinderGeometry(14, 14, 95, 20), mats.hubShell);
+      gripPost.position.set(x, 58, 10);
+      gripPost.userData.partId = "UPPER_HALO";
+      haloGroup.add(sideArm, trough, gripPost);
     });
     const topCross = new THREE.Mesh(new THREE.CylinderGeometry(12.5, 12.5, 430, 24), mats.carbon);
     topCross.rotation.z = Math.PI / 2;
-    topCross.position.set(0, 0, 135);
+    topCross.position.set(0, 0, 155);
     topCross.userData.partId = "UPPER_HALO";
     haloGroup.add(topCross);
     partGroups["UPPER_HALO"].add(haloGroup);
 
-    // 16. KITCHEN_TRAY_AND_SENSORS: Dual MGN9C Rails + Clear Polycarbonate Tray + LiDAR + LiFePO4
+    // 16. CLINICAL ERGONOMICS: Swing-Away Tray, Anterior Shin Block Pad, Fold-Down Footrest Pegs, LiFePO4 & 2AM Nightlight
     const railsGroup = new THREE.Group();
-    [-COL_X, COL_X].forEach(x => {
-      const rail = new THREE.Mesh(new THREE.BoxGeometry(12, 10, 290), mats.stainless);
-      rail.position.set(x, 16, 0);
-      rail.userData.partId = "KITCHEN_TRAY_AND_SENSORS";
-      railsGroup.add(rail);
-    });
-    const trayMesh = new THREE.Mesh(new THREE.BoxGeometry(440, 10, 270), mats.lexanTray);
-    trayMesh.position.set(0, 26, 0);
+    const trayMesh = new THREE.Mesh(new THREE.BoxGeometry(380, 8, 220), mats.lexanTray);
+    trayMesh.position.set(0, 18, 45);
     trayMesh.userData.partId = "KITCHEN_TRAY_AND_SENSORS";
     railsGroup.add(trayMesh);
     partGroups["KITCHEN_TRAY_AND_SENSORS"].add(railsGroup);
 
-    // Front Nose LiFePO4 Battery Pack + LD19 360° LiDAR Turret
+    // Anterior Tibial Shin Block Pad (prevents knee buckling during toilet sit-to-stand!)
+    const shinBar = makeTube(10, 430, mats.carbon, "KITCHEN_TRAY_AND_SENSORS");
+    shinBar.rotation.z = Math.PI / 2;
+    shinBar.position.set(0, 340, 95);
+    const shinPad = makeBox(310, 56, 28, mats.saddlePad, "KITCHEN_TRAY_AND_SENSORS");
+    shinPad.position.set(0, 340, 82);
+
+    // Fold-Down Aluminum Footrest Pegs on Lower Carbon Base (for Seated Power-Glide!)
+    [-COL_X + 28, COL_X - 28].forEach(px => {
+      const peg = makeBox(65, 12, 34, mats.stainless, "CF_BASE");
+      peg.position.set(px, BASE_Y + 4, 115);
+    });
+
+    // Front Nose LiFePO4 Battery Pack + Dual VL53L1X ToF + 2AM Amber Motion Nightlight
     const batteryBox = makeBox(190, 48, 82, mats.battery, "KITCHEN_TRAY_AND_SENSORS");
     batteryBox.position.set(0, BASE_Y + 22, 225);
-    const lidarPuck = makeTube(28, 38, mats.lidar, "KITCHEN_TRAY_AND_SENSORS");
-    lidarPuck.position.set(0, BASE_Y + 42, 272);
+    const lidarPuck = makeBox(120, 22, 28, mats.lidar, "KITCHEN_TRAY_AND_SENSORS");
+    lidarPuck.position.set(0, BASE_Y + 32, 272);
 
     // =========================================================================
     // REAL-TIME KINEMATICS & EXPLODED VIEW UPDATE ENGINE
@@ -1068,6 +1080,7 @@
     let soloMode = false;
     let xrayMode = false;
     let glideDemo = false;
+    let kneeScooterMode = false;
     let glidePhase = 0;
 
     const slExplode = document.getElementById("slExplode");
@@ -1086,7 +1099,9 @@
 
       document.getElementById("valExplode").textContent = `${Math.round(exp * 100)}%`;
       document.getElementById("valLift").textContent = `${Math.round(lift)} mm (Saddle: ${saddleHeightMm}mm, +${fwdShiftMm}mm FWD)`;
-      document.getElementById("valSaddle").textContent = `${Math.round(saddleDeg)}° ${saddleDeg < 5 ? "(Latched)" : "(Open Walk-In)"}`;
+      document.getElementById("valSaddle").textContent = kneeScooterMode
+        ? "90° Single-Leg Knee Scooter"
+        : `${Math.round(saddleDeg)}° ${saddleDeg < 5 ? "(Latched)" : "(Open Walk-In)"}`;
       document.getElementById("valTray").textContent = `+${Math.round(traySlide)} mm`;
 
       // Base elevation along 12° column rake
@@ -1120,7 +1135,7 @@
         const sign = Math.sign(x);
         const dBody = 175 + exp * 40;
         const dRod = 250 + lift + exp * 110;
-        const xOff = x + sign * exp * 115; // Pull out laterally when exploded so user can inspect cartridge!
+        const xOff = x + sign * exp * 115;
 
         body.position.set(xOff, BASE_Y + 20 + Math.cos(RAKE_RAD) * dBody, 20 + Math.sin(RAKE_RAD) * dBody);
         rod.position.set(xOff, BASE_Y + 20 + Math.cos(RAKE_RAD) * dRod, 20 + Math.sin(RAKE_RAD) * dRod);
@@ -1167,23 +1182,36 @@
         mesh.position.set(x + sign * exp * 60, saddleY, saddleZ - 10);
       });
 
-      saddleArms.forEach(({ group, x, sign }) => {
+      saddleArms.forEach(({ group, x, sign }, idx) => {
         group.position.set(x + sign * exp * 45, saddleY, saddleZ - 10 - exp * 50);
-        group.rotation.y = sign * swingRad;
+        // In 90° Single-Leg Knee-Scooter Mode: Right pad locks at 0° center for injured knee; Left pad swings 180° open!
+        const angle = kneeScooterMode ? (idx === 1 ? 0 : Math.PI) : sign * swingRad;
+        group.rotation.y = angle;
       });
 
-      latchParts.forEach(({ group, x, sign }) => {
+      latchParts.forEach(({ group, x, sign }, idx) => {
         group.position.set(x + sign * exp * 25, saddleY + exp * 30, saddleZ - 10 - exp * 75);
-        group.rotation.y = sign * swingRad;
+        const angle = kneeScooterMode ? (idx === 1 ? 0 : Math.PI) : sign * swingRad;
+        group.rotation.y = angle;
       });
 
-      // Update Upper Halo & MGN9C Slide-Bridge Kitchen Tray
+      // Update Upper Halo & Swing-Away Utility Tray
       const haloY = BASE_Y + 20 + Math.cos(RAKE_RAD) * (topDist + 18) + exp * 165;
       const haloZ = 20 + Math.sin(RAKE_RAD) * (topDist + 18);
       haloGroup.position.set(0, haloY, haloZ);
 
       railsGroup.position.set(0, haloY + exp * 55, haloZ);
-      trayMesh.position.z = traySlide;
+      trayMesh.position.z = 45 + traySlide;
+    }
+
+    function toggleKneeScooterMode() {
+      kneeScooterMode = !kneeScooterMode;
+      const btn = document.getElementById("kneeBtn");
+      btn.classList.toggle("active", kneeScooterMode);
+      if (kneeScooterMode) {
+        slLift.value = 30; // Ideal 450mm knee height for ankle fracture offloading
+      }
+      updateKinematics();
     }
 
     [slExplode, slLift, slSaddle, slTray].forEach(s => s.addEventListener("input", updateKinematics));

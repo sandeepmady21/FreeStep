@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="132mm" height="135mm" viewBox="0 0 132 135">
+<svg xmlns="http://www.w3.org/new/svg" width="132mm" height="135mm" viewBox="0 0 132 135">
 <rect width="100%" height="100%" fill="#0f172a"/>
-<text x="10" y="14" fill="#38bdf8" font-family="monospace" font-size="5">180-Deg Split-Saddle Pivot Hinge (1:1 mm)</text>
+<text x="10" y="14" fill="#38bdf8" font-family="monospace" font-size="4.5">3-Mode Saddle Hinge (0° Seat / 90° Knee Scooter / 180° Open) (1:1 mm)</text>
 <polygon points="20.00,115.00 112.00,115.00 112.00,40.00 85.00,20.00 47.00,20.00 20.00,40.00" fill="#1e293b" stroke="#38bdf8" stroke-width="0.8"/>
 <circle cx="52.00" cy="70.00" r="15.10" fill="none" stroke="#22c55e" stroke-width="0.6"/>
 <circle cx="92.00" cy="70.00" r="11.00" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
 <circle cx="92.00" cy="40.00" r="3.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="106.00" cy="70.00" r="3.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="92.00" cy="100.00" r="3.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
 <circle cx="34.00" cy="95.00" r="3.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
 <circle cx="34.00" cy="45.00" r="3.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
 </svg>

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="170mm" height="155mm" viewBox="0 0 170 155">
+<svg xmlns="http://www.w3.org/new/svg" width="170mm" height="155mm" viewBox="0 0 170 155">
 <rect width="100%" height="100%" fill="#0f172a"/>
-<text x="10" y="14" fill="#38bdf8" font-family="monospace" font-size="5">12-Deg Carbon Base Lug + M8 Actuator Clevis (1:1 mm)</text>
+<text x="10" y="14" fill="#38bdf8" font-family="monospace" font-size="4.5">12-Deg Base Lug + M8 Clevis + Footrest Pivot (1:1 mm)</text>
 <polygon points="20.00,135.00 150.00,135.00 150.00,87.00 115.00,20.00 55.00,20.00 20.00,87.00" fill="#1e293b" stroke="#38bdf8" stroke-width="0.8"/>
 <circle cx="50.00" cy="111.00" r="15.10" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
 <circle cx="120.00" cy="111.00" r="15.10" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
@@ -8,4 +8,5 @@
 <circle cx="35.00" cy="111.00" r="3.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
 <circle cx="135.00" cy="111.00" r="3.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
 <circle cx="85.00" cy="85.00" r="4.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="128.00" cy="121.00" r="4.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
 </svg>
