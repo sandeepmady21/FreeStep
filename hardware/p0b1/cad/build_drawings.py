@@ -71,7 +71,7 @@ for name,x in [('lowered',15),('mid',405),('raised',795)]:
  c.setFont('Helvetica-Bold',13);c.drawCentredString(x+185,260,name.upper())
 rows=[['Condition','Lowered','Middle','Raised'],['Extension / pan top','0 / 430','125 / 555','250 / 680'],['Actuator upper pin Z','854','979','1104'],['Block centres Z','704 / 1004','829 / 1129','954 / 1254'],['Perch pin row Z','281','406','531']]
 table(rows,45,230,[310,255,255,255])
-para('LA40PL assumption: lower pin (0,40,330), retracted pin distance524 = stroke250+274, upper pin rises vertically. Clevis gap28.5, PIN12 nominal12. Rail runs Z450..1450. Nominal250mm stroke; usable command travel may be shorter after limit/stop-distance calibration. Verify OEM drawing and all fit tolerances before machining.',45,82,1080,9)
+para('LA40PL assumption: lower pin (0,40,330), retracted pin distance524 = stroke250+274, upper pin rises vertically. Clevis gap28.5, PIN12 nominal12. Rail runs Z450..1450. Nominal250mm stroke; usable command travel may be shorter after limit/stop-distance calibration. Verify OEM drawing and all fit tolerances before machining.',45,100,1080,9)
 end()
 start('03 / Perch props and controlled recovery')
 y=H-120

@@ -14,7 +14,7 @@ These results do not establish load capacity, physical stopping, wiring integrit
 ## Source SHA256
 
 - cad/build.py: `80ee09f0beee60e7d5f6c5021d8de841b75bd4adfcfcff879ba021f59942c89e`
-- cad/build_drawings.py: `e24c9f25c383b9f186554a44a496248c356f79d3fac298cb9cae532ad25eab08`
+- cad/build_drawings.py: `30f8acff5d7dbf0a994b31dd20b184f79a062d7ae379037a6994ca4dde4040fe`
 - parameters.json: `3f65b558aad0d9b47d11919e85ee69c0e606b08cfe9354e3de6fcd466b7ededc`
 - tests/check_design.py: `db7ab04ea7a0ca93e10d85aa578eaeddb3a4b0b7c4a430868fc1bb589db7804d`
 - tests/check_exports.py: `a3dcbfc12092f819323032e572a667c1a3c766fe40a22762b89fba1d3ac25c31`
