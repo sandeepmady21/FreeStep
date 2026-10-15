@@ -1,0 +1,4 @@
+# Inspect generated CAD/PDF through their native viewers; edit the source scripts.
+*.step binary
+*.pdf binary
+*.dxf binary

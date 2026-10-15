@@ -1,481 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreeStep Air — Universal Kinematics & UWB Auto-Summon Simulator</title>
-  <style>
-    :root {
-      --bg: #0f172a;
-      --panel: #1e293b;
-      --border: #334155;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --green: #22c55e;
-      --amber: #f59e0b;
-      --red: #ef4444;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: var(--bg); color: var(--text); padding: 20px; }
-    h1 { font-size: 1.35rem; margin-bottom: 6px; color: var(--accent); }
-    .subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 18px; }
-    .grid { display: grid; grid-template-columns: 360px 1fr; gap: 18px; }
-    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
-    .card h2 { font-size: 1rem; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-    .control-group { margin-bottom: 14px; }
-    .control-group label { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 5px; color: var(--muted); }
-    .control-group label span { color: var(--text); font-weight: 600; }
-    input[type="range"] { width: 100%; accent-color: var(--accent); }
-    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-    button {
-      background: #0284c7; color: white; border: none; padding: 9px 12px;
-      border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.82rem;
-      transition: background 0.15s;
-    }
-    button:hover { background: #0369a1; }
-    button.summon { background: #16a34a; grid-column: span 2; font-size: 0.92rem; padding: 11px; }
-    button.summon:hover { background: #15803d; }
-    button.warn { background: #d97706; }
-    .telemetry { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; font-size: 0.82rem; }
-    .metric { background: #0f172a; padding: 9px; border-radius: 8px; border: 1px solid var(--border); }
-    .metric .k { color: var(--muted); font-size: 0.75rem; }
-    .metric .v { font-weight: 700; font-size: 0.95rem; margin-top: 3px; }
-    .canvas-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    canvas { width: 100%; height: 440px; background: #090d16; border-radius: 10px; border: 1px solid var(--border); cursor: crosshair; }
-    .banner { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-weight: 600; font-size: 0.88rem; background: #0f172a; border-left: 4px solid var(--accent); }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FreeStep P0 — bench prototype</title>
+<style>body{margin:0;background:#f4f6f7;color:#17313a;font:17px/1.6 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:40px 24px}h1{font-size:44px;line-height:1.15}h2{font-size:23px}a{color:#08637a}section{background:white;border:1px solid #d8e1e5;border-radius:12px;padding:24px;margin:24px 0}.notice{border-left:6px solid #b65e16;background:#fff2d7;padding:18px 24px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}.tag{font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}small{color:#465c65}li{margin:8px 0}</style>
 </head>
 <body>
-  <h1>FreeStep Air (Universal Carbon/7075 Edition) — Kinematics & UWB Auto-Summon Simulator</h1>
-  <p class="subtitle">Universal Home & Hospital Envelope: Width 480–640 mm | Saddle 420–720 mm | Slide-Bridge Tray 580–880 mm | Dual-Anchor UWB + 360° LiDAR Auto-Summon</p>
-
-  <div class="grid">
-    <div class="card">
-      <h2>1. Universal Presets & Controls</h2>
-      <div class="btn-row">
-        <button class="summon" id="btnSummon">📡 Summon Walker to Grandma (UWB AoA)</button>
-        <button onclick="setPreset(480, 420, false)">🚽 Bathroom / Toilet (480mm / 420mm)</button>
-        <button onclick="setPreset(640, 680, true)">🍳 Kitchen Perch + Ankle Cradle (680mm)</button>
-        <button onclick="setPreset(550, 480, false)">🦽 Wheelchair / Bed Transfer (480mm)</button>
-        <button onclick="setPreset(640, 660, false)">🍲 Counter Slide-Bridge (820mm Tray)</button>
-      </div>
-
-      <div class="control-group">
-        <label>Frame Outer Width (igus DryLin Morph) <span id="lblWidth">640 mm</span></label>
-        <input type="range" id="rngWidth" min="480" max="640" value="640" />
-      </div>
-      <div class="control-group">
-        <label>Sit-to-Stand Saddle Height (LINAK 300mm) <span id="lblHeight">480 mm</span></label>
-        <input type="range" id="rngHeight" min="420" max="720" value="480" />
-      </div>
-      <div class="control-group">
-        <label>Forearm Load-Cell Push / Offload <span id="lblForce">0 kg (Hands Off)</span></label>
-        <input type="range" id="rngForce" min="0" max="35" value="0" />
-      </div>
-      <div class="control-group">
-        <label>Doorway Test Width (Room Barrier) <span id="lblDoor">520 mm (20.5")</span></label>
-        <input type="range" id="rngDoor" min="500" max="850" value="520" />
-      </div>
-
-      <div class="btn-row">
-        <button class="warn" id="btnCradle" onclick="toggleCradle()">🦵 Toggle Ankle Cradle</button>
-        <button class="warn" onclick="triggerStumble()">⚠️ Simulate IMU Stumble</button>
-      </div>
-
-      <div class="telemetry">
-        <div class="metric"><div class="k">Controller State</div><div class="v" id="valState">PARKED_LOCKED</div></div>
-        <div class="metric"><div class="k">Electromagnetic Brakes</div><div class="v" id="valBrake" style="color:#22c55e">LOCKED (FAIL-SAFE)</div></div>
-        <div class="metric"><div class="k">Slide-Bridge Tray Height</div><div class="v" id="valTray">640 mm</div></div>
-        <div class="metric"><div class="k">UWB Bearing / Distance</div><div class="v" id="valUwb">0.0° | 0.50 m</div></div>
-      </div>
-
-      <div class="banner" id="statusBanner">
-        Tip: Click anywhere on the Right Canvas ("Top-Down Room View") to place Grandma and watch UWB Auto-Summon navigate through the narrow doorway!
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>2. Real-Time CAD Elevation (Left) & Top-Down UWB Auto-Summon Room Map (Right)</h2>
-      <div class="canvas-wrap">
-        <canvas id="cvSide" width="460" height="440"></canvas>
-        <canvas id="cvTop" width="460" height="440"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const cvSide = document.getElementById('cvSide');
-    const ctxSide = cvSide.getContext('2d');
-    const cvTop = document.getElementById('cvTop');
-    const ctxTop = cvTop.getContext('2d');
-
-    let state = {
-      widthMm: 640,
-      targetWidthMm: 640,
-      saddleMm: 480,
-      targetSaddleMm: 480,
-      forearmKg: 0,
-      doorWidthMm: 520,
-      ankleCradleDown: false,
-      imuFault: false,
-      summonActive: false,
-      controllerMode: 'PARKED_LOCKED',
-      brakeLocked: true,
-      // Top-down room coordinates (meters)
-      walkerX: 1.2,
-      walkerY: 3.3,
-      walkerHeading: -Math.PI / 2,
-      grandmaX: 2.3,
-      grandmaY: 0.9,
-      uwbDistM: 2.5,
-      uwbBearingDeg: 0
-    };
-
-    const rngWidth = document.getElementById('rngWidth');
-    const rngHeight = document.getElementById('rngHeight');
-    const rngForce = document.getElementById('rngForce');
-    const rngDoor = document.getElementById('rngDoor');
-
-    rngWidth.addEventListener('input', e => {
-      const reqW = parseInt(e.target.value, 10);
-      if (state.saddleMm > 520 && reqW < 580) {
-        setBanner('INTERLOCK BLOCKED: Lower saddle <= 520 mm before narrowing frame below 580 mm!', '#ef4444');
-        rngWidth.value = state.widthMm;
-        return;
-      }
-      state.targetWidthMm = reqW;
-    });
-
-    rngHeight.addEventListener('input', e => {
-      const reqH = parseInt(e.target.value, 10);
-      if (state.widthMm < 580 && reqH > 520) {
-        setBanner('INTERLOCK BLOCKED: Widen frame to >= 580 mm before raising to Kitchen Perch height!', '#ef4444');
-        rngHeight.value = state.saddleMm;
-        return;
-      }
-      state.targetSaddleMm = reqH;
-    });
-
-    rngForce.addEventListener('input', e => {
-      state.forearmKg = parseInt(e.target.value, 10);
-      if (state.forearmKg > 0 && state.summonActive) {
-        state.summonActive = false;
-        setBanner('HUMAN GRIP DETECTED: Auto-Summon cancelled immediately; switched to manual Walk Assist.', '#38bdf8');
-      }
-    });
-
-    rngDoor.addEventListener('input', e => {
-      state.doorWidthMm = parseInt(e.target.value, 10);
-      document.getElementById('lblDoor').textContent = `${state.doorWidthMm} mm (${(state.doorWidthMm/25.4).toFixed(1)}")`;
-    });
-
-    document.getElementById('btnSummon').addEventListener('click', () => {
-      state.imuFault = false;
-      state.forearmKg = 0;
-      rngForce.value = 0;
-      state.summonActive = true;
-      setBanner('AUTO-SUMMON ACTIVE: Retracting width to 480 mm & homing toward Grandma via Dual-Anchor UWB...', '#22c55e');
-    });
-
-    cvTop.addEventListener('click', e => {
-      const rect = cvTop.getBoundingClientRect();
-      const px = (e.clientX - rect.left) * (cvTop.width / rect.width);
-      const py = (e.clientY - rect.top) * (cvTop.height / rect.height);
-      state.grandmaX = (px - 40) / 85;
-      state.grandmaY = (py - 40) / 85;
-      state.summonActive = true;
-      setBanner('Grandma relocated! Press or watch UWB Auto-Summon navigate and dock 50 cm in front of her.', '#22c55e');
-    });
-
-    function setPreset(w, h, cradle) {
-      state.imuFault = false;
-      state.summonActive = false;
-      state.ankleCradleDown = cradle;
-      if (w >= 580) {
-        state.targetWidthMm = w;
-        state.targetSaddleMm = h;
-      } else {
-        state.targetSaddleMm = Math.min(h, 520);
-        state.targetWidthMm = w;
-      }
-      rngWidth.value = state.targetWidthMm;
-      rngHeight.value = state.targetSaddleMm;
-      setBanner(`Preset engaged: Target Width ${w} mm | Saddle ${h} mm | Tray ${h + 160} mm`, '#38bdf8');
-    }
-
-    function toggleCradle() {
-      state.ankleCradleDown = !state.ankleCradleDown;
-    }
-
-    function triggerStumble() {
-      state.imuFault = true;
-      state.summonActive = false;
-      setBanner('EMERGENCY_LOCK: MPU6050 detected >12° pitch/stumble spike! Hub brakes locked solid.', '#ef4444');
-    }
-
-    function setBanner(msg, color) {
-      const b = document.getElementById('statusBanner');
-      b.textContent = msg;
-      b.style.borderLeftColor = color;
-    }
-
-    function stepSimulation() {
-      if (state.imuFault) {
-        state.controllerMode = 'EMERGENCY_LOCK';
-        state.brakeLocked = true;
-        return;
-      }
-
-      // Smooth actuator interpolation
-      if (Math.abs(state.saddleMm - state.targetSaddleMm) > 1) {
-        state.saddleMm += Math.sign(state.targetSaddleMm - state.saddleMm) * 2.5;
-      }
-      if (Math.abs(state.widthMm - state.targetWidthMm) > 1) {
-        state.widthMm += Math.sign(state.targetWidthMm - state.widthMm) * 2.5;
-      }
-
-      if (state.summonActive) {
-        // Step 1: Prep low CG & 480mm doorway width
-        state.targetSaddleMm = 430;
-        state.targetWidthMm = 480;
-        rngWidth.value = 480;
-        rngHeight.value = 430;
-
-        if (state.saddleMm > 500 || state.widthMm > 495) {
-          state.controllerMode = 'AUTO_SUMMON_PREP';
-          state.brakeLocked = true;
-          return;
-        }
-
-        // Step 2: Waypoint navigation through doorway (y = 2.0m wall with doorway at x = 2.1m)
-        let goalX = state.grandmaX;
-        let goalY = state.grandmaY + 0.48; // Dock 48cm in front of Grandma
-        const doorCenterX = 2.1;
-        const wallY = 2.0;
-
-        // If walker and Grandma are on opposite sides of the bathroom doorway wall (y=2.0m), route through doorway center
-        if ((state.walkerY > wallY + 0.15 && goalY < wallY) || (state.walkerY < wallY - 0.15 && goalY > wallY)) {
-          goalX = doorCenterX;
-          goalY = (state.walkerY > wallY) ? wallY - 0.1 : wallY + 0.1;
-        }
-
-        const dx = goalX - state.walkerX;
-        const dy = goalY - state.walkerY;
-        const distToGrandma = Math.hypot(state.grandmaX - state.walkerX, (state.grandmaY + 0.48) - state.walkerY);
-        state.uwbDistM = distToGrandma;
-
-        if (distToGrandma <= 0.12) {
-          state.summonActive = false;
-          state.controllerMode = 'AUTO_SUMMON_DOCKED';
-          state.brakeLocked = true;
-          state.uwbDistM = 0.50;
-          state.uwbBearingDeg = 0.0;
-          setBanner('AUTO_SUMMON_DOCKED: Parked & electromagnetically locked 50 cm in front of Grandma!', '#22c55e');
-          return;
-        }
-
-        const desiredHeading = Math.atan2(dy, dx);
-        let headingErr = desiredHeading - state.walkerHeading;
-        while (headingErr > Math.PI) headingErr -= 2 * Math.PI;
-        while (headingErr < -Math.PI) headingErr += 2 * Math.PI;
-
-        state.uwbBearingDeg = (headingErr * 180 / Math.PI);
-        state.walkerHeading += Math.max(-0.07, Math.min(0.07, headingErr * 0.2));
-        const speed = 0.018;
-        state.walkerX += Math.cos(state.walkerHeading) * speed;
-        state.walkerY += Math.sin(state.walkerHeading) * speed;
-        state.controllerMode = 'AUTO_SUMMON_HOMING';
-        state.brakeLocked = false;
-      } else {
-        if (state.forearmKg === 0) {
-          state.controllerMode = 'PARKED_LOCKED';
-          state.brakeLocked = true;
-        } else {
-          state.controllerMode = 'WALK_ASSIST';
-          state.brakeLocked = false;
-        }
-      }
-    }
-
-    function drawSideView() {
-      ctxSide.clearRect(0, 0, cvSide.width, cvSide.height);
-      const floorY = 390;
-      const scale = 0.34; // mm to px
-
-      // Floor & Kitchen Counter (840mm slab) reference
-      ctxSide.strokeStyle = '#475569';
-      ctxSide.lineWidth = 2;
-      ctxSide.beginPath();
-      ctxSide.moveTo(20, floorY);
-      ctxSide.lineTo(440, floorY);
-      ctxSide.stroke();
-
-      const counterH = 830 * scale;
-      ctxSide.fillStyle = '#1e293b';
-      ctxSide.fillRect(330, floorY - counterH, 110, counterH);
-      ctxSide.strokeStyle = '#64748b';
-      ctxSide.strokeRect(330, floorY - counterH, 110, counterH);
-      ctxSide.fillStyle = '#94a3b8';
-      ctxSide.font = '11px sans-serif';
-      ctxSide.fillText('Kitchen Slab (830mm)', 335, floorY - counterH - 6);
-
-      // Wheels (Rear 165mm FOC Hub, Front 150mm Tente Caster)
-      const rearX = 135, frontX = 285;
-      const rearR = (165 / 2) * scale;
-      const frontR = (150 / 2) * scale;
-
-      // Lower Carbon Rail (Ø30mm)
-      ctxSide.strokeStyle = '#cbd5e1';
-      ctxSide.lineWidth = 7;
-      ctxSide.beginPath();
-      ctxSide.moveTo(rearX, floorY - rearR);
-      ctxSide.lineTo(frontX, floorY - frontR);
-      ctxSide.stroke();
-
-      // Outer Vertical Carbon Column
-      const colX = 245;
-      const outerTopY = floorY - 540 * scale;
-      ctxSide.strokeStyle = '#64748b';
-      ctxSide.lineWidth = 9;
-      ctxSide.beginPath();
-      ctxSide.moveTo(colX, floorY - frontR);
-      ctxSide.lineTo(colX, outerTopY);
-      ctxSide.stroke();
-
-      // Inner Telescoping Column + Saddle + Forearm Cockpit + Slide-Bridge Tray
-      const saddleY = floorY - state.saddleMm * scale;
-      const trayMm = Math.round(state.saddleMm + 160);
-      const trayY = floorY - trayMm * scale;
-
-      ctxSide.strokeStyle = '#38bdf8';
-      ctxSide.lineWidth = 5;
-      ctxSide.beginPath();
-      ctxSide.moveTo(colX, outerTopY);
-      ctxSide.lineTo(colX, trayY);
-      ctxSide.stroke();
-
-      // 180-Deg Split Saddle
-      ctxSide.fillStyle = '#22c55e';
-      ctxSide.fillRect(colX - 85, saddleY - 6, 85, 12);
-      ctxSide.fillStyle = '#e2e8f0';
-      ctxSide.fillText(`Split Saddle (${Math.round(state.saddleMm)}mm)`, colX - 165, saddleY + 4);
-
-      // Slide-Bridge Kitchen Tray + Forearm Cockpit
-      ctxSide.fillStyle = '#f59e0b';
-      ctxSide.fillRect(colX - 45, trayY - 5, 130, 8);
-      ctxSide.fillText(`Forearm & Slide-Bridge Tray (${trayMm}mm)`, colX - 125, trayY - 10);
-
-      // Flip-Down Ankle Offload Knee Cradle (at 450mm height)
-      const cradleY = floorY - 450 * scale;
-      if (state.ankleCradleDown) {
-        ctxSide.fillStyle = '#ec4899';
-        ctxSide.fillRect(colX - 75, cradleY, 75, 10);
-        ctxSide.fillText('Ankle-Saver Knee Cradle (ACTIVE)', colX - 210, cradleY + 22);
-      }
-
-      // Rear Wheel
-      ctxSide.beginPath();
-      ctxSide.arc(rearX, floorY - rearR, rearR, 0, Math.PI * 2);
-      ctxSide.fillStyle = state.brakeLocked ? '#ef4444' : '#22c55e';
-      ctxSide.fill();
-      // Front Wheel
-      ctxSide.beginPath();
-      ctxSide.arc(frontX, floorY - frontR, frontR, 0, Math.PI * 2);
-      ctxSide.fillStyle = '#38bdf8';
-      ctxSide.fill();
-
-      ctxSide.fillStyle = '#94a3b8';
-      ctxSide.fillText('SIDE ELEVATION (1:1 Scaled Kinematics)', 18, 24);
-    }
-
-    function drawTopView() {
-      ctxTop.clearRect(0, 0, cvTop.width, cvTop.height);
-      const ox = 40, oy = 40, m2px = 85;
-
-      // Draw Bathroom Wall at y = 2.0m with adjustable Doorway gap at x = 2.1m
-      const wallPy = oy + 2.0 * m2px;
-      const doorCenterPx = ox + 2.1 * m2px;
-      const halfDoorPx = ((state.doorWidthMm / 1000) * m2px) / 2;
-
-      ctxTop.strokeStyle = '#64748b';
-      ctxTop.lineWidth = 6;
-      ctxTop.beginPath();
-      ctxTop.moveTo(20, wallPy);
-      ctxTop.lineTo(doorCenterPx - halfDoorPx, wallPy);
-      ctxTop.moveTo(doorCenterPx + halfDoorPx, wallPy);
-      ctxTop.lineTo(440, wallPy);
-      ctxTop.stroke();
-
-      ctxTop.fillStyle = '#94a3b8';
-      ctxTop.font = '11px sans-serif';
-      ctxTop.fillText(`Doorway Opening (${state.doorWidthMm}mm)`, doorCenterPx - 60, wallPy - 10);
-
-      // Draw Grandma (UWB Summon Pendant Beacon)
-      const gx = ox + state.grandmaX * m2px;
-      const gy = oy + state.grandmaY * m2px;
-
-      ctxTop.beginPath();
-      ctxTop.arc(gx, gy, 16, 0, Math.PI * 2);
-      ctxTop.fillStyle = '#a855f7';
-      ctxTop.fill();
-      ctxTop.fillStyle = '#f8fafc';
-      ctxTop.fillText('👵 Grandma (UWB Tag)', gx - 48, gy - 22);
-
-      // Draw Walker U-Frame
-      const wx = ox + state.walkerX * m2px;
-      const wy = oy + state.walkerY * m2px;
-      const wPx = (state.widthMm / 1000) * m2px;
-      const lPx = 0.64 * m2px;
-
-      ctxTop.save();
-      ctxTop.translate(wx, wy);
-      ctxTop.rotate(state.walkerHeading + Math.PI / 2);
-
-      // U-shape frame (Open rear facing top/Grandma)
-      ctxTop.strokeStyle = state.summonActive ? '#22c55e' : '#38bdf8';
-      ctxTop.lineWidth = 4;
-      ctxTop.beginPath();
-      ctxTop.moveTo(-wPx / 2, -lPx / 2);
-      ctxTop.lineTo(-wPx / 2, lPx / 2);
-      ctxTop.lineTo(wPx / 2, lPx / 2);
-      ctxTop.lineTo(wPx / 2, -lPx / 2);
-      ctxTop.stroke();
-
-      // Left & Right UWB Anchors
-      ctxTop.fillStyle = '#f59e0b';
-      ctxTop.beginPath();
-      ctxTop.arc(-wPx / 2, 0, 4, 0, Math.PI * 2);
-      ctxTop.arc(wPx / 2, 0, 4, 0, Math.PI * 2);
-      ctxTop.fill();
-      ctxTop.restore();
-
-      ctxTop.fillStyle = '#94a3b8';
-      ctxTop.fillText('TOP-DOWN ROOM MAP (Click to move Grandma)', 18, 24);
-    }
-
-    function updateTelemetryUI() {
-      document.getElementById('lblWidth').textContent = `${Math.round(state.widthMm)} mm (${(state.widthMm/25.4).toFixed(1)}")`;
-      document.getElementById('lblHeight').textContent = `${Math.round(state.saddleMm)} mm`;
-      document.getElementById('lblForce').textContent = state.forearmKg === 0
-        ? '0 kg (Hands Off -> Auto-Braked)'
-        : `${state.forearmKg} kg (${state.forearmKg >= 15 ? '✅ PWB Safe Offload' : 'Light Touch'})`;
-      document.getElementById('valState').textContent = state.controllerMode;
-      const brkEl = document.getElementById('valBrake');
-      brkEl.textContent = state.brakeLocked ? 'LOCKED (FAIL-SAFE)' : 'RELEASED (ACTIVE)';
-      brkEl.style.color = state.brakeLocked ? '#22c55e' : '#38bdf8';
-      document.getElementById('valTray').textContent = `${Math.round(state.saddleMm + 160)} mm`;
-      document.getElementById('valUwb').textContent = `${state.uwbBearingDeg.toFixed(1)}° | ${state.uwbDistM.toFixed(2)} m`;
-    }
-
-    function loop() {
-      stepSimulation();
-      drawSideView();
-      drawTopView();
-      updateTelemetryUI();
-      requestAnimationFrame(loop);
-    }
-    loop();
-  </script>
+<main>
+<p class="tag">FreeStep P0 / 15 October 2026</p>
+<h1>Assisted rise.<br>Stationary kitchen perch.</h1>
+<div class="notice">
+<strong>Bench engineering prototype — no human-use release.</strong>
+<br>No patient load rating or manufacturing drawings are approved. Firmware is disabled by default.</div>
+<p>One guided lift, compatible pelvic support, caregiver hold-to-run controls and passive mechanical wheel locks. Adjustable adult fit is a design requirement that still needs testing.</p>
+<section>
+<h2>One architecture</h2>
+<p>Locked metal base → single guided mast → fitted body support and mechanical perch lock.</p>
+<p>Independent E-stop and watchdog → OEM lift controller ← isolated requests from the bench supervisor.</p>
+<small>System topology only. No structural geometry is released. The ESP32 is secondary bench supervision, not a safety-rated controller.</small>
+</section>
+<div class="grid">
+<section>
+<h2>Implemented</h2>
+<p>Hold-to-run requests, latched faults, deliberate reset, absolute position and brake/support/guard/tilt/travel checks.</p>
+<a href="https://github.com/sandeepmady21/FreeStep/tree/main/firmware">Inspect controller and tests</a>
+</section>
+<section>
+<h2>Required next</h2>
+<p>OEM selection, reviewed CAD, seated support access, stable load path, rest-lock recovery and physical tests.</p>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/hardware/VALIDATION_PLAN.md">Read validation gates</a>
+</section>
+<section>
+<h2>Walking later</h2>
+<p>P0 allows only unoccupied repositioning. Supported gait needs continuous pelvic support, stride clearance and a separately validated brake configuration.</p>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/research/CURRENT_PRODUCTS_AND_DESIGN.md">Read current-product research</a>
+</section>
+</div>
+<section>
+<h2>Evidence, not a simulated safety pass</h2>
+<p>The former viewers and Python model represented incompatible concepts. This page replaces them; there is no clinical simulator. Software tests do not establish physical safety.</p>
+<ul>
+<li>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/hardware/PROTOTYPE_SPEC.md">Authoritative prototype specification</a>
+</li>
+<li>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/PROCUREMENT_AND_BUILD_PLAN.md">Procurement: costs and mass remain unknown</a>
+</li>
+<li>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/README.md">Repository and verification commands</a>
+</li>
+</ul>
+<small>Original CAD and historical concepts remain archived for attribution. They are not P0 build files.</small>
+</section>
+</main>
 </body>
 </html>

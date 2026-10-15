@@ -1,0 +1,405 @@
+{
+  "revision": "P0-B1",
+  "status": "REVIEW; NO PHYSICAL TESTS OR LOAD RATING",
+  "checks": [
+    {
+      "check": "all authored shapes valid positive volume",
+      "pass_": true,
+      "detail": 35
+    },
+    {
+      "check": "positive instance quantities",
+      "pass_": true,
+      "detail": 70
+    },
+    {
+      "check": "rail hole count",
+      "pass_": true,
+      "detail": "17 M6 rail +4 M8 stop holes"
+    },
+    {
+      "check": "retention stop bore axis -26/650",
+      "pass_": true,
+      "detail": "world coordinates verify after plate rotation"
+    },
+    {
+      "check": "retention stop bore axis -26/1308",
+      "pass_": true,
+      "detail": "world coordinates verify after plate rotation"
+    },
+    {
+      "check": "retention stop bore axis 26/650",
+      "pass_": true,
+      "detail": "world coordinates verify after plate rotation"
+    },
+    {
+      "check": "retention stop bore axis 26/1308",
+      "pass_": true,
+      "detail": "world coordinates verify after plate rotation"
+    },
+    {
+      "check": "block pattern",
+      "pass_": true,
+      "detail": "57 x45; blocks300 apart"
+    },
+    {
+      "check": "pin engagement stack",
+      "pass_": true,
+      "detail": "12mm pin ears outer48.5;16mm pin ladder outer80; washer allowances physical fit hold"
+    },
+    {
+      "check": "rail working envelope",
+      "pass_": true,
+      "detail": "block edges662..1296 within450..1450"
+    },
+    {
+      "check": "retention stops beyond operating travel",
+      "pass_": true,
+      "detail": "nominal2mm gaps; stops need load/dynamic review"
+    },
+    {
+      "check": "perch pin indexing",
+      "pass_": true,
+      "detail": "11 rows cover0..250 in25mm steps"
+    },
+    {
+      "check": "perch cap height",
+      "pass_": true,
+      "detail": "100 bolt;3 pocket;20 cap, tab underside380"
+    },
+    {
+      "check": "prop thread engagement",
+      "pass_": true,
+      "detail": "80mm block; nominal17 exposure; thread strip not checked"
+    },
+    {
+      "check": "prop pin/screw ligament",
+      "pass_": true,
+      "detail": "nominal11.75mm; stress concentration needs review"
+    },
+    {
+      "check": "selected fixed/moving solids across51 poses",
+      "pass_": true,
+      "detail": {
+        "intersections": 0,
+        "collisions": []
+      }
+    },
+    {
+      "check": "notched bridge measured design clearance",
+      "pass_": true,
+      "detail": "6mm nominal Y gap to cap/tab; must remain>=3 measured under load"
+    },
+    {
+      "check": "authored actuator envelope vs steel sweep",
+      "pass_": true,
+      "detail": []
+    },
+    {
+      "check": "clevis nose clearance to authored envelopes",
+      "pass_": true,
+      "detail": "lower3.4mm / upper6.1mm nominal; OEM drawing and deflected fit remain H01"
+    },
+    {
+      "check": "stock cuts fit with trim and kerf",
+      "pass_": true,
+      "detail": [
+        {
+          "section_mm": [
+            40,
+            80,
+            4
+          ],
+          "stock_mm": 6000,
+          "used_mm": 5375,
+          "parts": [
+            [
+              "T03",
+              1200
+            ],
+            [
+              "T03",
+              1200
+            ],
+            [
+              "T01",
+              1100
+            ],
+            [
+              "T01",
+              1100
+            ],
+            [
+              "T02",
+              760
+            ]
+          ],
+          "bar": 1,
+          "offcut_mm": 585
+        },
+        {
+          "section_mm": [
+            60,
+            60,
+            4
+          ],
+          "stock_mm": 6000,
+          "used_mm": 5713,
+          "parts": [
+            [
+              "T05",
+              790
+            ],
+            [
+              "T05",
+              790
+            ],
+            [
+              "T07",
+              700
+            ],
+            [
+              "T07",
+              700
+            ],
+            [
+              "T04",
+              580
+            ],
+            [
+              "T08",
+              500
+            ],
+            [
+              "T08",
+              500
+            ],
+            [
+              "T10",
+              460
+            ],
+            [
+              "T06",
+              460
+            ],
+            [
+              "T09",
+              100
+            ],
+            [
+              "T09",
+              100
+            ]
+          ],
+          "bar": 1,
+          "offcut_mm": 247
+        },
+        {
+          "section_mm": [
+            60,
+            60,
+            4
+          ],
+          "stock_mm": 6000,
+          "used_mm": 1389,
+          "parts": [
+            [
+              "T06",
+              460
+            ],
+            [
+              "T06",
+              460
+            ],
+            [
+              "T06",
+              460
+            ]
+          ],
+          "bar": 2,
+          "offcut_mm": 4571
+        }
+      ]
+    }
+  ],
+  "mass": {
+    "nominal_custom_steel_kg": 151.708672712161,
+    "moving_custom_steel_kg": 58.17733770609358,
+    "vendor_weld_guard_fastener_masses": "excluded; weigh actual device"
+  },
+  "screening": {
+    "payload_study_kg": 75,
+    "moving_gravity_N": 1306.469682896778,
+    "arm_section_I_mm4": 470698.6666666667,
+    "arm_section_Z_mm3": 15689.955555555556,
+    "arm_simple_bending_MPa": 27.47840768760361,
+    "arm_8000N_blocked_drive_MPa": 168.2605148658448,
+    "guide_couple_per_block_N": 2874.2333023729116,
+    "guide_8000N_fault_couple_per_block_N": 17600.0,
+    "guide_catalogue_C0_N": 52820,
+    "pin12_8000N_double_shear_MPa": 35.367765131532295,
+    "pin16_8000N_double_shear_MPa": 19.89436788648692,
+    "three_caster_average_load_kg": 75.56955757072033,
+    "caster_catalogue_each_kg": 110,
+    "stability": [
+      {
+        "extension": 0,
+        "steel_plus_dummy_CG_mm": [
+          6.732571275838412e-09,
+          515.6745858312995,
+          558.7111646553732
+        ],
+        "min_edge_distance_mm": 359.9999999932674,
+        "restoring_Nm": 800.6443485352944,
+        "challenge_100N_at_1m_Nm": 100
+      },
+      {
+        "extension": 125,
+        "steel_plus_dummy_CG_mm": [
+          6.73258030223804e-09,
+          515.6745858312994,
+          634.7635785768816
+        ],
+        "min_edge_distance_mm": 359.9999999932674,
+        "restoring_Nm": 800.6443485352944,
+        "challenge_100N_at_1m_Nm": 100
+      },
+      {
+        "extension": 250,
+        "steel_plus_dummy_CG_mm": [
+          6.7325853169044995e-09,
+          515.6745858312995,
+          710.81599249839
+        ],
+        "min_edge_distance_mm": 359.9999999932674,
+        "restoring_Nm": 800.6443485352944,
+        "challenge_100N_at_1m_Nm": 100
+      }
+    ]
+  },
+  "stock_nest": [
+    {
+      "section_mm": [
+        40,
+        80,
+        4
+      ],
+      "stock_mm": 6000,
+      "used_mm": 5375,
+      "parts": [
+        [
+          "T03",
+          1200
+        ],
+        [
+          "T03",
+          1200
+        ],
+        [
+          "T01",
+          1100
+        ],
+        [
+          "T01",
+          1100
+        ],
+        [
+          "T02",
+          760
+        ]
+      ],
+      "bar": 1,
+      "offcut_mm": 585
+    },
+    {
+      "section_mm": [
+        60,
+        60,
+        4
+      ],
+      "stock_mm": 6000,
+      "used_mm": 5713,
+      "parts": [
+        [
+          "T05",
+          790
+        ],
+        [
+          "T05",
+          790
+        ],
+        [
+          "T07",
+          700
+        ],
+        [
+          "T07",
+          700
+        ],
+        [
+          "T04",
+          580
+        ],
+        [
+          "T08",
+          500
+        ],
+        [
+          "T08",
+          500
+        ],
+        [
+          "T10",
+          460
+        ],
+        [
+          "T06",
+          460
+        ],
+        [
+          "T09",
+          100
+        ],
+        [
+          "T09",
+          100
+        ]
+      ],
+      "bar": 1,
+      "offcut_mm": 247
+    },
+    {
+      "section_mm": [
+        60,
+        60,
+        4
+      ],
+      "stock_mm": 6000,
+      "used_mm": 1389,
+      "parts": [
+        [
+          "T06",
+          460
+        ],
+        [
+          "T06",
+          460
+        ],
+        [
+          "T06",
+          460
+        ]
+      ],
+      "bar": 2,
+      "offcut_mm": 4571
+    }
+  ],
+  "limitations": [
+    "Nominal sharp-corner tubes: real sections/corner radii/tolerances need mill properties",
+    "No weld/bolt/thread-stripping/local bearing/buckling/plate bending/fatigue calculation",
+    "Guide load distribution and combined moments/preload/life need supplier review",
+    "Steel-only mass screen excludes vendor parts, guards and welds; stability must use measured contacts/CG",
+    "No patient rating, floor friction/sliding test, proof load or physical result implied",
+    "Swept solid check excludes manually removed props, vendor internals, cables, guards, fasteners and deformation"
+  ]
+}

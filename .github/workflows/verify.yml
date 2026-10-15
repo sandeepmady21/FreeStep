@@ -1,0 +1,39 @@
+name: Verify P0 bench software and CAD
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python3 firmware/test_safety_interlocks.py
+      - run: python3 tools/validate_repository.py
+  esp32s3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install platformio==6.2.0
+      - run: pio run -e esp32s3_bench
+  cad:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: hardware/p0b1/cad/requirements.txt
+      - run: sudo apt-get update && sudo apt-get install -y libgl1 libglu1-mesa libxrender1
+      - run: pip install -r hardware/p0b1/cad/requirements.txt
+      - run: python hardware/p0b1/tests/check_design.py
+      - run: python hardware/p0b1/tests/check_exports.py
+      - run: python hardware/p0b1/cad/build_drawings.py

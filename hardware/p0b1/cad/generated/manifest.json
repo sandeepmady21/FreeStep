@@ -1,0 +1,1901 @@
+{
+  "parameters": {
+    "revision": "P0-B1",
+    "date": "2026-10-15",
+    "units": "mm",
+    "status": "bench design for supplier fit-check and engineering review; no human use",
+    "caster_centres_x": [
+      -400,
+      400
+    ],
+    "caster_centres_y": [
+      0,
+      1000
+    ],
+    "caster_height": 163,
+    "caster_plate_thickness": 8,
+    "base_section": [
+      40,
+      80,
+      4
+    ],
+    "base_leg_length": 1100,
+    "mast_top": 1451,
+    "rail_start_z": 450,
+    "rail_length": 1000,
+    "rail_mount_y": 140,
+    "rail_hole_pitch": 60,
+    "rail_first_hole": 20,
+    "carriage_spacing": 300,
+    "block_height": 36,
+    "block_width": 70,
+    "block_length": 84,
+    "block_holes_x": 57,
+    "block_holes_z": 45,
+    "actuator_axis_y": 40,
+    "actuator_bottom_pin_z": 330,
+    "actuator_retracted_pin_distance": 524,
+    "actuator_stroke": 250,
+    "working_travel": 250,
+    "clevis_inner_gap": 28.5,
+    "actuator_pin_diameter": 12,
+    "moving_arm_section": [
+      60,
+      60,
+      4
+    ],
+    "moving_arm_x": 260,
+    "moving_arm_start_y": 40,
+    "moving_arm_end_y": 860,
+    "yoke_above_top_pin": 60,
+    "seat_top_z": 430,
+    "seat_centre_y": 700,
+    "seat_size": [
+      400,
+      320,
+      6
+    ],
+    "seat_cross_y": [
+      580,
+      820
+    ],
+    "lock_x": [
+      -330,
+      330
+    ],
+    "lock_plate_y": 900,
+    "lock_pin_y": 885,
+    "lock_screw_y": 915,
+    "lock_first_pin_z": 281,
+    "lock_pitch": 25,
+    "lock_pin_count": 11,
+    "lock_pin_diameter": 16,
+    "lock_catch_underside_z": 380,
+    "lock_block_size": [
+      50,
+      70,
+      80
+    ],
+    "lock_screw": "ISO 4017 M20x100-8.8 full thread; no substitute coarse pitch",
+    "lock_screw_pitch": 2.5,
+    "lock_screw_nominal_projection": 17,
+    "lock_screw_projection_limits": [
+      14,
+      20
+    ],
+    "steel_density_kg_mm3": 7.85e-06,
+    "preliminary_payload_kg": 75,
+    "fault_actuator_force_N": 8000,
+    "guide_C0_N_per_block": 52820,
+    "guide_M0_roll_Nm_per_block": 420,
+    "floor_test_force_N": 100
+  },
+  "parts": [
+    {
+      "id": "P01",
+      "description": "Caster plate; use 75 x 45 mounting option",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 112364.2479604738,
+      "dimensions": [
+        130,
+        110,
+        8
+      ],
+      "holes": [
+        [
+          -37.5,
+          -22.5,
+          9,
+          "through M8 clearance"
+        ],
+        [
+          -37.5,
+          22.5,
+          9,
+          "through M8 clearance"
+        ],
+        [
+          37.5,
+          -22.5,
+          9,
+          "through M8 clearance"
+        ],
+        [
+          37.5,
+          22.5,
+          9,
+          "through M8 clearance"
+        ]
+      ],
+      "quantity": 4,
+      "unit_mass_kg": 0.8820593464897193
+    },
+    {
+      "id": "P02",
+      "description": "Mast backing plate; machine guide face after welding",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 3192335.016580066,
+      "dimensions": [
+        200,
+        1000,
+        16
+      ],
+      "holes": [
+        [
+          0,
+          -480,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          -420,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          -360,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          -300,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          -240,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          -180,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          -120,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          -60,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          0,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          60,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          120,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          180,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          240,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          300,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          360,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          420,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          0,
+          480,
+          5,
+          "M6-6H through; drill 5 then tap; verify rail end distance"
+        ],
+        [
+          -26,
+          300,
+          6.8,
+          "M8-6H through for independent retention stop"
+        ],
+        [
+          -26,
+          -358,
+          6.8,
+          "M8-6H through for independent retention stop"
+        ],
+        [
+          26,
+          300,
+          6.8,
+          "M8-6H through for independent retention stop"
+        ],
+        [
+          26,
+          -358,
+          6.8,
+          "M8-6H through for independent retention stop"
+        ]
+      ],
+      "quantity": 1,
+      "unit_mass_kg": 25.05982988015352
+    },
+    {
+      "id": "P03",
+      "description": "Moving bridge; mounting face machined after welding",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 1103352.478338676,
+      "dimensions": [
+        220,
+        420,
+        12
+      ],
+      "holes": [
+        [
+          -28.5,
+          -172.5,
+          8.5,
+          "through M8 clearance"
+        ],
+        [
+          -28.5,
+          -127.5,
+          8.5,
+          "through M8 clearance"
+        ],
+        [
+          -28.5,
+          127.5,
+          8.5,
+          "through M8 clearance"
+        ],
+        [
+          -28.5,
+          172.5,
+          8.5,
+          "through M8 clearance"
+        ],
+        [
+          28.5,
+          -172.5,
+          8.5,
+          "through M8 clearance"
+        ],
+        [
+          28.5,
+          -127.5,
+          8.5,
+          "through M8 clearance"
+        ],
+        [
+          28.5,
+          127.5,
+          8.5,
+          "through M8 clearance"
+        ],
+        [
+          28.5,
+          172.5,
+          8.5,
+          "through M8 clearance"
+        ]
+      ],
+      "quantity": 1,
+      "unit_mass_kg": 8.661316954958606
+    },
+    {
+      "id": "P04",
+      "description": "Lower clevis removable base",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 113628.8500985199,
+      "dimensions": [
+        100,
+        100,
+        12
+      ],
+      "holes": [
+        [
+          -35,
+          -35,
+          13,
+          "M12 clearance"
+        ],
+        [
+          -35,
+          35,
+          13,
+          "M12 clearance"
+        ],
+        [
+          35,
+          -35,
+          13,
+          "M12 clearance"
+        ],
+        [
+          35,
+          35,
+          13,
+          "M12 clearance"
+        ]
+      ],
+      "quantity": 1,
+      "unit_mass_kg": 0.8919864732733812
+    },
+    {
+      "id": "P05",
+      "description": "Lower clevis ear; short nose clears motor",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 40772.81536969149,
+      "dimensions": [
+        70,
+        60,
+        10
+      ],
+      "holes": [
+        [
+          0,
+          17,
+          12.5,
+          "actuator pin clearance; final match OEM eye"
+        ]
+      ],
+      "quantity": 2,
+      "unit_mass_kg": 0.32006660065207815
+    },
+    {
+      "id": "P06",
+      "description": "Upper clevis ear; short nose clears MLF housing",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 28872.815369691485,
+      "dimensions": [
+        70,
+        43,
+        10
+      ],
+      "holes": [
+        [
+          0,
+          -8.5,
+          12.5,
+          "actuator pin clearance; final match OEM eye"
+        ]
+      ],
+      "quantity": 2,
+      "unit_mass_kg": 0.22665160065207815
+    },
+    {
+      "id": "P07",
+      "description": "Ballast pan; not a patient seat",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 765719.2037334939,
+      "dimensions": [
+        400,
+        320,
+        6
+      ],
+      "holes": [
+        [
+          -160,
+          -110,
+          11,
+          "M10 ballast restraint"
+        ],
+        [
+          -160,
+          110,
+          11,
+          "M10 ballast restraint"
+        ],
+        [
+          160,
+          -110,
+          11,
+          "M10 ballast restraint"
+        ],
+        [
+          160,
+          110,
+          11,
+          "M10 ballast restraint"
+        ]
+      ],
+      "quantity": 1,
+      "unit_mass_kg": 6.0108957493079265
+    },
+    {
+      "id": "P08",
+      "description": "Perch prop ladder plate; horizontal local = world Y",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 221479.2885016549,
+      "dimensions": [
+        70,
+        350,
+        10
+      ],
+      "holes": [
+        [
+          -15,
+          -144,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          -119,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          -94,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          -69,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          -44,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          -19,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          6,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          31,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          56,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          81,
+          16.5,
+          "through; ream paired plates together"
+        ],
+        [
+          -15,
+          106,
+          16.5,
+          "through; ream paired plates together"
+        ]
+      ],
+      "quantity": 4,
+      "unit_mass_kg": 1.7386124147379909
+    },
+    {
+      "id": "P09",
+      "description": "Moving prop contact tab; rear edge Y935 clears relieved bridges",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 67999.99999999999,
+      "dimensions": [
+        50,
+        85,
+        16
+      ],
+      "holes": [],
+      "quantity": 2,
+      "unit_mass_kg": 0.5337999999999998
+    },
+    {
+      "id": "P10",
+      "description": "Lower clevis pedestal landing",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 425462.97400641034,
+      "dimensions": [
+        120,
+        180,
+        20
+      ],
+      "holes": [
+        [
+          -35,
+          -55,
+          10.2,
+          "M12-6H through after welding"
+        ],
+        [
+          -35,
+          15,
+          10.2,
+          "M12-6H through after welding"
+        ],
+        [
+          35,
+          -55,
+          10.2,
+          "M12-6H through after welding"
+        ],
+        [
+          35,
+          15,
+          10.2,
+          "M12-6H through after welding"
+        ]
+      ],
+      "quantity": 1,
+      "unit_mass_kg": 3.339884345950321
+    },
+    {
+      "id": "P11",
+      "description": "Ladder-to-post bridge; 60 wide x 6 deep front-edge relief, centred, through thickness",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 29280.0,
+      "dimensions": [
+        80,
+        35,
+        12
+      ],
+      "holes": [],
+      "quantity": 4,
+      "unit_mass_kg": 0.22984799999999997
+    },
+    {
+      "id": "P12",
+      "description": "Moving yoke spacer to bridge",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 45000.0,
+      "dimensions": [
+        50,
+        30,
+        30
+      ],
+      "holes": [],
+      "quantity": 2,
+      "unit_mass_kg": 0.35324999999999995
+    },
+    {
+      "id": "P13",
+      "description": "Square mast/base web; weld per assembly map",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 60000.0,
+      "dimensions": [
+        100,
+        100,
+        6
+      ],
+      "holes": [],
+      "quantity": 2,
+      "unit_mass_kg": 0.471
+    },
+    {
+      "id": "P15",
+      "description": "Perch screw block; M20-6H through at local Y+15; cross pin at Y-15 Z15",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 250066.51249751478,
+      "dimensions": [
+        50,
+        70,
+        80
+      ],
+      "operations": "Tap M20x2.5 through; bore cross pin 16.5 through X; verify 11.75 mm nominal ligament",
+      "quantity": 2,
+      "unit_mass_kg": 1.963022123105491
+    },
+    {
+      "id": "P16",
+      "description": "Perch cap; underside 20.5 dia x 3 deep locates screw tip; tether outside load path",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 31009.809265496668,
+      "dimensions": [
+        40,
+        40,
+        20
+      ],
+      "operations": "Circular pocket from underside; no thread; grease contact",
+      "quantity": 2,
+      "unit_mass_kg": 0.24342700273414883
+    },
+    {
+      "id": "P17",
+      "description": "Independent carriage retention stop; 8.5 cross bore through Y at Z10",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 9477.179377003236,
+      "dimensions": [
+        16,
+        36,
+        20
+      ],
+      "operations": "Cross drill 8.5 through Y; bolt M8x55 tentative; dynamic capacity requires review",
+      "quantity": 4,
+      "unit_mass_kg": 0.0743958581094754
+    },
+    {
+      "id": "T01",
+      "description": "Base longitudinal leg",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 985600.0,
+      "section": [
+        40,
+        80,
+        4
+      ],
+      "cut_length": 1100,
+      "quantity": 2,
+      "unit_mass_kg": 7.736959999999999
+    },
+    {
+      "id": "T02",
+      "description": "Front base cross member",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 680959.9999999998,
+      "section": [
+        80,
+        40,
+        4
+      ],
+      "cut_length": 760,
+      "quantity": 1,
+      "unit_mass_kg": 5.345535999999997
+    },
+    {
+      "id": "T03",
+      "description": "Mast post",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 1075199.9999999995,
+      "section": [
+        80,
+        40,
+        4
+      ],
+      "cut_length": 1200,
+      "quantity": 2,
+      "unit_mass_kg": 8.440319999999996
+    },
+    {
+      "id": "T04",
+      "description": "Moving front cross member",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 519680.0000000001,
+      "section": [
+        60,
+        60,
+        4
+      ],
+      "cut_length": 580,
+      "quantity": 1,
+      "unit_mass_kg": 4.0794880000000004
+    },
+    {
+      "id": "T10",
+      "description": "Moving middle cross member; fits between continuous side arms",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 412160.00000000023,
+      "section": [
+        60,
+        60,
+        4
+      ],
+      "cut_length": 460,
+      "quantity": 1,
+      "unit_mass_kg": 3.2354560000000014
+    },
+    {
+      "id": "T05",
+      "description": "Moving side arm; square-cut butt joints",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 707840.0000000007,
+      "section": [
+        60,
+        60,
+        4
+      ],
+      "cut_length": 790,
+      "quantity": 2,
+      "unit_mass_kg": 5.556544000000005
+    },
+    {
+      "id": "T06",
+      "description": "Ballast support drop",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 412160.00000000023,
+      "section": [
+        60,
+        60,
+        4
+      ],
+      "cut_length": 460,
+      "quantity": 4,
+      "unit_mass_kg": 3.2354560000000014
+    },
+    {
+      "id": "T07",
+      "description": "Ballast cross member",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 627200.0000000006,
+      "section": [
+        60,
+        60,
+        4
+      ],
+      "cut_length": 700,
+      "quantity": 2,
+      "unit_mass_kg": 4.923520000000004
+    },
+    {
+      "id": "T08",
+      "description": "Stationary prop support post",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 448000.00000000023,
+      "section": [
+        60,
+        60,
+        4
+      ],
+      "cut_length": 500,
+      "quantity": 2,
+      "unit_mass_kg": 3.5168000000000017
+    },
+    {
+      "id": "T09",
+      "description": "Prop-post base outrigger",
+      "kind": "custom",
+      "material": "S355 / YSt355; mill certificate required",
+      "volume_mm3": 89600.00000000003,
+      "section": [
+        60,
+        60,
+        4
+      ],
+      "cut_length": 100,
+      "quantity": 2,
+      "unit_mass_kg": 0.7033600000000002
+    },
+    {
+      "id": "PIN12",
+      "description": "Turned EN8/C45 clevis pin; 3 mm split-pin holes at 5 from each end",
+      "kind": "custom",
+      "material": "EN8/C45 with material certificate",
+      "volume_mm3": 7748.509620748218,
+      "diameter": 12,
+      "cut_length": 70,
+      "quantity": 2,
+      "unit_mass_kg": 0.06082580052287351
+    },
+    {
+      "id": "PIN16",
+      "description": "Turned EN8/C45 clevis pin; 3 mm split-pin holes at 5 from each end",
+      "kind": "custom",
+      "material": "EN8/C45 with material certificate",
+      "volume_mm3": 21891.629034088168,
+      "diameter": 16,
+      "cut_length": 110,
+      "quantity": 2,
+      "unit_mass_kg": 0.1718492879175921
+    },
+    {
+      "id": "BOLT20",
+      "description": "ISO 4017 M20x100-8.8 full thread; schematic thread envelope",
+      "kind": "purchased",
+      "material": "8.8 fastener",
+      "volume_mm3": 41548.4143116222,
+      "quantity": 2
+    },
+    {
+      "id": "RAIL",
+      "description": "HIWIN HGR25R1000; nominal rail mount envelope; verify 20 mm end distance",
+      "kind": "purchased",
+      "material": "Vendor alloy steel",
+      "volume_mm3": 491606.79325757804,
+      "quantity": 1
+    },
+    {
+      "id": "BLOCK",
+      "description": "HIWIN HGW25CC; H36 W70 L84; 57x45 M8 pattern",
+      "kind": "purchased",
+      "material": "Vendor alloy steel",
+      "volume_mm3": 146989.91999999998,
+      "quantity": 2
+    },
+    {
+      "id": "CASTER",
+      "description": "Blickle LWK-TPA126G-FI-P25; own envelope only; pedal/sweep need physical check",
+      "kind": "purchased",
+      "material": "Vendor polymer/steel",
+      "volume_mm3": 534160.4942353667,
+      "quantity": 4
+    },
+    {
+      "id": "ACT_BODY",
+      "description": "LINAK LA40 PL manual-lowering own exclusion envelope; not vendor model",
+      "kind": "purchased",
+      "material": "OEM assembly",
+      "volume_mm3": 2623939.3800004954,
+      "quantity": 1
+    },
+    {
+      "id": "ACT_ROD",
+      "description": "LA40 PL telescoping rod and MLF envelope; nominal housing ends19.1 below upper pin; supplier hold",
+      "kind": "purchased",
+      "material": "OEM assembly",
+      "volume_mm3": 326193.76433708577,
+      "quantity": 1
+    },
+    {
+      "id": "CTRL",
+      "description": "Reserved CBJ2/BAJ enclosure volume; final brackets match-drilled",
+      "kind": "purchased",
+      "material": "OEM assembly",
+      "volume_mm3": 6480000.0,
+      "quantity": 1
+    }
+  ],
+  "instances": [
+    {
+      "id": "P01",
+      "name": "caster_plate_-1_0",
+      "xyz": [
+        -400,
+        0,
+        163
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P01",
+      "name": "caster_plate_-1_1000",
+      "xyz": [
+        -400,
+        1000,
+        163
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "T01",
+      "name": "base_leg_-1",
+      "xyz": [
+        -400,
+        -50,
+        211
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        -90
+      ],
+      "moving": false
+    },
+    {
+      "id": "T03",
+      "name": "mast_post_-1",
+      "xyz": [
+        -70,
+        104,
+        251
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "T08",
+      "name": "prop_post_-1",
+      "xyz": [
+        -330,
+        1000,
+        251
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "T09",
+      "name": "prop_outrigger_-1",
+      "xyz": [
+        -380,
+        1000,
+        221
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": false
+    },
+    {
+      "id": "P13",
+      "name": "mast_web_-1",
+      "xyz": [
+        -116,
+        150,
+        301
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": false
+    },
+    {
+      "id": "P08",
+      "name": "ladder_-1_-365",
+      "xyz": [
+        -370,
+        900,
+        425
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": false
+    },
+    {
+      "id": "P08",
+      "name": "ladder_-1_-295",
+      "xyz": [
+        -300,
+        900,
+        425
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": false
+    },
+    {
+      "id": "P11",
+      "name": "ladder_bridge_-1_275",
+      "xyz": [
+        -330,
+        952.5,
+        275
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P11",
+      "name": "ladder_bridge_-1_575",
+      "xyz": [
+        -330,
+        952.5,
+        575
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P01",
+      "name": "caster_plate_1_0",
+      "xyz": [
+        400,
+        0,
+        163
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P01",
+      "name": "caster_plate_1_1000",
+      "xyz": [
+        400,
+        1000,
+        163
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "T01",
+      "name": "base_leg_1",
+      "xyz": [
+        400,
+        -50,
+        211
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        -90
+      ],
+      "moving": false
+    },
+    {
+      "id": "T03",
+      "name": "mast_post_1",
+      "xyz": [
+        70,
+        104,
+        251
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "T08",
+      "name": "prop_post_1",
+      "xyz": [
+        330,
+        1000,
+        251
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "T09",
+      "name": "prop_outrigger_1",
+      "xyz": [
+        280,
+        1000,
+        221
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": false
+    },
+    {
+      "id": "P13",
+      "name": "mast_web_1",
+      "xyz": [
+        110,
+        150,
+        301
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": false
+    },
+    {
+      "id": "P08",
+      "name": "ladder_1_295",
+      "xyz": [
+        290,
+        900,
+        425
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": false
+    },
+    {
+      "id": "P08",
+      "name": "ladder_1_365",
+      "xyz": [
+        360,
+        900,
+        425
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": false
+    },
+    {
+      "id": "P11",
+      "name": "ladder_bridge_1_275",
+      "xyz": [
+        330,
+        952.5,
+        275
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P11",
+      "name": "ladder_bridge_1_575",
+      "xyz": [
+        330,
+        952.5,
+        575
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "T02",
+      "name": "base_front_cross",
+      "xyz": [
+        -380,
+        100,
+        211
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": false
+    },
+    {
+      "id": "P02",
+      "name": "machined_backbone",
+      "xyz": [
+        0,
+        124,
+        950
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        -90
+      ],
+      "moving": false
+    },
+    {
+      "id": "P17",
+      "name": "rail_retention_stop_-26_640",
+      "xyz": [
+        -26,
+        158,
+        640
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P17",
+      "name": "rail_retention_stop_-26_1298",
+      "xyz": [
+        -26,
+        158,
+        1298
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P17",
+      "name": "rail_retention_stop_26_640",
+      "xyz": [
+        26,
+        158,
+        640
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P17",
+      "name": "rail_retention_stop_26_1298",
+      "xyz": [
+        26,
+        158,
+        1298
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P10",
+      "name": "lower_pedestal",
+      "xyz": [
+        0,
+        60,
+        251
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P04",
+      "name": "lower_clevis_base",
+      "xyz": [
+        0,
+        40,
+        271
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P05",
+      "name": "lower_clevis_ear_-1",
+      "xyz": [
+        -24.25,
+        40,
+        313
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": false
+    },
+    {
+      "id": "P05",
+      "name": "lower_clevis_ear_1",
+      "xyz": [
+        14.25,
+        40,
+        313
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": false
+    },
+    {
+      "id": "PIN12",
+      "name": "lower_actuator_pin",
+      "xyz": [
+        -35,
+        40,
+        330
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": false
+    },
+    {
+      "id": "RAIL",
+      "name": "HGR25_rail",
+      "xyz": [
+        0,
+        140,
+        450
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "CASTER",
+      "name": "caster_-400_0",
+      "xyz": [
+        -400,
+        0,
+        0
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "CASTER",
+      "name": "caster_-400_1000",
+      "xyz": [
+        -400,
+        1000,
+        0
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "CASTER",
+      "name": "caster_400_0",
+      "xyz": [
+        400,
+        0,
+        0
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "CASTER",
+      "name": "caster_400_1000",
+      "xyz": [
+        400,
+        1000,
+        0
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "ACT_BODY",
+      "name": "LA40_PL_body",
+      "xyz": [
+        0,
+        40,
+        330
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "CTRL",
+      "name": "OEM_control_reservation",
+      "xyz": [
+        0,
+        -100,
+        1000
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P03",
+      "name": "moving_bridge",
+      "xyz": [
+        0,
+        176,
+        854
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        -90
+      ],
+      "moving": true
+    },
+    {
+      "id": "BLOCK",
+      "name": "HGW25_block_-150",
+      "xyz": [
+        0,
+        140,
+        704
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "BLOCK",
+      "name": "HGW25_block_150",
+      "xyz": [
+        0,
+        140,
+        1004
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "T04",
+      "name": "moving_front_cross",
+      "xyz": [
+        -290,
+        40,
+        914
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": true
+    },
+    {
+      "id": "T10",
+      "name": "moving_middle_cross",
+      "xyz": [
+        -230,
+        248,
+        914
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": true
+    },
+    {
+      "id": "T05",
+      "name": "moving_arm_-1",
+      "xyz": [
+        -260,
+        70,
+        914
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        -90
+      ],
+      "moving": true
+    },
+    {
+      "id": "T06",
+      "name": "seat_drop_-1_580",
+      "xyz": [
+        -260,
+        580,
+        424
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "T06",
+      "name": "seat_drop_-1_820",
+      "xyz": [
+        -260,
+        820,
+        424
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "P12",
+      "name": "bridge_spacer_-1",
+      "xyz": [
+        -80,
+        203,
+        914
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "P06",
+      "name": "upper_clevis_ear_-1",
+      "xyz": [
+        -24.25,
+        40,
+        862.5
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": true
+    },
+    {
+      "id": "P09",
+      "name": "prop_contact_-1",
+      "xyz": [
+        -330,
+        892.5,
+        380
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "T05",
+      "name": "moving_arm_1",
+      "xyz": [
+        260,
+        70,
+        914
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        -90
+      ],
+      "moving": true
+    },
+    {
+      "id": "T06",
+      "name": "seat_drop_1_580",
+      "xyz": [
+        260,
+        580,
+        424
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "T06",
+      "name": "seat_drop_1_820",
+      "xyz": [
+        260,
+        820,
+        424
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "P12",
+      "name": "bridge_spacer_1",
+      "xyz": [
+        80,
+        203,
+        914
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "P06",
+      "name": "upper_clevis_ear_1",
+      "xyz": [
+        14.25,
+        40,
+        862.5
+      ],
+      "rotation": [
+        [
+          1,
+          1,
+          1
+        ],
+        120
+      ],
+      "moving": true
+    },
+    {
+      "id": "P09",
+      "name": "prop_contact_1",
+      "xyz": [
+        330,
+        892.5,
+        380
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "T07",
+      "name": "seat_cross_580",
+      "xyz": [
+        -350,
+        580,
+        394
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": true
+    },
+    {
+      "id": "T07",
+      "name": "seat_cross_820",
+      "xyz": [
+        -350,
+        820,
+        394
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": true
+    },
+    {
+      "id": "P07",
+      "name": "secured_ballast_pan",
+      "xyz": [
+        0,
+        700,
+        424
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "PIN12",
+      "name": "upper_actuator_pin",
+      "xyz": [
+        -35,
+        40,
+        854
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": true
+    },
+    {
+      "id": "ACT_ROD",
+      "name": "LA40_PL_rod",
+      "xyz": [
+        0,
+        40,
+        460
+      ],
+      "rotation": null,
+      "moving": true
+    },
+    {
+      "id": "P15",
+      "name": "prop_screw_block_-1",
+      "xyz": [
+        -330,
+        900,
+        266
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "PIN16",
+      "name": "prop_pin_-1",
+      "xyz": [
+        -385,
+        885,
+        281
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": false
+    },
+    {
+      "id": "BOLT20",
+      "name": "prop_jackscrew_-1",
+      "xyz": [
+        -330,
+        915,
+        263
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P16",
+      "name": "prop_cap_-1",
+      "xyz": [
+        -330,
+        915,
+        360
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P15",
+      "name": "prop_screw_block_1",
+      "xyz": [
+        330,
+        900,
+        266
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "PIN16",
+      "name": "prop_pin_1",
+      "xyz": [
+        275,
+        885,
+        281
+      ],
+      "rotation": [
+        [
+          0,
+          1,
+          0
+        ],
+        90
+      ],
+      "moving": false
+    },
+    {
+      "id": "BOLT20",
+      "name": "prop_jackscrew_1",
+      "xyz": [
+        330,
+        915,
+        263
+      ],
+      "rotation": null,
+      "moving": false
+    },
+    {
+      "id": "P16",
+      "name": "prop_cap_1",
+      "xyz": [
+        330,
+        915,
+        360
+      ],
+      "rotation": null,
+      "moving": false
+    }
+  ],
+  "poses": [
+    {
+      "pose": "lowered",
+      "extension_mm": 0,
+      "seat_top_mm": 430,
+      "upper_pin_mm": 854
+    },
+    {
+      "pose": "mid",
+      "extension_mm": 125,
+      "seat_top_mm": 555,
+      "upper_pin_mm": 979
+    },
+    {
+      "pose": "raised",
+      "extension_mm": 250,
+      "seat_top_mm": 680,
+      "upper_pin_mm": 1104
+    }
+  ]
+}
