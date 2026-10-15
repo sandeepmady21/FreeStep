@@ -288,4 +288,4 @@ if __name__ == "__main__":
     generate_all_parts()
     generate_cutlist()
     generate_bom()
-    print("Generated 9.85 kg Standard-COTS Zero-Lock-In CAD, Cutlist, and ₹55,200 BOM successfully!")
+    print("Generated 9.85 kg Standard-COTS Zero-Lock-In CAD, Cutlist, and ₹62,800 BOM successfully!")

@@ -3,7 +3,7 @@
 This architecture follows one golden rule: **Buy 100% industry-standard, multi-vendor commodity parts (sold by dozens of sellers on Robu.in, Amazon India, Decathlon, and IndiaMART with zero B2B manufacturer lock-in), and ONLY custom-machine the 6 structural `7075-T6` aluminum joints that give the walker its unique geometry.**
 
 - **Total Weight:** **`9.85 kg`** (Sub-10 kg featherweight class)
-- **Total Prototype Cost:** **`₹55,200`** (20 line items in [`hardware/INDIA_BOM_SOURCING.csv`](./hardware/INDIA_BOM_SOURCING.csv))
+- **Total Prototype Cost:** **`₹62,800`** (20 line items in [`hardware/INDIA_BOM_SOURCING.csv`](./hardware/INDIA_BOM_SOURCING.csv))
 - **Mechanical Assembly Time:** **`10–12 Hours` (1 Single Weekend)** — zero raw leadscrew alignment or exposed belt tensioning
 - **Bathroom & Saree Safety:** **10/10 (`IP65` Sealed Cartridges)** — zero exposed belts or spinning motor bells near Grandma's ankles
 
@@ -20,7 +20,7 @@ This architecture follows one golden rule: **Buy 100% industry-standard, multi-v
 
 ---
 
-## 2. Day-1 Ordering Checklist (20 Standard Items Across 4 Batches — `₹55,200` Total)
+## 2. Day-1 Ordering Checklist (20 Standard Items Across 4 Batches — `₹62,800` Total)
 
 Full item-by-item specifications and weights are in [`hardware/INDIA_BOM_SOURCING.csv`](./hardware/INDIA_BOM_SOURCING.csv).
 

@@ -630,7 +630,7 @@ def make_interactive_html():
       <h1>FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) — MASTER ASSEMBLY BLUEPRINTS</h1>
       <div class="sub">Interactive Exploded Sub-Assembly CAD Viewer + All 6 Printable 1:1 Engineering Blueprint Sheets</div>
     </div>
-    <div class="badge">100% STANDARD MULTI-VENDOR COTS | ₹55,200 | 1-WEEKEND BUILD</div>
+    <div class="badge">100% STANDARD MULTI-VENDOR COTS | ₹62,800 | 1-WEEKEND BUILD</div>
   </header>
 
   <div class="controls">
@@ -815,7 +815,7 @@ def make_interactive_html():
       ctx.fillText(`• Current Lift: ${lift}mm / 300mm (Saddle: ${saddleH}mm)`, 700, 240);
       ctx.fillText(`• Kitchen Tray Extension: +${tray}mm forward`, 700, 262);
       ctx.fillStyle = '#f43f5e';
-      ctx.fillText('• Total Mass: 9.85 kg | Cost: ₹55,200', 700, 290);
+      ctx.fillText('• Total Mass: 9.85 kg | Cost: ₹62,800', 700, 290);
 
       // 6. 180-Deg Split Saddle on Inner Plunger
       const sx = px - Math.sin(rakeRad) * 45;
@@ -858,7 +858,7 @@ def make_interactive_html():
 def make_markdown_manual():
     md = '''# FreeStep Air (`9.85 kg` Standard-COTS Edition): Master Assembly Blueprints (Sheets 1–6)
 
-All 6 engineering assembly blueprints below are scaled for the **100% Standard Multi-Vendor COTS Cartridge Architecture** (`₹55,200` total cost, `9.85 kg` total mass, `10–12 hour` single-weekend build).
+All 6 engineering assembly blueprints below are scaled for the **100% Standard Multi-Vendor COTS Cartridge Architecture** (`₹62,800` total cost, `9.85 kg` total mass, `10–12 hour` single-weekend build).
 
 You can also open the interactive exploded CAD blueprint viewer in your browser at [`docs/assembly_blueprints.html`](../docs/assembly_blueprints.html).
 
