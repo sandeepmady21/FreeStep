@@ -156,7 +156,24 @@ All components below are standard off-the-shelf industrial parts available in In
 | **Power System** | `24V 6Ah–8Ah LiFePO4` Battery Pack with BMS + 24V Charger + Emergency Stop Mushroom Button | 1 set | Robu.in / Local EV Pack Builder | ₹3,200 |
 | **Ergonomics** | Padded Forearm Gutter Troughs + 180° Split Saddle Cushions + Flip-Down Ankle-Offload Knee Pad + Tray | 1 set | Local Upholstery / Medical Supply | ₹1,800 |
 | **3D Printed Parts** | Non-structural ABS/PETG Electronics Covers, Wire Channels, & Ergonomic Handle Grips | ~600g | Self / Robu 3D Printing | ₹650 |
-| **Total BOM** | **Complete "ElderStep Pro" Functional Prototype** | | | **~₹27,600** *(or ~₹16,500 if built on top of an existing ₹7k Rollator frame)* |
+| **Total BOM (Standard Spec)** | **Complete Functional Prototype (Al/Steel Spec)** | | | **~₹27,600** |
+
+---
+
+### 5.1 The "No-Compromise Ultra-Light Medical Spec" (`11.0 kg` Total Weight, Aerospace/Hospital Grade)
+
+When the priority is **minimum weight (`11.0 kg` total vs. `20+ kg` steel frames), whisper-quiet medical operation (`<42 dB`), zero flex, and maximum daily usefulness**, we upgrade the architecture to the **Carbon / `7075-T6` / `igus®` / `LINAK` / `FOC` Specification** (full line-by-line sourcing and mass budget in [`hardware/INDIA_BOM_SOURCING.csv`](hardware/INDIA_BOM_SOURCING.csv)):
+
+| Subsystem | Standard DIY Spec (`~19 kg`) | **No-Compromise Ultra-Light Spec (`11.0 kg`)** | Why It Is Massively Better |
+| :--- | :--- | :--- | :--- |
+| **Chassis & Columns** | Heavy `40×40 mm` metal box tubes (`~6.5 kg`) | **Autoclave 3K Roll-Wrapped Carbon Tubes (`ø30 mm × 2.5 mm`) + 5-Axis CNC `7075-T6` Billet Split-Clamps + Grade-5 Titanium Bolts (`2.4 kg`)** | Uses outer-diameter CNC clamping + `3M DP420` structural epoxy (zero cross-drilled holes in carbon!). **63% lighter** with aerospace torsional stiffness. |
+| **Linear Guides** | Steel rods + `LM16UU` ball bearings (`1.8 kg`, rusts in wet bathrooms) | **`igus® DryLin® W` Hard-Anodized Aluminum Rails + `iglidur® J` Polymer Carriages (`0.9 kg`, igus India Bengaluru)** | **50% lighter**, 100% washdown-proof in wet Indian bathrooms, dead silent, and never binds or gouges under moment loads. |
+| **Sit-to-Stand Actuators** | Generic industrial lead-screw actuators (`65 dB` whine, `7 mm/s` slow) | **Medical-Grade `LINAK LA23` or `TiMOTION TA16` (`<42 dB` whisper-quiet, `IPX6` washable, `25 mm/s` fast lift)** | Lifts from `17"` toilet/bed height to `27"` kitchen counter perch in **8 seconds** smoothly and silently; certified for hospital shower chairs. |
+| **Rear Hub Drivetrain** | Heavy e-bike iron hub motors (`6.0 kg` pair, cogging drag when off) | **Lightweight Pancake Outrunner FOC Hub Motors (`1.5 kg` pair) + `14-Bit AS5048A` Encoders + `SimpleFOC / VESC`** | Saves **4.5 kg** at the rear axle! Zero magnetic drag when pushed unpowered, plus active tremor damping and instant hill-hold. |
+| **Front Casters** | Generic hardware-store swivel wheels | **`Tente®` / `Blickle®` `150 mm` Medical Twin-Wheel Casters with Electromagnetic Straight-Line Lock (`0.6 kg`)** | Effortless rolling over `20 mm` bathroom marble thresholds; locks straight (`0°`) when backing out of narrow bathrooms. |
+| **Cockpit Force Sensing** | Film `FSR402` strips (`±15%` drift) | **Dual `20 kg` Aluminum Strain-Gauge Load Cells + `24-Bit ADS1220` ADC inside Forearm Rests** | Measures exact gram-level push intent ("Zero-Gravity" power steering) AND exact kilogram offloading on the healing ankle. |
+| **Seat & Kitchen Bridge** | Basic foam pad & clip-on plastic tray | **Viscoelastic Medical Gel Split-Saddle (`Fidlock®` magnetic 1-finger latch) + Elevating Countertop Slide-Bridge Tray (`17"` to `34"`) with Gimbal & `Qi2` Charger** | Tray rises flush with the `33"` kitchen granite counter so she can **slide** heavy pots/plates across without lifting a single gram! |
+| **Battery System** | Hardwired `24V` brick (`3.2 kg`) | **`600 g` Hot-Swappable `21700` Lithium Cartridge with `100W USB-C PD` Charging** | Swaps in 3 seconds like a cordless drill battery; charges with a standard laptop USB-C charger. |
 
 ---
 

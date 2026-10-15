@@ -1,14 +1,14 @@
-Subsystem,Item Name,Specification,Qty,Preferred India Source,Unit Price (INR),Total Price (INR)
-Vertical Lift,Heavy-Duty Electric Linear Actuator,"24V DC, 1500N (150kgf), 250mm Stroke, IP65, Hall Sensor Feedback",2,Robu.in / IndiaMART,2600,5200
-Width Morph,Compact Linear Actuator,"24V DC, 1000N, 130mm Stroke, Built-in Limit Switches",1,Robu.in,1900,1900
-Width Morph,Hardened Chrome Linear Shafts + Bearings,16mm Dia x 650mm SFC16 Shaft (x2) + LMF16LUU Flanged Bearings (x4),1,Robu.in / Local CNC,1800,1800
-Chassis,Telescoping Square Tubes + Wear Pads,6061-T6 Al / SS304 40x40x2.5mm & 35x35x2.5mm + UHMW-PE Strips,1,Local Metal Market / IndiaMART,2800,2800
-Brackets,Laser-Cut Structural Gussets & Saddle Hinges,5mm/6mm Mild Steel / Al6061 (from hardware/laser_cut/*.dxf),12,Robu Laser Cutting Service,185,2220
-Drivetrain,6.5-inch Geared/Direct BLDC Hub Motor Wheels,24V 250W High-Torque Hub Motors with Hall Sensors & E-Brake,2,IndiaMART / EV Suppliers,1800,3600
-Front Casters,6-inch Heavy-Duty Medical Swivel Casters,"PU Tread, Sealed Precision Ball Bearings, 360-Deg Swivel",2,Kosmochem / IndiaMART,550,1100
-Electronics,ESP32-S3 DevKitC-1 + MPU6050 6-Axis IMU,Dual-Core MCU + I2C Accelerometer/Gyroscope for Stumble Lock,1,Robu.in,650,650
-Motor Drivers,BTS7960 43A H-Bridge Drivers + ZS-X11H BLDC Drivers,3x BTS7960 (Actuators) + 2x ZS-X11H (Rear Hub Motors),1,Robu.in,1750,1750
-Sensors & UI,Forearm FSR402 Force Sensors + Waterproof Rockers,2x FSR402 + 3x IP65 Momentary Rocker Switches + 2x Limit Switches,1,Robu.in,950,950
-Power System,24V 8Ah LiFePO4 Battery Pack + BMS + Charger,Lightweight Lithium Iron Phosphate Pack + Emergency Stop Switch,1,Robu.in / Local EV Pack Builder,3200,3200
-Ergonomics,Padded Forearm Troughs + Split Saddle + Knee Cradle,High-Density Memory Foam + Wipeable Medical Vinyl + Tray,1,Local Upholstery / KosmoCare,1800,1800
-3D Prints,Non-Structural Sensor Covers & Switch Cockpit,"PETG/ABS Filament (~600g, from hardware/3d_print/*.stl)",1,Self / Robu 3D Printing,650,650
+Subsystem,Item Name,Premium No-Compromise Specification,Mass (kg),Qty,India Source (Direct / Authorized),Unit Price (INR),Total Price (INR)
+Chassis Tubes,3K Roll-Wrapped Carbon Fiber Structural Tubes,"Autoclave-cured 3K twill weave (NOT pultruded), Ø30mm x 2.5mm wall & Ø25mm x 2.5mm wall",1.10,1 set,Robu.in Carbon / Composite Suppliers India,6800,6800
+Structural Nodes,5-Axis CNC 7075-T6 Billet Split-Clamps & Hinges,"Aerospace 7075-T6 Aluminum, hard-anodized + 3M DP420 Epoxy + Grade-5 Ti-6Al-4V Bolts",1.30,14 pcs,Karkhana.io / Fracktal / Robu CNC Service,650,9100
+Linear Guides,igus DryLin W / T Linear Guide System,"Hard-anodized Al rails (WS-10-40) + iglidur J maintenance-free washdown polymer carriages",0.90,1 set,igus India Pvt Ltd (Bengaluru Direct),5400,5400
+Vertical Lift,Medical-Grade Precision Linear Actuators,"LINAK LA23 / TiMOTION TA16 (24V, 1500N, 250mm stroke, IPX6 Washable, <42dB, Hall Sync)",2.20,2,Linak India (Mumbai/BLR) / TiMOTION India,8500,17000
+Width Morph,Compact Precision Linear Actuator,"LINAK / TiMOTION Micro Actuator (24V, 1000N, 130mm stroke, IP66, integrated limit feedback)",0.60,1,Linak India / TiMOTION India,6200,6200
+Drivetrain,Lightweight Outrunner FOC Hub Motor Wheels,"6.5-inch PU medical tire, pancake BLDC motor + 14-bit AS5048A magnetic encoder (<750g/wheel)",1.50,2,ODrive / Robu / Custom EV CNC Hub,5500,11000
+Front Casters,Tente / Blickle Medical Twin-Wheel Swivel Casters,"150mm (6in) soft-tread thermorubber, sealed precision bearings + directional swivel lock",0.60,2,Tente India / Blickle India,2200,4400
+Motor Control,Dual-Channel FOC Controller + Actuator H-Bridges,"Dual VESC / ODrive S1 / SimpleFOC PowerShield (silent sinusoidal FOC) + 3x BTS7960/DRV8873",0.35,1 set,Robu.in / MakerBotics India,6800,6800
+Force & IMU Sensing,24-Bit Dual Load-Cell Cockpit + 6-Axis IMU,"2x 20kg Micro-Beam Aluminum Load Cells + ADS1220 24-bit ADC + BNO085/MPU6050 IMU + 2x VL53L1X ToF",0.20,1 set,Robu.in / Evelta Electronics (Mumbai),3400,3400
+Power System,Hot-Swappable 24V Li-Ion/LiFePO4 Smart Cartridge,"21700 Samsung 50E cells (24V 10Ah, 600g) + Smart BMS + 100W USB-C PD Bidirectional Charging",0.65,1 set,Local Custom EV Pack / Makita 18V-24V Dock,5800,5800
+Ergonomics & Saddle,Medical Viscoelastic Gel Split Saddle + Ankle Cradle,"Dartex waterproof antimicrobial upholstery, memory-gel foam, Fidlock magnetic auto-latch, Boa ankle cradle",1.10,1 set,Custom Medical Orthotic Upholstery,4800,4800
+Kitchen Bridge Tray,Carbon-Core Elevating Kitchen Tray + Gimbal + Qi2,"1-Axis passive teacup gimbal + silicone non-slip mat + 15W MagSafe/Qi2 phone charger",0.50,1 set,Custom CNC Carbon Plate + Electronics,2800,2800
+TOTAL,"ElderStep Pro (Ultra-Light Carbon / 7075 Medical Spec)","Total Weight: 11.00 kg (24.2 lbs) | Load Rating: 120 kg | Noise: <42 dB | Waterproof: IPX6",11.00,-,-,83500,83500
