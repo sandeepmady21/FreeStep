@@ -1,5 +1,5 @@
 /**
- * ElderStep Pro (Final 10.20 kg 5-Module Carbon/7075 Edition) - Master Safety & Control Firmware
+ * FreeStep Air (Final 10.20 kg 5-Module Carbon/7075 Edition) - Master Safety & Control Firmware
  * Target MCU: ESP32-S3
  *
  * Implements All Global Benchmark Refinements:
@@ -216,7 +216,7 @@ void setup() {
   Wire.write(0x00);
   imuAvailable = (Wire.endTransmission() == 0);
 
-  Serial.println("ElderStep Pro 10.20kg 5-Module Controller Initialized");
+  Serial.println("FreeStep Air 10.20kg 5-Module Controller Initialized");
 }
 
 void loop() {

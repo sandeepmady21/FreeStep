@@ -1,4 +1,4 @@
-# ElderStep Pro (`9.85 kg` Standard-COTS Zero-Lock-In Edition): Procurement & 1-Weekend Build Plan
+# FreeStep Air (`9.85 kg` Standard-COTS Zero-Lock-In Edition): Procurement & 1-Weekend Build Plan
 
 This architecture follows one golden rule: **Buy 100% industry-standard, multi-vendor commodity parts (sold by dozens of sellers on Robu.in, Amazon India, Decathlon, and IndiaMART with zero B2B manufacturer lock-in), and ONLY custom-machine the 6 structural `7075-T6` aluminum joints that give the walker its unique geometry.**
 

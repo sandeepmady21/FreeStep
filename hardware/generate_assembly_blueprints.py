@@ -39,7 +39,7 @@ def svg_header(title, sheet_num, subtitle):
   <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">{title}</text>
   <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">{subtitle}</text>
   <text x="1160" y="46" fill="#22c55e" font-family="monospace" font-size="16" font-weight="bold" text-anchor="end">SHEET {sheet_num} OF 6</text>
-  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">ELDERSTEP PRO (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
+  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
 '''
 
 
@@ -503,7 +503,7 @@ def make_interactive_html():
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ElderStep Pro — Interactive CAD Assembly Blueprints & Exploded Viewer</title>
+  <title>FreeStep Air — Interactive CAD Assembly Blueprints & Exploded Viewer</title>
   <style>
     :root {
       --bg: #0b1120;
@@ -627,7 +627,7 @@ def make_interactive_html():
 <body>
   <header>
     <div>
-      <h1>ELDERSTEP PRO (9.85 kg STANDARD-COTS EDITION) — MASTER ASSEMBLY BLUEPRINTS</h1>
+      <h1>FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) — MASTER ASSEMBLY BLUEPRINTS</h1>
       <div class="sub">Interactive Exploded Sub-Assembly CAD Viewer + All 6 Printable 1:1 Engineering Blueprint Sheets</div>
     </div>
     <div class="badge">100% STANDARD MULTI-VENDOR COTS | ₹55,200 | 1-WEEKEND BUILD</div>
@@ -856,7 +856,7 @@ def make_interactive_html():
 
 
 def make_markdown_manual():
-    md = '''# ElderStep Pro (`9.85 kg` Standard-COTS Edition): Master Assembly Blueprints (Sheets 1–6)
+    md = '''# FreeStep Air (`9.85 kg` Standard-COTS Edition): Master Assembly Blueprints (Sheets 1–6)
 
 All 6 engineering assembly blueprints below are scaled for the **100% Standard Multi-Vendor COTS Cartridge Architecture** (`₹55,200` total cost, `9.85 kg` total mass, `10–12 hour` single-weekend build).
 

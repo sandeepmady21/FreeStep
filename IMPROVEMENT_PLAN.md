@@ -1,4 +1,4 @@
-# FreeStep v2 ("ElderStep Pro"): Engineering Teardown, Master Plan & Product Roadmap
+# FreeStep v2 ("FreeStep Air"): Engineering Teardown, Master Plan & Product Roadmap
 
 ## 1. Mission & Core Design Philosophy
 
@@ -33,7 +33,7 @@ We analyzed both the 106-item Bill of Materials ([`README.md`](README.md)) and t
 > [!CAUTION]
 > **Do not build the original `FreeStep` as-is for an elderly post-op patient.** Inspecting [`Models/FreeStep.step`](Models/FreeStep.step) reveals 7 severe structural and ergonomic failure points when used by a senior with an ankle fracture.
 
-| # | Subsystem in `FreeStep` | Failure Mode Found in CAD / BOM | How We Fix It in **ElderStep Pro (v2)** |
+| # | Subsystem in `FreeStep` | Failure Mode Found in CAD / BOM | How We Fix It in **FreeStep Air (v2)** |
 | :- | :--- | :--- | :--- |
 | **1** | **Actuators only lift the handlebar (`Upper_Crossbar_Bent_Tube`), NOT a seat** | If an elderly person is sitting on a bed or toilet, a rising handlebar forces them to pull their entire body weight up using only their wrists and shoulders. Also offers **zero hip support** at the kitchen counter. | Couple the vertical lift directly to a **180° Split-Saddle Sit-to-Stand Seat + Forearm Troughs** so the actuators physically lift **under the pelvis/hips** (from `17"` to `28"`). |
 | **2** | **`LM10UU` steel ball bearings running on `ø10 mm` hollow carbon tubes** | Hardened steel balls inside `LM10UU` bearings point-load and crush the epoxy resin surface of hollow `ø10 mm` carbon fiber tubes (`2 mm` wall), causing delaminating grit and sudden binding under human weight. | Replace with **industrial telescoping square aluminum/steel columns with Delrin/PTFE wear pads** or **hardened chrome-plated steel linear shafts (`SFC16`)**. |
@@ -59,7 +59,7 @@ We analyzed both the 106-item Bill of Materials ([`README.md`](README.md)) and t
 
 ---
 
-## 4. Mechanical & Electrical Architecture ("ElderStep Pro")
+## 4. Mechanical & Electrical Architecture ("FreeStep Air")
 
 ```mermaid
 flowchart TD
@@ -187,7 +187,7 @@ When the priority is **minimum weight (`11.0 kg` total vs. `20+ kg` steel frames
   4. User's elbow height (standing) and knee-to-floor height (`mm`).
 * **Action 2:** Add two zero-wait upgrades to the current setup: a **clip-on kitchen walker tray** and a **beveled rubber threshold ramp** at the bathroom door.
 
-### Phase 1 (Weeks 1–2): "ElderStep v1.0" — Sit-to-Stand + Kitchen Perch + Ankle Cradle
+### Phase 1 (Weeks 1–2): "FreeStep Air v1.0" — Sit-to-Stand + Kitchen Perch + Ankle Cradle
 * **Focus:** Solve the **vertical lifting** and **hands-free kitchen/toilet support** first (fixed width calibrated to fit the bathroom door).
 * **Build Steps:**
   1. Fabricate the U-frame base (calibrated to `19.5"`–`20.5"` width to clear the specific bathroom door without needing the horizontal morphing actuator yet) with two vertical telescoping columns and the `1500N` linear actuators.
@@ -195,13 +195,13 @@ When the priority is **minimum weight (`11.0 kg` total vs. `20+ kg` steel frames
   3. Wire the **Synchronized Dual-Actuator Controller** (using Hall-sensor feedback so left and right columns never rack or tilt).
 * **Test Milestone:** Sit on the split saddle at bed/toilet height (`17"`), press UP to stand effortlessly, walk into the kitchen, raise the saddle to `27"` counter height, rest the injured leg on the knee cradle, and prepare tea with **both hands completely free**.
 
-### Phase 2 (Weeks 3–4): "ElderStep v1.5" — Smart Auto-Braking Hub Motors & Threshold Assist
+### Phase 2 (Weeks 3–4): "FreeStep Air v1.5" — Smart Auto-Braking Hub Motors & Threshold Assist
 * **Focus:** Replace rear passive wheels with **24V BLDC Hub Motors + Forearm Touch/Force Sensors + IMU**.
 * **Build Steps:**
   1. Implement **"Dead-Man's Auto-Brake"** (wheels locked solid whenever hands leave the handles—100% safe when perching at the kitchen stove or sitting down).
   2. Implement **Touch-Proportional Power Assist** (cancels out the weight of the frame so it feels feather-light) + **Threshold Crawl Button** to climb the bathroom doorway lip smoothly.
 
-### Phase 3 (Weeks 5–6): "ElderStep v2.0" — Dynamic Width-Morphing & Smart Guardian Suite
+### Phase 3 (Weeks 5–6): "FreeStep Air" — Dynamic Width-Morphing & Smart Guardian Suite
 * **Focus:** Add the motorized horizontal telescoping crossbar (`490 mm` $\leftrightarrow$ `620 mm` width morphing) with ESP32 safety interlocks, plus smart health/safety add-ons.
 
 ---

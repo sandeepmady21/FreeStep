@@ -1,4 +1,4 @@
-# ElderStep Pro (`9.85 kg` Standard-COTS Edition): Master Assembly Blueprints (Sheets 1–6)
+# FreeStep Air (`9.85 kg` Standard-COTS Edition): Master Assembly Blueprints (Sheets 1–6)
 
 All 6 engineering assembly blueprints below are scaled for the **100% Standard Multi-Vendor COTS Cartridge Architecture** (`₹55,200` total cost, `9.85 kg` total mass, `10–12 hour` single-weekend build).
 

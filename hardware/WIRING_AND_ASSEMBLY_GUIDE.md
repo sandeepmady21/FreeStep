@@ -1,4 +1,4 @@
-# ElderStep Pro (FreeStep v2) — Electrical Wiring & Mechanical Assembly Guide
+# FreeStep Air (FreeStep v2) — Electrical Wiring & Mechanical Assembly Guide
 
 ## 1. Power Distribution Architecture
 

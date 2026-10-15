@@ -21,7 +21,7 @@
   <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 01: MASTER CHASSIS ORTHOGRAPHIC & KINEMATIC ENVELOPE</text>
   <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">Side Elevation (12-Deg Nose-Over-Toes Rake) + Front Doorway Clearance View (495mm Universal Envelope)</text>
   <text x="1160" y="46" fill="#22c55e" font-family="monospace" font-size="16" font-weight="bold" text-anchor="end">SHEET 1 OF 6</text>
-  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">ELDERSTEP PRO (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
+  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
 
   <!-- SIDE VIEW (LEFT PANEL) -->
   <text x="60" y="110" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] SIDE ELEVATION (SEATED 420MM vs STANDING 713MM)</text>

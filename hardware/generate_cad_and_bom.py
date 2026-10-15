@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ElderStep Pro (9.85 kg Standard-COTS Zero-Lock-In Edition) CAD & BOM Generator
+FreeStep Air (9.85 kg Standard-COTS Zero-Lock-In Edition) CAD & BOM Generator
 Generates:
   1. 2D DXF & SVG profiles + 3D STL meshes for the 6 CNC 7075-T6 structural joints
      designed around 100% standard, multi-vendor COTS cartridges:
@@ -97,7 +97,7 @@ def write_extruded_plate_stl(filepath, outer_pts, thickness_mm):
         triangles.append(((nx, ny, 0), (x1, y1, 0), (x2, y2, thickness_mm), (x1, y1, thickness_mm)))
 
     with open(filepath, "wb") as f:
-        f.write(b"ElderStep 7075-T6 CNC Part".ljust(80, b"\x00"))
+        f.write(b"FreeStep Air 7075 CNC Part".ljust(80, b"\x00"))
         f.write(struct.pack("<I", len(triangles)))
         for norm, v1, v2, v3 in triangles:
             f.write(struct.pack("<12fH", *norm, *v1, *v2, *v3, 0))
@@ -131,7 +131,7 @@ def write_cylinder_shell_stl(filepath, r_outer, r_inner, height_mm, segments=48)
         triangles.append(((0, 0, 1), (ix1, iy1, height_mm), (ox2, oy2, height_mm), (ix2, iy2, height_mm)))
 
     with open(filepath, "wb") as f:
-        f.write(b"ElderStep 3D/Turned Part".ljust(80, b"\x00"))
+        f.write(b"FreeStep Air 3D Part".ljust(80, b"\x00"))
         f.write(struct.pack("<I", len(triangles)))
         for norm, v1, v2, v3 in triangles:
             f.write(struct.pack("<12fH", *norm, *v1, *v2, *v3, 0))

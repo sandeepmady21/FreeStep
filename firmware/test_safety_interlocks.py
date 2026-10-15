@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Automated Verification Suite for ElderStep Pro Final 10.20 kg 5-Module Controller.
+Automated Verification Suite for FreeStep Air Final 10.20 kg 5-Module Controller.
 Verifies all 12 clinical, biomechanical, and autonomous safety laws:
   1. Dead-Man's Auto-Brake when hands leave forearm load cells
   2. Closed-Loop 12-Deg Inclined Column Synchronization (Left/Right Hall error correction)
@@ -214,7 +214,7 @@ def evaluate_controller_step(
     }
 
 
-class TestElderStepFinal5ModuleController(unittest.TestCase):
+class TestFreeStepAirFinal5ModuleController(unittest.TestCase):
     def test_01_dead_mans_auto_brake_when_hands_off(self):
         res = evaluate_controller_step(load_left=100, load_right=200)
         self.assertEqual(res["state"], "PARKED_LOCKED")
