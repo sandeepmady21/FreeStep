@@ -3,350 +3,1352 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreeStep Air — Interactive CAD Assembly Blueprints & Exploded Viewer</title>
+  <title>FreeStep Air — 3D CAD Assembly & Part Inspector</title>
+  <script src="./three.min.js"></script>
+  <script src="./OrbitControls.js"></script>
   <style>
     :root {
-      --bg: #0b1120;
+      --bg: #070b14;
       --panel: #0f172a;
+      --panel2: #1e293b;
       --border: #334155;
       --cyan: #38bdf8;
       --green: #22c55e;
       --amber: #f59e0b;
       --rose: #f43f5e;
-      --text: #e2e8f0;
+      --text: #f1f5f9;
       --muted: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, ui-monospace, monospace;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: var(--panel);
-      border: 1.5px solid var(--cyan);
-      padding: 16px 24px;
-      border-radius: 10px;
-      margin-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      height: 56px;
+      flex-shrink: 0;
     }
-    h1 { font-size: 20px; color: var(--cyan); }
-    .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand h1 { font-size: 17px; color: var(--cyan); font-weight: 800; letter-spacing: 0.4px; }
+    .brand span { font-size: 12px; color: var(--muted); }
+    .badges { display: flex; gap: 8px; align-items: center; }
     .badge {
-      background: #064e3b;
-      color: #6ee7b7;
+      background: rgba(34, 197, 94, 0.14);
+      color: #4ade80;
       border: 1px solid var(--green);
-      padding: 6px 12px;
+      padding: 4px 10px;
       border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
+      font-size: 11px;
+      font-weight: 700;
     }
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 18px;
-    }
-    .ctrl-box label {
-      display: block;
-      font-size: 12px;
+    .badge.cyan {
+      background: rgba(56, 189, 248, 0.14);
       color: var(--cyan);
-      margin-bottom: 6px;
-      font-weight: bold;
+      border-color: var(--cyan);
     }
-    input[type="range"] { width: 100%; accent-color: var(--cyan); cursor: pointer; }
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 310px 1fr 370px;
+      flex: 1;
+      min-height: 0;
     }
-    .tab-btn {
+
+    /* Left Sidebar: 16-Part CAD Tree */
+    .sidebar-left {
       background: var(--panel);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 10px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 12px;
-      transition: 0.15s;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
-    .tab-btn.active, .tab-btn:hover {
-      background: #1e3a8a;
+    .panel-title {
+      padding: 12px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cyan);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.9);
+    }
+    .part-list {
+      overflow-y: auto;
+      flex: 1;
+      padding: 8px;
+    }
+    .part-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 10px;
+      margin-bottom: 4px;
+      border-radius: 7px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.15s;
+      background: rgba(30, 41, 59, 0.45);
+    }
+    .part-item:hover {
+      background: var(--panel2);
+      border-color: #475569;
+    }
+    .part-item.active {
+      background: rgba(56, 189, 248, 0.18);
       border-color: var(--cyan);
       color: #fff;
-      font-weight: bold;
+      font-weight: 600;
     }
-    .viewer-box {
-      background: var(--panel);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-      overflow-x: auto;
+    .part-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      flex-shrink: 0;
     }
-    canvas {
-      background: #090d16;
-      border: 1px solid #1e293b;
-      border-radius: 8px;
-      max-width: 100%;
+    .part-tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #0f172a;
+      color: var(--muted);
+      border: 1px solid #334155;
+      margin-left: 6px;
+      flex-shrink: 0;
     }
-    .sheet-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      margin-top: 24px;
+
+    /* Center 3D Viewport */
+    .viewport-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(circle at center, #111c33 0%, #060911 100%);
+      min-height: 0;
     }
-    .sheet-card {
-      background: var(--panel);
+    #webgl-container {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      cursor: grab;
+    }
+    #webgl-container:active { cursor: grabbing; }
+
+    /* Floating Top Camera & Mode Bar */
+    .cam-bar {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .btn {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(8px);
+      color: var(--text);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
+      padding: 7px 11px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.15s;
     }
-    .sheet-card h2 {
-      font-size: 15px;
+    .btn:hover, .btn.active {
+      background: #0284c7;
+      border-color: var(--cyan);
+      color: #fff;
+    }
+    .btn.amber.active {
+      background: #d97706;
+      border-color: #fde047;
+    }
+    .btn.green.active {
+      background: #15803d;
+      border-color: #4ade80;
+    }
+
+    /* Floating Bottom Kinematic & Explode Sliders */
+    .slider-dock {
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid var(--border);
+      padding: 12px 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      z-index: 10;
+    }
+    .slider-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
       color: var(--cyan);
+      margin-bottom: 5px;
+    }
+    .slider-group input[type="range"] {
+      width: 100%;
+      accent-color: var(--cyan);
+      cursor: pointer;
+    }
+
+    /* Right Sidebar: Selected Part Inspector & 2D Blueprint Sheet */
+    .sidebar-right {
+      background: var(--panel);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      min-height: 0;
+    }
+    .inspector-card {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .inspector-card h2 {
+      font-size: 15px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .inspector-sub {
+      font-size: 11px;
+      color: var(--amber);
+      font-weight: 600;
       margin-bottom: 10px;
     }
-    .sheet-card img {
+    .spec-table {
       width: 100%;
-      height: auto;
+      border-collapse: collapse;
+      font-size: 11.5px;
+      margin-bottom: 10px;
+    }
+    .spec-table td {
+      padding: 6px 4px;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    }
+    .spec-table td:first-child { color: var(--muted); width: 42%; }
+    .spec-table td:last-child { color: var(--text); font-weight: 600; }
+    .desc-box {
+      background: rgba(30, 41, 59, 0.6);
+      border-left: 3px solid var(--cyan);
+      padding: 9px 10px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: #cbd5e1;
+      margin-bottom: 10px;
+    }
+    .cad-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .cad-links a {
+      text-decoration: none;
+      background: #1e3a8a;
+      color: #fff;
+      border: 1px solid var(--cyan);
+      padding: 6px 10px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .cad-links a:hover { background: #0284c7; }
+    .bp-preview {
+      padding: 12px;
+    }
+    .bp-preview img {
+      width: 100%;
       border-radius: 6px;
-      border: 1px solid #1e293b;
+      border: 1px solid var(--border);
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+    .bp-preview img:hover { border-color: var(--cyan); }
+    .hint-pill {
+      position: absolute;
+      bottom: 82px;
+      left: 16px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+    /* Fullscreen Modal for Blueprint Sheet */
+    #bpModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 15, 0.92);
+      z-index: 999;
+      padding: 30px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    #bpModal img {
+      max-width: 95vw;
+      max-height: 85vh;
+      border: 2px solid var(--cyan);
+      border-radius: 8px;
+      background: #0b1120;
     }
   </style>
 </head>
 <body>
   <header>
-    <div>
-      <h1>FREESTEP AIR (9.85 kg STANDARD-COTS EDITION) — MASTER ASSEMBLY BLUEPRINTS</h1>
-      <div class="sub">Interactive Exploded Sub-Assembly CAD Viewer + All 6 Printable 1:1 Engineering Blueprint Sheets</div>
+    <div class="brand">
+      <h1>FREESTEP AIR — 3D CAD ASSEMBLY & PART INSPECTOR</h1>
+      <span>Drag to Rotate 360° • Scroll to Zoom • Click Any Part in Tree or 3D Viewport to Isolate</span>
     </div>
-    <div class="badge">100% STANDARD MULTI-VENDOR COTS | ₹62,800 | 1-WEEKEND BUILD</div>
+    <div class="badges">
+      <div class="badge cyan">495 mm (19.5") Universal Width</div>
+      <div class="badge">9.85 kg Featherweight</div>
+      <div class="badge">₹62,800 Full COTS Build</div>
+    </div>
   </header>
 
-  <div class="controls">
-    <div class="ctrl-box">
-      <label>EXPLODE SUB-ASSEMBLIES: <span id="expVal">35%</span></label>
-      <input type="range" id="explodeSlider" min="0" max="100" value="35" />
+  <div class="workspace">
+    <!-- LEFT SIDEBAR: 16-PART CAD ASSEMBLY TREE -->
+    <div class="sidebar-left">
+      <div class="panel-title">
+        <span>3D ASSEMBLY TREE (16 PARTS)</span>
+        <button class="btn" id="soloToggleBtn" onclick="toggleSoloMode()" style="padding:3px 8px; font-size:10px;">Solo Mode: OFF</button>
+      </div>
+      <div class="part-list" id="partListContainer"></div>
     </div>
-    <div class="ctrl-box">
-      <label>ACTUATOR LIFT STROKE (12° RAKE): <span id="liftVal">120 mm (Saddle: 537 mm)</span></label>
-      <input type="range" id="liftSlider" min="0" max="300" value="120" />
+
+    <!-- CENTER: INTERACTIVE 3D THREE.JS VIEWPORT -->
+    <div class="viewport-wrap">
+      <div class="cam-bar">
+        <button class="btn active" onclick="setCameraView('iso')">3D Isometric</button>
+        <button class="btn" onclick="setCameraView('front')">Front (495mm Doorway)</button>
+        <button class="btn" onclick="setCameraView('side')">Side (12° Rake)</button>
+        <button class="btn" onclick="setCameraView('top')">Top (180° Saddle)</button>
+        <button class="btn" onclick="setCameraView('caster')">Zoom: 74mm Front Caster</button>
+        <button class="btn" onclick="setCameraView('column')">Zoom: Actuator Column</button>
+        <button class="btn" onclick="setCameraView('hub')">Zoom: 6.5" Rear Hub</button>
+        <button class="btn amber" id="xrayBtn" onclick="toggleXray()">X-Ray Carbon Tubes: OFF</button>
+        <button class="btn green" id="glideBtn" onclick="toggleGlideDemo()">Demo: Seated Power-Glide</button>
+      </div>
+
+      <div id="webgl-container"></div>
+      <div class="hint-pill">🖱️ Left-Drag: Orbit 3D | Right-Drag: Pan | Scroll: Zoom | Click Any 3D Part to Inspect</div>
+
+      <div class="slider-dock">
+        <div class="slider-group">
+          <label><span>EXPLODE 3D PARTS</span><span id="valExplode">0%</span></label>
+          <input type="range" id="slExplode" min="0" max="100" value="0" />
+        </div>
+        <div class="slider-group">
+          <label><span>LIFT STROKE (12° RAKE)</span><span id="valLift">80 mm (Saddle: 498mm)</span></label>
+          <input type="range" id="slLift" min="0" max="300" value="80" />
+        </div>
+        <div class="slider-group">
+          <label><span>180° SPLIT-SADDLE SWING</span><span id="valSaddle">0° (Latched)</span></label>
+          <input type="range" id="slSaddle" min="0" max="180" value="0" />
+        </div>
+        <div class="slider-group">
+          <label><span>KITCHEN TRAY SLIDE</span><span id="valTray">0 mm</span></label>
+          <input type="range" id="slTray" min="0" max="300" value="0" />
+        </div>
+      </div>
     </div>
-    <div class="ctrl-box">
-      <label>KITCHEN TRAY FORWARD SLIDE: <span id="trayVal">100 mm</span></label>
-      <input type="range" id="traySlider" min="0" max="300" value="100" />
+
+    <!-- RIGHT SIDEBAR: SELECTED PART INSPECTOR & 2D BLUEPRINT -->
+    <div class="sidebar-right">
+      <div class="panel-title">
+        <span>SELECTED PART ENGINEERING SPECS</span>
+        <span id="partCodeBadge" style="color:#fde047;">ALL</span>
+      </div>
+      <div class="inspector-card">
+        <h2 id="inspTitle">Full FreeStep Air Assembly</h2>
+        <div class="inspector-sub" id="inspSub">Complete 9.85 kg Standard-COTS Sit-to-Stand & Power-Glide Walker</div>
+        <div class="desc-box" id="inspDesc">
+          Click any of the 16 sub-assemblies in the left tree (or click directly on any 3D part in the model) to inspect its exact dimensions, material spec, fastener torque, and downloadable DXF/STL CAD files. Turn on "Solo Mode" in the top-left to isolate a single part in 3D!
+        </div>
+        <table class="spec-table" id="inspTable"></table>
+        <div class="cad-links" id="inspLinks"></div>
+      </div>
+
+      <div class="panel-title">
+        <span>ASSOCIATED 2D BLUEPRINT (CLICK TO ENLARGE)</span>
+      </div>
+      <div class="bp-preview">
+        <img id="inspBlueprintImg" src="../hardware/blueprints/blueprint_01_master_frame_orthographic.svg" onclick="openBpModal(this.src)" alt="Blueprint Preview" />
+      </div>
     </div>
   </div>
 
-  <div class="viewer-box">
-    <canvas id="cadCanvas" width="1120" height="520"></canvas>
-  </div>
-
-  <div class="sheet-grid">
-    <div class="sheet-card">
-      <h2>SHEET 1/6: Master Chassis Orthographic & Kinematic Envelope (495mm Width, 12° Rake)</h2>
-      <img src="../hardware/blueprints/blueprint_01_master_frame_orthographic.svg" alt="Blueprint 01" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 2/6: Telescoping Carbon Column (ø35/ø30mm) & Standard 24V 300mm IP65 Actuator Cartridge</h2>
-      <img src="../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg" alt="Blueprint 02" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 3/6: Rear 6.5" (165mm) Sealed IP65 BLDC Hub Wheel & ø16mm D-Axle Dropout</h2>
-      <img src="../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg" alt="Blueprint 03" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 4/6: Ultra-Low 74mm Front Twin-Skate Caster Assembly (SKF 51104 + 64mm 82A PU Wheels)</h2>
-      <img src="../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg" alt="Blueprint 04" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 5/6: 180° Split-Saddle Pivot Hinge & N52 + Conical Stainless Shear-Pin Latch (12 kN)</h2>
-      <img src="../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg" alt="Blueprint 05" />
-    </div>
-    <div class="sheet-card">
-      <h2>SHEET 6/6: MGN9C Slide-Bridge Kitchen Tray, Floating Delrin Mount & ESP32-S3 Master Wiring</h2>
-      <img src="../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg" alt="Blueprint 06" />
-    </div>
+  <!-- Enlarged Blueprint Modal -->
+  <div id="bpModal" onclick="this.style.display='none'">
+    <img id="bpModalImg" src="" alt="Full Blueprint" />
+    <div style="margin-top:12px; color:#38bdf8; font-size:13px; font-weight:bold;">Click anywhere to close fullscreen blueprint</div>
   </div>
 
   <script>
-    const canvas = document.getElementById('cadCanvas');
-    const ctx = canvas.getContext('2d');
-    const expSlider = document.getElementById('explodeSlider');
-    const liftSlider = document.getElementById('liftSlider');
-    const traySlider = document.getElementById('traySlider');
-
-    function draw() {
-      const exp = parseFloat(expSlider.value) / 100.0;
-      const lift = parseFloat(liftSlider.value);
-      const tray = parseFloat(traySlider.value);
-
-      const saddleH = Math.round(420 + lift * 0.978);
-      const fwdShift = Math.round(lift * 0.208);
-      document.getElementById('expVal').textContent = Math.round(exp * 100) + '%';
-      document.getElementById('liftVal').textContent = `${lift} mm (Saddle: ${saddleH} mm, +${fwdShift} mm FWD)`;
-      document.getElementById('trayVal').textContent = `${tray} mm`;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw Blueprint Grid
-      ctx.strokeStyle = '#1e293b';
-      ctx.lineWidth = 1;
-      for (let x = 0; x < canvas.width; x += 25) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    // =========================================================================
+    // CATALOG OF ALL 16 3D ASSEMBLY PARTS & ENGINEERING METADATA
+    // =========================================================================
+    const PARTS_CATALOG = [
+      {
+        id: "ALL",
+        name: "00. Full FreeStep Air Assembly",
+        tag: "9.85 kg",
+        color: "#38bdf8",
+        sub: "Complete 16-Part Standard-COTS Cartridge + 3K Carbon & 7075-T6 Walker",
+        desc: "Universal 495 mm (19.5\") width fits every 20\"+ Indian bathroom door. Combines 12° forward-inclined telescoping carbon columns (housing standard IP65 24V 300mm actuators) with standard 6.5\" IP65 BLDC hub wheels and 74mm low-profile twin-skate front casters.",
+        specs: [
+          ["Outer Width / Inside Clear", "495.0 mm (19.5\") / 430.0 mm (17.0\")"],
+          ["Front Under-Bed Nose", "74.0 mm (2.9\" clearance)"],
+          ["Saddle Lift Range", "420 mm (Toilet/Bed) -> 713 mm (Perch)"],
+          ["Handle & Tray Range", "580 mm -> 873 mm (+300mm Tray Slide)"],
+          ["Total Mass / Budget", "9.85 kg / ₹62,800 (₹53,600 Core)"]
+        ],
+        links: [
+          { label: "View Full BOM (CSV)", url: "../hardware/INDIA_BOM_SOURCING.csv" },
+          { label: "Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }
+        ],
+        bp: "../hardware/blueprints/blueprint_01_master_frame_orthographic.svg",
+        cam: [950, 720, 950], target: [0, 360, 0]
+      },
+      {
+        id: "CF_BASE",
+        name: "01. Lower Carbon U-Base Tubes",
+        tag: "CF-03/04",
+        color: "#334155",
+        sub: "3K Roll-Wrapped Twill Carbon Fiber (ø30mm OD x ø26mm ID)",
+        desc: "Forms the rigid 495 mm wide x 580 mm wheelbase lower horseshoe frame. Open at the rear so the user can step inside or back straight over a toilet commode; cross-bridged at the front nose.",
+        specs: [
+          ["Tube Spec", "ø30.0 mm OD x ø26.0 mm ID (2.0 mm wall)"],
+          ["Side Legs (CF-03)", "2x 540 mm cut length"],
+          ["Front Bridge (CF-04)", "1x 415 mm cut length"],
+          ["Bonding Adhesive", "3M DP420 Epoxy + 110 µm Glass Beads"]
+        ],
+        links: [{ label: "Carbon Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }],
+        bp: "../hardware/blueprints/blueprint_01_master_frame_orthographic.svg",
+        cam: [650, 320, 650], target: [0, 80, 0]
+      },
+      {
+        id: "CNC_BASE_LUG",
+        name: "02. 12° Inclined CNC Base Lugs",
+        tag: "CNC 7075",
+        color: "#2563eb",
+        sub: "Billet 7075-T6 Aluminum (12 mm Thick) — 12deg_incline_base_lug.dxf",
+        desc: "Joins the horizontal ø30 mm lower carbon leg to the 12° forward-inclined ø35 mm outer carbon lifting barrel. Includes the lower M8 clevis pin boss that anchors the bottom eye of the internal 24V linear actuator.",
+        specs: [
+          ["Material", "7075-T6 Aircraft Aluminum (12.0 mm plate)"],
+          ["Column Rake Angle", "12.0° Forward ('Nose-Over-Toes' arc)"],
+          ["Tube Sockets", "ø30.2 mm base + ø35.2 mm inclined bore"],
+          ["Actuator Anchor", "M8x45 mm Quick-Release Clevis Pin"]
+        ],
+        links: [
+          { label: "Download DXF", url: "../hardware/cnc_7075/12deg_incline_base_lug.dxf" },
+          { label: "Download 3D STL", url: "../hardware/cnc_7075/12deg_incline_base_lug.stl" },
+          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/12deg_incline_base_lug.svg" }
+        ],
+        bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
+        cam: [550, 260, 450], target: [0, 120, 40]
+      },
+      {
+        id: "CF_OUTER_COL",
+        name: "03. Outer ø35mm Carbon Barrels",
+        tag: "CF-01",
+        color: "#475569",
+        sub: "3K Roll-Wrapped Carbon Tube (ø35mm OD x ø31mm ID x 460mm)",
+        desc: "The stationary outer telescoping barrels inclined at 12° forward. Tip: Click 'X-Ray Carbon Tubes' in the top bar to make these barrels transparent and see the internal 24V actuator & Delrin bushings inside!",
+        specs: [
+          ["Dimensions", "ø35.0 mm OD x ø31.0 mm ID x 460 mm (x2)"],
+          ["Role", "Absorbs 100% of lateral/bending load"],
+          ["Top Seal", "30 mm ID x 2.5 mm Silicone Wiper O-Ring"],
+          ["Weight (Pair)", "410 g"]
+        ],
+        links: [{ label: "Carbon Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }],
+        bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
+        cam: [600, 420, 500], target: [0, 320, 50]
+      },
+      {
+        id: "DELRIN_BUSHING",
+        name: "04. Lathe-Turned Delrin Bushings",
+        tag: "POM CNC",
+        color: "#22c55e",
+        sub: "CNC Lathe-Turned POM (Delrin) Acetal Sleeves (4x) + Wiper O-Rings",
+        desc: "Precision self-lubricating acetal guide bushings pressed between the ø35 mm outer carbon barrel (31.0 mm ID) and the ø30.0 mm inner carbon plunger. Eliminates carbon-on-carbon friction and lateral play.",
+        specs: [
+          ["Outer / Inner Dia", "31.00 mm OD x 30.05 mm ID x 40 mm length"],
+          ["Material", "Virgin POM-C (Delrin) Acetal Rod (Lathe-Turned)"],
+          ["Quantity", "4 pieces (2 per telescoping column)"],
+          ["Cost (Set of 4)", "₹1,200"]
+        ],
+        links: [
+          { label: "Download 3D STL", url: "../hardware/3d_print/delrin_telescoping_column_bushing.stl" }
+        ],
+        bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
+        cam: [480, 460, 420], target: [0, 390, 60]
+      },
+      {
+        id: "CF_INNER_COL",
+        name: "05. Inner ø30mm Carbon Plungers",
+        tag: "CF-02",
+        color: "#0284c7",
+        sub: "3K Roll-Wrapped Carbon Tube (ø30mm OD x ø26mm ID x 440mm)",
+        desc: "Telescopes smoothly out of the ø35 mm barrels on the Delrin bushings across the 300 mm stroke (+293 mm UP, +62 mm FORWARD). Carries both the 180° split-saddle and the upper handlebar halo.",
+        specs: [
+          ["Dimensions", "ø30.0 mm OD x ø26.0 mm ID x 440 mm (x2)"],
+          ["Stroke", "300 mm along 12° rake"],
+          ["Bending Stiffness", "Carries 150 kgf off-axis load without flexing"]
+        ],
+        links: [{ label: "Carbon Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }],
+        bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
+        cam: [620, 580, 520], target: [0, 460, 80]
+      },
+      {
+        id: "ACTUATOR_24V",
+        name: "06. Standard 24V 300mm Actuators",
+        tag: "COTS IP65",
+        color: "#f59e0b",
+        sub: "Standard 24V 300mm Tubular Inline Linear Actuator (1500N, IP65, Hall Sensor)",
+        desc: "Housed completely INSIDE the telescoping carbon tubes! Pinned at the bottom base lug and top cap with two M8 quick-release clevis pins. 100% mechanically self-locking worm drive (cannot drop under load) and swaps in 3 minutes.",
+        specs: [
+          ["Standard Spec", "24V DC, 300 mm Stroke, 1500 N (150 kgf) / leg"],
+          ["Combined Lift", "3,000 N (300 kgf total), 32 mm/s (9.3s lift)"],
+          ["Protection & Sync", "IP65 Waterproof + Built-in Hall Quadrature Encoder"],
+          ["Cost (Pair)", "₹5,200 (Robu.in / Amazon / Multi-Vendor)"]
+        ],
+        links: [{ label: "View Sheet 2 Blueprint", url: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg" }],
+        bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
+        cam: [520, 420, 460], target: [0, 350, 60]
+      },
+      {
+        id: "CNC_TOP_CAP",
+        name: "07. Top Actuator Clevis & Float Caps",
+        tag: "CNC 7075",
+        color: "#3b82f6",
+        sub: "Top M8 Clevis Cap (inhouse_sfu1204_ballscrew_column_cap.dxf) + +-1.5mm Delrin Float",
+        desc: "Transfers the upward push of the internal 24V actuator rod into the top of the ø30 mm inner carbon plunger and upper halo. The right-side cap includes a +-1.5 mm floating Delrin sleeve so the two columns never bind.",
+        specs: [
+          ["Material", "7075-T6 Aluminum (12 mm) + Delrin Float Sleeve"],
+          ["Clevis Pin", "M8x45 mm Stainless Quick-Release Pin"],
+          ["Anti-Bind Float", "+-1.5 mm lateral compliance on Right Column"]
+        ],
+        links: [
+          { label: "Download DXF", url: "../hardware/cnc_7075/inhouse_sfu1204_ballscrew_column_cap.dxf" },
+          { label: "Download 3D STL", url: "../hardware/cnc_7075/inhouse_sfu1204_ballscrew_column_cap.stl" },
+          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/inhouse_sfu1204_ballscrew_column_cap.svg" }
+        ],
+        bp: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg",
+        cam: [520, 680, 480], target: [0, 580, 100]
+      },
+      {
+        id: "CNC_REAR_DROPOUT",
+        name: "08. Rear ø16mm Hub Axle Dropouts",
+        tag: "CNC 7075",
+        color: "#2563eb",
+        sub: "4-Bolt Split Clamp Dropout (rear_16mm_hub_axle_dropout.dxf)",
+        desc: "Clamps onto the rear of the ø30 mm carbon base legs and holds the universal ø16 mm D-flat stator shaft of the standard 6.5\" BLDC hub motor wheel using four M6x35 Grade 10.9 bolts (torqued to 12 Nm).",
+        specs: [
+          ["Material", "7075-T6 Aluminum (12.0 mm thickness)"],
+          ["Axle Bore", "ø16.05 mm D-Flat Split Clamp"],
+          ["Clamp Fasteners", "4x M6x35 mm Grade 10.9 + Loctite 243 (12 Nm)"]
+        ],
+        links: [
+          { label: "Download DXF", url: "../hardware/cnc_7075/rear_16mm_hub_axle_dropout.dxf" },
+          { label: "Download 3D STL", url: "../hardware/cnc_7075/rear_16mm_hub_axle_dropout.stl" },
+          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/rear_16mm_hub_axle_dropout.svg" }
+        ],
+        bp: "../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg",
+        cam: [460, 220, -480], target: [0, 85, -240]
+      },
+      {
+        id: "REAR_HUB_WHEELS",
+        name: "09. Rear 6.5\" Sealed BLDC Hub Wheels",
+        tag: "COTS IP65",
+        color: "#f43f5e",
+        sub: "Standard 6.5\" (165mm) 24V Hall-Sensor Sealed BLDC Hub Motors (DRV-01)",
+        desc: "Global commodity standard hoverboard/AMR robot wheel. Provides active forward walking assist, uphill boost, 40 Nm instant parking brake, UWB autonomous summon, and Seated Power-Glide—with 100% IP65 bathroom waterproofing and zero exposed belts to snag a saree!",
+        specs: [
+          ["Diameter / Tire", "165 mm (6.5\") Solid High-Grip Shock PU Rubber"],
+          ["Motor & Control", "24V 3-Phase BLDC + 5-Pin Hall + Sinusoidal FOC"],
+          ["Holding Torque", "40 Nm Combined Active Electromagnetic Brake"],
+          ["Cost (Pair + FOC)", "₹4,400 Wheels + ₹2,200 Dual FOC Driver"]
+        ],
+        links: [{ label: "View Sheet 3 Blueprint", url: "../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg" }],
+        bp: "../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg",
+        cam: [520, 220, -520], target: [0, 85, -250]
+      },
+      {
+        id: "CNC_CASTER_FORK",
+        name: "10. Front 74mm CNC Caster Forks",
+        tag: "CNC 7075",
+        color: "#3b82f6",
+        sub: "Low-Profile Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) + SKF 51104 Thrust Bearing",
+        desc: "Custom low-slung 7075-T6 swivel fork with an integrated pocket for a standard SKF 51104 axial thrust ball bearing (20x35x10 mm). Keeps total front nose height at just 74.0 mm (2.9\") so it slides under any low bed or sofa.",
+        specs: [
+          ["Total Nose Height", "74.0 mm (2.9\") from floor to top of carbon leg"],
+          ["Swivel Bearing", "SKF 51104 Axial Thrust Ball Bearing + M10 Kingpin"],
+          ["Caster Trail", "18.0 mm trail for flutter-free tracking"]
+        ],
+        links: [
+          { label: "Download DXF", url: "../hardware/cnc_7075/inhouse_twin_64mm_caster_fork.dxf" },
+          { label: "Download 3D STL", url: "../hardware/cnc_7075/inhouse_twin_64mm_caster_fork.stl" },
+          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/inhouse_twin_64mm_caster_fork.svg" }
+        ],
+        bp: "../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg",
+        cam: [420, 180, 520], target: [180, 45, 270]
+      },
+      {
+        id: "SKATE_WHEELS",
+        name: "11. Twin 64mm 82A Skate PU Wheels",
+        tag: "DECATHLON",
+        color: "#10b981",
+        colorHex: 0x10b981,
+        sub: "4x Oxelo 64mm 82A High-Rebound Inline Skate PU Wheels + ABEC-9 608RS Bearings",
+        desc: "Twin 64 mm soft 82A polyurethane skate wheels per front fork cut swivel scrubbing resistance in half on bathroom tiles, roll silently over grout lines, and climb 15–40 mm marble thresholds effortlessly.",
+        specs: [
+          ["Wheel Spec", "64 mm Dia x 24 mm Width, 82A Durometer PU"],
+          ["Bearings", "Sealed ABEC-9 608RS (8 mm M8x75 stainless axle)"],
+          ["Cost (4 Wheels + Bearings)", "₹1,400 (Decathlon India + Amazon)"]
+        ],
+        links: [{ label: "View Sheet 4 Blueprint", url: "../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg" }],
+        bp: "../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg",
+        cam: [400, 160, 520], target: [180, 35, 270]
+      },
+      {
+        id: "CNC_SADDLE_HINGE",
+        name: "12. 180° Split-Saddle Pivot Hinges",
+        tag: "CNC 7075",
+        color: "#2563eb",
+        sub: "Clamping Bearing Pivot (saddle_180_pivot_hinge.dxf) + Dual 608RS Flanged Bearings",
+        desc: "Clamps onto the ø30 mm inner telescoping carbon tubes so the seat rises and lowers from 420 mm to 713 mm. Houses dual 608RS flanged bearings and spring ball detents at 0° (latched) and 180° (flushed outward).",
+        specs: [
+          ["Material", "7075-T6 Aluminum (12 mm) + 4x 608RS Bearings"],
+          ["Rotation Range", "0° (Seated) to 180° (Open Walk-In / Commode)"],
+          ["Weight Sensing", "4x 50 kg Half-Bridge Strain Gauges (HX711)"]
+        ],
+        links: [
+          { label: "Download DXF", url: "../hardware/cnc_7075/saddle_180_pivot_hinge.dxf" },
+          { label: "Download 3D STL", url: "../hardware/cnc_7075/saddle_180_pivot_hinge.stl" },
+          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/saddle_180_pivot_hinge.svg" }
+        ],
+        bp: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg",
+        cam: [480, 520, -350], target: [0, 420, 0]
+      },
+      {
+        id: "SADDLE_PADS",
+        name: "13. 180° Cushioned Split-Saddle Pads",
+        tag: "PAD-01",
+        color: "#f59e0b",
+        sub: "Closed-Cell EVA Foam + Wipe-Clean Antibacterial Marine Vinyl (Left & Right)",
+        desc: "Use the '180° Split-Saddle Swing' slider below to swing the two halves outward! When open (180°), the user walks straight in or backs over the toilet with zero canvas straps. Swing them together behind the hips to sit or perch.",
+        specs: [
+          ["Height Range", "420 mm (Toilet/Bed) to 713 mm (Kitchen Perch)"],
+          ["Upholstery", "Waterproof Antibacterial Marine Vinyl over EVA"],
+          ["Cost (Pair)", "₹1,200 (Local Car Seat Upholsterer)"]
+        ],
+        links: [{ label: "View Sheet 5 Blueprint", url: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg" }],
+        bp: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg",
+        cam: [0, 680, -450], target: [0, 420, 0]
+      },
+      {
+        id: "CNC_SADDLE_LATCH",
+        name: "14. N52 + Stainless Conical Latch",
+        tag: "12 kN LOCK",
+        color: "#22c55e",
+        sub: "N52 Neodymium Magnet + Twin 10mm 304SS Conical Shear Pins (inhouse_n52_conical_saddle_latch.dxf)",
+        desc: "Self-centering magnetic snap lock at the center of the split saddle. Two 20x5 mm N52 magnets pull the halves together while twin 10 mm 304 stainless steel 45° conical pins lock into tapered sockets with 1,200 kgf vertical shear strength.",
+        specs: [
+          ["Shear Rating", "12.0 kN (1,200 kgf) in solid 304SS / 7075 shear"],
+          ["Auto-Alignment", "2x N52 Ring Magnets (20x5 mm) + 45° Tapers"],
+          ["Safety Interlock", "Reed switch confirms lock to ESP32-S3"]
+        ],
+        links: [
+          { label: "Download DXF", url: "../hardware/cnc_7075/inhouse_n52_conical_saddle_latch.dxf" },
+          { label: "Download 3D STL", url: "../hardware/cnc_7075/inhouse_n52_conical_saddle_latch.stl" },
+          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/inhouse_n52_conical_saddle_latch.svg" }
+        ],
+        bp: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg",
+        cam: [0, 560, -320], target: [0, 420, 0]
+      },
+      {
+        id: "UPPER_HALO",
+        name: "15. Upper ø25mm Halo & Grip Pods",
+        tag: "CF-05/06",
+        color: "#38bdf8",
+        sub: "ø25x21mm Carbon Halo + Ergonomic Nylon PA12 Handle Pods (FSR406 + Thumb Rocker)",
+        desc: "Rigid forearm & hand support halo at the top of the lifting columns (580 mm -> 873 mm height). Houses the FSR406 grip pressure sensors (for effortless power-assist walking) and the Thumb Glide Rocker (for Seated Power-Glide).",
+        specs: [
+          ["Carbon Tube", "ø25 mm OD x ø21 mm ID (2x 420mm + 1x 415mm)"],
+          ["Handle Pods", "ergo_handle_pod_left_right.stl (PA12 Nylon)"],
+          ["Embedded Sensors", "2x FSR406 Grip + 2x Qorvo DW3000 UWB Anchors"]
+        ],
+        links: [
+          { label: "Download Handle Pod STL", url: "../hardware/3d_print/ergo_handle_pod_left_right.stl" }
+        ],
+        bp: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg",
+        cam: [550, 750, 550], target: [0, 580, 100]
+      },
+      {
+        id: "KITCHEN_TRAY_AND_SENSORS",
+        name: "16. MGN9C Kitchen Tray, LiDAR & LiFePO4",
+        tag: "TRY/BAT/LID",
+        color: "#06b6d4",
+        sub: "Dual MGN9C 300mm Stainless Linear Rails + 6mm Lexan Tray + LD19 LiDAR + 24V LiFePO4",
+        desc: "Use the 'Kitchen Tray Slide' slider below to extend the 6 mm clear polycarbonate tray +300 mm forward over a kitchen counter! Also includes the front nose LD19 360° LiDAR, VL53L1X cliff sensors, and 1.04 kg 24V 6Ah LiFePO4 anti-tip battery ballast.",
+        specs: [
+          ["Linear Rails", "2x Standard MGN9C 300 mm Stainless Rails & Carriages"],
+          ["Tray Dimensions", "420 mm x 280 mm x 6 mm Clear Polycarbonate"],
+          ["Sensors & Battery", "LD19 360° LiDAR + VL53L1X Cliff + 24V 6Ah LiFePO4"]
+        ],
+        links: [
+          { label: "Download LiDAR Shroud STL", url: "../hardware/3d_print/lidar_nose_shroud.stl" },
+          { label: "View Sheet 6 Wiring", url: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg" }
+        ],
+        bp: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg",
+        cam: [580, 680, 620], target: [0, 520, 220]
       }
-      for (let y = 0; y < canvas.height; y += 25) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-      }
+    ];
 
-      // Floor Line
-      const floorY = 465;
-      ctx.strokeStyle = '#64748b';
-      ctx.setLineDash([6, 4]);
-      ctx.beginPath(); ctx.moveTo(40, floorY); ctx.lineTo(1080, floorY); ctx.stroke();
-      ctx.setLineDash([]);
+    // =========================================================================
+    // THREE.JS 3D CAD SCENE INITIALIZATION
+    // =========================================================================
+    const container = document.getElementById("webgl-container");
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x070b14);
 
-      // Explode offsets
-      const eWheel = exp * 55;
-      const eCaster = exp * 50;
-      const eAct = exp * 75;
-      const eTop = exp * 45;
+    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 5, 6000);
+    camera.position.set(950, 720, 950);
 
-      // 1. Rear 6.5" Sealed BLDC Hub Wheel
-      const rx = 220 - eWheel;
-      const ry = floorY - 52 + eWheel * 0.3;
-      ctx.fillStyle = '#1e293b';
-      ctx.strokeStyle = '#f43f5e';
-      ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.arc(rx, ry, 52, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = '#38bdf8';
-      ctx.beginPath(); ctx.arc(rx, ry, 8, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#f43f5e';
-      ctx.font = '11px monospace';
-      ctx.fillText('6.5" IP65 Hub Wheel (ø16mm D-Axle)', rx - 80, ry + 72);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    container.appendChild(renderer.domElement);
 
-      // 2. Rear 7075-T6 Dropout + Carbon U-Base Leg
-      ctx.fillStyle = '#334155';
-      ctx.strokeStyle = '#e2e8f0';
-      ctx.lineWidth = 2;
-      ctx.fillRect(230, floorY - 56, 310, 14);
-      ctx.strokeRect(230, floorY - 56, 310, 14);
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 360, 0);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
 
-      // Front LiFePO4 Battery Ballast
-      ctx.fillStyle = '#166534';
-      ctx.strokeStyle = '#22c55e';
-      ctx.fillRect(445, floorY - 78, 75, 22);
-      ctx.strokeRect(445, floorY - 78, 75, 22);
-      ctx.fillStyle = '#dcfce7';
-      ctx.fillText('24V LiFePO4', 450, floorY - 63);
+    // Studio CAD Lighting
+    scene.add(new THREE.AmbientLight(0xdbeafe, 0.75));
+    const dir1 = new THREE.DirectionalLight(0xffffff, 0.95);
+    dir1.position.set(800, 1400, 900);
+    scene.add(dir1);
+    const dir2 = new THREE.DirectionalLight(0x38bdf8, 0.45);
+    dir2.position.set(-900, 600, -800);
+    scene.add(dir2);
 
-      // 3. Front 74mm Low-Profile Twin 64mm Skate Caster
-      const cx = 555 + eCaster;
-      const cy = floorY - 22 + eCaster * 0.25;
-      ctx.fillStyle = '#1e293b';
-      ctx.strokeStyle = '#22c55e';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = '#22c55e';
-      ctx.fillText('74mm Skate Caster + 51104 Bearing', cx - 60, cy + 40);
+    // Millimeter CAD Floor Grid + 510mm Bathroom Doorway Reference Outline
+    const grid = new THREE.GridHelper(1600, 32, 0x38bdf8, 0x1e293b);
+    scene.add(grid);
 
-      // 4. 12-Deg Base Lug + Outer ø35mm Carbon Barrel
-      const bx = 375, by = floorY - 56;
-      const rakeRad = 12 * Math.PI / 180;
-      const colLen = 185;
-      const tx = bx + Math.sin(rakeRad) * colLen;
-      const ty = by - Math.cos(rakeRad) * colLen;
+    // Bathroom Door Frame Reference (510mm wide)
+    const doorMat = new THREE.LineBasicMaterial({ color: 0xf43f5e, transparent: true, opacity: 0.45 });
+    const doorGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(-255, 0, 340),
+      new THREE.Vector3(-255, 920, 340),
+      new THREE.Vector3(255, 920, 340),
+      new THREE.Vector3(255, 0, 340)
+    ]);
+    scene.add(new THREE.Line(doorGeo, doorMat));
 
-      ctx.strokeStyle = '#475569';
-      ctx.lineWidth = 20;
-      ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(tx, ty); ctx.stroke();
+    // Materials Library
+    const mats = {
+      carbon: new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.35, metalness: 0.45 }),
+      carbonOuter: new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.3, metalness: 0.5, transparent: true, opacity: 1.0 }),
+      carbonInner: new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.3, metalness: 0.4, transparent: true, opacity: 1.0 }),
+      cncBlue: new THREE.MeshStandardMaterial({ color: 0x2563eb, roughness: 0.25, metalness: 0.75 }),
+      delrin: new THREE.MeshStandardMaterial({ color: 0x22c55e, roughness: 0.2, metalness: 0.1 }),
+      actuatorBody: new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.3, metalness: 0.7 }),
+      stainless: new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.15, metalness: 0.9 }),
+      clevisPin: new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.2, metalness: 0.8 }),
+      tire: new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.85, metalness: 0.1 }),
+      hubShell: new THREE.MeshStandardMaterial({ color: 0xe11d48, roughness: 0.25, metalness: 0.8 }),
+      skatePU: new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.2, metalness: 0.1, transparent: true, opacity: 0.88 }),
+      thrustBrg: new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.25, metalness: 0.85 }),
+      saddlePad: new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.45, metalness: 0.1 }),
+      latchGreen: new THREE.MeshStandardMaterial({ color: 0x16a34a, roughness: 0.25, metalness: 0.75 }),
+      lexanTray: new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.1, metalness: 0.1, transparent: true, opacity: 0.55 }),
+      battery: new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.35, metalness: 0.3 }),
+      lidar: new THREE.MeshStandardMaterial({ color: 0x06b6d4, roughness: 0.25, metalness: 0.7 })
+    };
 
-      // Delrin Bushings (exploded slightly upward along axis)
-      const dx = tx + Math.sin(rakeRad) * (eAct * 0.4);
-      const dy = ty - Math.cos(rakeRad) * (eAct * 0.4);
-      ctx.fillStyle = '#22c55e';
-      ctx.beginPath(); ctx.arc(dx, dy, 11, 0, Math.PI * 2); ctx.fill();
-      ctx.fillText('Lathe-Turned Delrin Bushing + O-Ring', dx + 18, dy + 4);
+    // Registry of meshes per part ID for raycasting, highlighting, and exploding
+    const partGroups = {};
+    PARTS_CATALOG.forEach(p => { if (p.id !== "ALL") partGroups[p.id] = new THREE.Group(); });
 
-      // 5. Inner ø30mm Carbon Plunger + Standard 24V 300mm Actuator Cartridge
-      const liftPx = lift * 0.45 + eAct;
-      const px = tx + Math.sin(rakeRad) * liftPx;
-      const py = ty - Math.cos(rakeRad) * liftPx;
+    const rootWalker = new THREE.Group();
+    scene.add(rootWalker);
+    Object.values(partGroups).forEach(g => rootWalker.add(g));
 
-      ctx.strokeStyle = '#0284c7';
-      ctx.lineWidth = 13;
-      ctx.beginPath();
-      ctx.moveTo(bx + Math.sin(rakeRad) * (40 + eAct * 0.5), by - Math.cos(rakeRad) * (40 + eAct * 0.5));
-      ctx.lineTo(px, py);
-      ctx.stroke();
-
-      // Internal Standard 24V Actuator Cartridge Callout (shown offset in exploded mode)
-      const ax = 790, ay = 260;
-      ctx.fillStyle = '#0f172a';
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 1.5;
-      ctx.fillRect(680, 40, 410, 380);
-      ctx.strokeRect(680, 40, 410, 380);
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 13px monospace';
-      ctx.fillText('EXPLODED COLUMN CARTRIDGE DETAIL:', 700, 68);
-      ctx.font = '11px monospace';
-      ctx.fillStyle = '#e2e8f0';
-      ctx.fillText('• Outer Tube: ø35x31mm 3K Carbon (460mm)', 700, 95);
-      ctx.fillText('• Guide: 2x CNC Turned POM (Delrin) Sleeves', 700, 118);
-      ctx.fillText('• Inner Tube: ø30x26mm 3K Carbon (440mm)', 700, 141);
-      ctx.fillStyle = '#fef08a';
-      ctx.fillText('• Core: Standard 24V 300mm IP65 Inline Actuator', 700, 164);
-      ctx.fillText('  pinned at top & bottom via 2x M8 Clevis Pins', 700, 184);
-      ctx.fillStyle = '#22c55e';
-      ctx.fillText('• Zero side-load on actuator; swaps in 3 mins!', 700, 210);
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillText(`• Current Lift: ${lift}mm / 300mm (Saddle: ${saddleH}mm)`, 700, 240);
-      ctx.fillText(`• Kitchen Tray Extension: +${tray}mm forward`, 700, 262);
-      ctx.fillStyle = '#f43f5e';
-      ctx.fillText('• Total Mass: 9.85 kg | Cost: ₹62,800', 700, 290);
-
-      // 6. 180-Deg Split Saddle on Inner Plunger
-      const sx = px - Math.sin(rakeRad) * 45;
-      const sy = py + Math.cos(rakeRad) * 45;
-      ctx.fillStyle = '#f59e0b';
-      ctx.strokeStyle = '#fef08a';
-      ctx.lineWidth = 2;
-      ctx.fillRect(sx - 85 - eTop * 0.4, sy - 8, 82, 16);
-      ctx.strokeRect(sx - 85 - eTop * 0.4, sy - 8, 82, 16);
-      ctx.fillStyle = '#fef08a';
-      ctx.fillText(`180° Split Saddle (${saddleH}mm)`, sx - 235 - eTop * 0.4, sy + 4);
-
-      // 7. Upper Halo + MGN9C Slide-Bridge Kitchen Tray
-      const hx = px;
-      const hy = py - eTop;
-      ctx.fillStyle = '#334155';
-      ctx.strokeStyle = '#38bdf8';
-      ctx.fillRect(hx - 20, hy - 12, 135, 12);
-      ctx.strokeRect(hx - 20, hy - 12, 135, 12);
-
-      const trayPx = tray * 0.35;
-      ctx.fillStyle = '#06b6d4';
-      ctx.fillRect(hx + 10 + trayPx, hy - 24 - eTop * 0.3, 130, 9);
-      ctx.fillStyle = '#22d3ee';
-      ctx.fillText(`MGN9C Kitchen Tray (+${tray}mm)`, hx + 10 + trayPx, hy - 32 - eTop * 0.3);
+    function tagMesh(mesh, partId) {
+      mesh.userData.partId = partId;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      partGroups[partId].add(mesh);
+      return mesh;
     }
 
-    expSlider.addEventListener('input', draw);
-    liftSlider.addEventListener('input', draw);
-    traySlider.addEventListener('input', draw);
-    draw();
+    // Geometry Helpers
+    function makeTube(r, len, mat, partId) {
+      const geo = new THREE.CylinderGeometry(r, r, len, 28);
+      return tagMesh(new THREE.Mesh(geo, mat), partId);
+    }
+    function makeBox(w, h, d, mat, partId) {
+      const geo = new THREE.BoxGeometry(w, h, d);
+      return tagMesh(new THREE.Mesh(geo, mat), partId);
+    }
+
+    // Key Walker Dimensions (1 unit = 1 mm)
+    // X: Left (-215) to Right (+215) -> 430mm center-to-center column spacing, 495mm total outer width
+    // Y: Vertical height from floor (0 = floor)
+    // Z: Rear (-250) to Front (+280) -> 530-580mm wheelbase
+    const COL_X = 215;
+    const BASE_Y = 66;
+    const RAKE_RAD = (12 * Math.PI) / 180;
+
+    // 1. CF_BASE: Lower ø30mm U-Base Legs (Left, Right, and Front Nose Bridge)
+    [-COL_X, COL_X].forEach(x => {
+      const leg = makeTube(15, 520, mats.carbon, "CF_BASE");
+      leg.rotation.x = Math.PI / 2;
+      leg.position.set(x, BASE_Y, 10);
+    });
+    const frontBridge = makeTube(15, 430, mats.carbon, "CF_BASE");
+    frontBridge.rotation.z = Math.PI / 2;
+    frontBridge.position.set(0, BASE_Y, 265);
+
+    // 2. CNC_BASE_LUG: 12-Deg Forward-Inclined CNC 7075-T6 Base Lugs (Left & Right)
+    [-COL_X, COL_X].forEach(x => {
+      const lug = makeBox(38, 72, 110, mats.cncBlue, "CNC_BASE_LUG");
+      lug.position.set(x, BASE_Y + 18, 20);
+      const socket = makeTube(21, 68, mats.cncBlue, "CNC_BASE_LUG");
+      socket.rotation.x = RAKE_RAD;
+      socket.position.set(x, BASE_Y + 35, 25);
+    });
+
+    // 3. CF_OUTER_COL: Outer ø35mm Telescoping Carbon Barrels (460mm long, inclined 12° forward)
+    const outerColLen = 440;
+    [-COL_X, COL_X].forEach(x => {
+      const barrel = makeTube(17.5, outerColLen, mats.carbonOuter, "CF_OUTER_COL");
+      barrel.rotation.x = RAKE_RAD;
+      barrel.position.set(
+        x,
+        BASE_Y + 20 + Math.cos(RAKE_RAD) * (outerColLen / 2),
+        20 + Math.sin(RAKE_RAD) * (outerColLen / 2)
+      );
+    });
+
+    // 4. DELRIN_BUSHING: Lathe-Turned POM (Delrin) Sleeve Bushings (2 per column + O-ring)
+    const delrinMeshes = [];
+    [-COL_X, COL_X].forEach(x => {
+      [0.45, 0.96].forEach(frac => {
+        const dPos = outerColLen * frac;
+        const bush = makeTube(16.2, 38, mats.delrin, "DELRIN_BUSHING");
+        bush.rotation.x = RAKE_RAD;
+        bush.position.set(
+          x,
+          BASE_Y + 20 + Math.cos(RAKE_RAD) * dPos,
+          20 + Math.sin(RAKE_RAD) * dPos
+        );
+        delrinMeshes.push({ mesh: bush, baseX: x, dPos });
+      });
+    });
+
+    // 5. CF_INNER_COL: Inner ø30mm Telescoping Carbon Plunger Tubes (moves with Lift Stroke!)
+    const innerColLen = 420;
+    const innerCols = [];
+    [-COL_X, COL_X].forEach(x => {
+      const plunger = makeTube(15, innerColLen, mats.carbonInner, "CF_INNER_COL");
+      plunger.rotation.x = RAKE_RAD;
+      innerCols.push({ mesh: plunger, x });
+    });
+
+    // 6. ACTUATOR_24V: Standard 24V 300mm IP65 Inline Linear Actuator Cartridges + M8 Clevis Pins
+    const actuatorParts = [];
+    [-COL_X, COL_X].forEach(x => {
+      const body = makeTube(12.5, 310, mats.actuatorBody, "ACTUATOR_24V");
+      body.rotation.x = RAKE_RAD;
+      const rod = makeTube(8, 320, mats.stainless, "ACTUATOR_24V");
+      rod.rotation.x = RAKE_RAD;
+      const pinBot = makeTube(5, 48, mats.clevisPin, "ACTUATOR_24V");
+      pinBot.rotation.z = Math.PI / 2;
+      const pinTop = makeTube(5, 48, mats.clevisPin, "ACTUATOR_24V");
+      pinTop.rotation.z = Math.PI / 2;
+      actuatorParts.push({ body, rod, pinBot, pinTop, x });
+    });
+
+    // 7. CNC_TOP_CAP: Top CNC 7075-T6 Actuator Clevis Caps + Right Floating Delrin Sleeve
+    const topCaps = [];
+    [-COL_X, COL_X].forEach((x, idx) => {
+      const cap = makeBox(44, 34, 52, idx === 1 ? mats.delrin : mats.cncBlue, "CNC_TOP_CAP");
+      topCaps.push({ mesh: cap, x });
+    });
+
+    // 8. CNC_REAR_DROPOUT: Rear ø16mm D-Axle Clamp Dropouts
+    [-COL_X, COL_X].forEach(x => {
+      const drop = makeBox(24, 68, 56, mats.cncBlue, "CNC_REAR_DROPOUT");
+      drop.position.set(x, BASE_Y + 6, -245);
+    });
+
+    // 9. REAR_HUB_WHEELS: Standard 6.5" (165mm) Sealed IP65 BLDC Hub Motor Wheels
+    const rearWheels = [];
+    [-COL_X, COL_X].forEach(x => {
+      const sign = Math.sign(x);
+      const wGroup = new THREE.Group();
+      const tire = new THREE.Mesh(new THREE.CylinderGeometry(82.5, 82.5, 38, 36), mats.tire);
+      tire.rotation.z = Math.PI / 2;
+      tire.userData.partId = "REAR_HUB_WHEELS";
+      const hub = new THREE.Mesh(new THREE.CylinderGeometry(54, 54, 41, 32), mats.hubShell);
+      hub.rotation.z = Math.PI / 2;
+      hub.userData.partId = "REAR_HUB_WHEELS";
+      const axle = new THREE.Mesh(new THREE.CylinderGeometry(8, 8, 65, 16), mats.stainless);
+      axle.rotation.z = Math.PI / 2;
+      axle.userData.partId = "REAR_HUB_WHEELS";
+      wGroup.add(tire, hub, axle);
+      wGroup.position.set(x + sign * 28, 82.5, -245);
+      partGroups["REAR_HUB_WHEELS"].add(wGroup);
+      rearWheels.push({ group: wGroup, baseX: x + sign * 28, sign });
+    });
+
+    // 10 & 11. CNC_CASTER_FORK + SKATE_WHEELS: Front 74mm Low-Profile Twin 64mm Skate Casters
+    const casterForks = [];
+    const skateWheels = [];
+    [-COL_X, COL_X].forEach(x => {
+      const sign = Math.sign(x);
+      // SKF 51104 Thrust Bearing + CNC Fork
+      const fGroup = new THREE.Group();
+      const brg = new THREE.Mesh(new THREE.CylinderGeometry(17.5, 17.5, 10, 24), mats.thrustBrg);
+      brg.position.y = 22;
+      brg.userData.partId = "CNC_CASTER_FORK";
+      const crown = new THREE.Mesh(new THREE.BoxGeometry(58, 12, 44), mats.cncBlue);
+      crown.position.y = 12;
+      crown.userData.partId = "CNC_CASTER_FORK";
+      const legL = new THREE.Mesh(new THREE.BoxGeometry(8, 38, 34), mats.cncBlue);
+      legL.position.set(-24, -6, -10);
+      legL.userData.partId = "CNC_CASTER_FORK";
+      const legR = new THREE.Mesh(new THREE.BoxGeometry(8, 38, 34), mats.cncBlue);
+      legR.position.set(24, -6, -10);
+      legR.userData.partId = "CNC_CASTER_FORK";
+      fGroup.add(brg, crown, legL, legR);
+      fGroup.position.set(x, 42, 265);
+      partGroups["CNC_CASTER_FORK"].add(fGroup);
+      casterForks.push({ group: fGroup, baseX: x, sign });
+
+      // Twin 64mm 82A Inline Skate PU Wheels
+      const swGroup = new THREE.Group();
+      [-11, 11].forEach(wx => {
+        const w = new THREE.Mesh(new THREE.CylinderGeometry(32, 32, 16, 28), mats.skatePU);
+        w.rotation.z = Math.PI / 2;
+        w.position.x = wx;
+        w.userData.partId = "SKATE_WHEELS";
+        const core = new THREE.Mesh(new THREE.CylinderGeometry(14, 14, 17, 20), mats.stainless);
+        core.rotation.z = Math.PI / 2;
+        core.position.x = wx;
+        core.userData.partId = "SKATE_WHEELS";
+        swGroup.add(w, core);
+      });
+      const axleM8 = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 62, 14), mats.clevisPin);
+      axleM8.rotation.z = Math.PI / 2;
+      axleM8.userData.partId = "SKATE_WHEELS";
+      swGroup.add(axleM8);
+      swGroup.position.set(x, 32, 255);
+      partGroups["SKATE_WHEELS"].add(swGroup);
+      skateWheels.push({ group: swGroup, baseX: x, sign });
+    });
+
+    // 12, 13, 14. 180° SPLIT-SADDLE HINGES, PADS & N52 CONICAL SHEAR LATCH
+    const saddleHinges = [];
+    const saddleArms = [];
+    const latchParts = [];
+
+    [-COL_X, COL_X].forEach((x, idx) => {
+      const sign = Math.sign(x);
+      // CNC Pivot Hinge Bracket on Inner Column
+      const hinge = makeBox(48, 36, 56, mats.cncBlue, "CNC_SADDLE_HINGE");
+      saddleHinges.push({ mesh: hinge, x, sign });
+
+      // Pivoting Saddle Pad Group
+      const pivotGroup = new THREE.Group();
+      const armBar = new THREE.Mesh(new THREE.BoxGeometry(175, 14, 44), mats.stainless);
+      armBar.position.set(-sign * 92, 0, -35);
+      armBar.userData.partId = "SADDLE_PADS";
+      const pad = new THREE.Mesh(new THREE.BoxGeometry(165, 28, 125), mats.saddlePad);
+      pad.position.set(-sign * 95, 16, -35);
+      pad.userData.partId = "SADDLE_PADS";
+      pivotGroup.add(armBar, pad);
+      partGroups["SADDLE_PADS"].add(pivotGroup);
+      saddleArms.push({ group: pivotGroup, x, sign });
+
+      // Center N52 + Conical Stainless Shear-Pin Latch Half
+      const lGroup = new THREE.Group();
+      const latchBlock = new THREE.Mesh(new THREE.BoxGeometry(28, 26, 68), mats.latchGreen);
+      latchBlock.position.set(-sign * 182, 6, -35);
+      latchBlock.userData.partId = "CNC_SADDLE_LATCH";
+      lGroup.add(latchBlock);
+      if (idx === 0) {
+        // Add twin 10mm 304SS 45-deg Conical Shear Pins + N52 Magnet
+        [-18, 18].forEach(pz => {
+          const pin = new THREE.Mesh(new THREE.ConeGeometry(6, 22, 16), mats.stainless);
+          pin.rotation.z = -Math.PI / 2;
+          pin.position.set(168, 6, -35 + pz);
+          pin.userData.partId = "CNC_SADDLE_LATCH";
+          lGroup.add(pin);
+        });
+      }
+      partGroups["CNC_SADDLE_LATCH"].add(lGroup);
+      latchParts.push({ group: lGroup, x, sign });
+    });
+
+    // 15. UPPER_HALO: ø25mm Carbon Support Halo & Ergonomic Handlebar Grip Pods
+    const haloGroup = new THREE.Group();
+    [-COL_X, COL_X].forEach(x => {
+      const sideArm = new THREE.Mesh(new THREE.CylinderGeometry(12.5, 12.5, 360, 24), mats.carbon);
+      sideArm.rotation.x = Math.PI / 2;
+      sideArm.position.set(x, 0, -40);
+      sideArm.userData.partId = "UPPER_HALO";
+      const gripPod = new THREE.Mesh(new THREE.CylinderGeometry(17, 15, 135, 24), mats.hubShell);
+      gripPod.rotation.x = Math.PI / 2;
+      gripPod.position.set(x, 4, -170);
+      gripPod.userData.partId = "UPPER_HALO";
+      haloGroup.add(sideArm, gripPod);
+    });
+    const topCross = new THREE.Mesh(new THREE.CylinderGeometry(12.5, 12.5, 430, 24), mats.carbon);
+    topCross.rotation.z = Math.PI / 2;
+    topCross.position.set(0, 0, 135);
+    topCross.userData.partId = "UPPER_HALO";
+    haloGroup.add(topCross);
+    partGroups["UPPER_HALO"].add(haloGroup);
+
+    // 16. KITCHEN_TRAY_AND_SENSORS: Dual MGN9C Rails + Clear Polycarbonate Tray + LiDAR + LiFePO4
+    const railsGroup = new THREE.Group();
+    [-COL_X, COL_X].forEach(x => {
+      const rail = new THREE.Mesh(new THREE.BoxGeometry(12, 10, 290), mats.stainless);
+      rail.position.set(x, 16, 0);
+      rail.userData.partId = "KITCHEN_TRAY_AND_SENSORS";
+      railsGroup.add(rail);
+    });
+    const trayMesh = new THREE.Mesh(new THREE.BoxGeometry(440, 10, 270), mats.lexanTray);
+    trayMesh.position.set(0, 26, 0);
+    trayMesh.userData.partId = "KITCHEN_TRAY_AND_SENSORS";
+    railsGroup.add(trayMesh);
+    partGroups["KITCHEN_TRAY_AND_SENSORS"].add(railsGroup);
+
+    // Front Nose LiFePO4 Battery Pack + LD19 360° LiDAR Turret
+    const batteryBox = makeBox(190, 48, 82, mats.battery, "KITCHEN_TRAY_AND_SENSORS");
+    batteryBox.position.set(0, BASE_Y + 22, 225);
+    const lidarPuck = makeTube(28, 38, mats.lidar, "KITCHEN_TRAY_AND_SENSORS");
+    lidarPuck.position.set(0, BASE_Y + 42, 272);
+
+    // =========================================================================
+    // REAL-TIME KINEMATICS & EXPLODED VIEW UPDATE ENGINE
+    // =========================================================================
+    let selectedPartId = "ALL";
+    let soloMode = false;
+    let xrayMode = false;
+    let glideDemo = false;
+    let glidePhase = 0;
+
+    const slExplode = document.getElementById("slExplode");
+    const slLift = document.getElementById("slLift");
+    const slSaddle = document.getElementById("slSaddle");
+    const slTray = document.getElementById("slTray");
+
+    function updateKinematics() {
+      const exp = parseFloat(slExplode.value) / 100.0;
+      const lift = parseFloat(slLift.value); // 0..300 mm
+      const saddleDeg = parseFloat(slSaddle.value); // 0..180 deg
+      const traySlide = parseFloat(slTray.value); // 0..300 mm
+
+      const saddleHeightMm = Math.round(420 + lift * Math.cos(RAKE_RAD));
+      const fwdShiftMm = Math.round(lift * Math.sin(RAKE_RAD));
+
+      document.getElementById("valExplode").textContent = `${Math.round(exp * 100)}%`;
+      document.getElementById("valLift").textContent = `${Math.round(lift)} mm (Saddle: ${saddleHeightMm}mm, +${fwdShiftMm}mm FWD)`;
+      document.getElementById("valSaddle").textContent = `${Math.round(saddleDeg)}° ${saddleDeg < 5 ? "(Latched)" : "(Open Walk-In)"}`;
+      document.getElementById("valTray").textContent = `+${Math.round(traySlide)} mm`;
+
+      // Base elevation along 12° column rake
+      const plungerBaseDist = 250 + lift;
+      const topDist = 470 + lift;
+
+      // Update Inner Carbon Plungers
+      innerCols.forEach(({ mesh, x }) => {
+        const sign = Math.sign(x);
+        const d = plungerBaseDist + exp * 95;
+        mesh.position.set(
+          x + sign * exp * 35,
+          BASE_Y + 20 + Math.cos(RAKE_RAD) * d,
+          20 + Math.sin(RAKE_RAD) * d
+        );
+      });
+
+      // Update Delrin Bushings
+      delrinMeshes.forEach(({ mesh, baseX, dPos }) => {
+        const sign = Math.sign(baseX);
+        const d = dPos + exp * 55;
+        mesh.position.set(
+          baseX + sign * exp * 65,
+          BASE_Y + 20 + Math.cos(RAKE_RAD) * d,
+          20 + Math.sin(RAKE_RAD) * d
+        );
+      });
+
+      // Update Internal 24V Linear Actuator Cartridges & M8 Clevis Pins
+      actuatorParts.forEach(({ body, rod, pinBot, pinTop, x }) => {
+        const sign = Math.sign(x);
+        const dBody = 175 + exp * 40;
+        const dRod = 250 + lift + exp * 110;
+        const xOff = x + sign * exp * 115; // Pull out laterally when exploded so user can inspect cartridge!
+
+        body.position.set(xOff, BASE_Y + 20 + Math.cos(RAKE_RAD) * dBody, 20 + Math.sin(RAKE_RAD) * dBody);
+        rod.position.set(xOff, BASE_Y + 20 + Math.cos(RAKE_RAD) * dRod, 20 + Math.sin(RAKE_RAD) * dRod);
+
+        pinBot.position.set(xOff + sign * exp * 45, BASE_Y + 35, 25);
+        pinTop.position.set(
+          xOff + sign * exp * 45,
+          BASE_Y + 20 + Math.cos(RAKE_RAD) * (topDist + exp * 120),
+          20 + Math.sin(RAKE_RAD) * (topDist + exp * 120)
+        );
+      });
+
+      // Update Top CNC Clevis Caps
+      topCaps.forEach(({ mesh, x }) => {
+        const sign = Math.sign(x);
+        const d = topDist + exp * 135;
+        mesh.position.set(
+          x + sign * exp * 35,
+          BASE_Y + 20 + Math.cos(RAKE_RAD) * d,
+          20 + Math.sin(RAKE_RAD) * d
+        );
+      });
+
+      // Update Rear 6.5" BLDC Hub Wheels
+      rearWheels.forEach(({ group, baseX, sign }) => {
+        group.position.set(baseX + sign * exp * 110, 82.5, -245 - exp * 60);
+      });
+
+      // Update Front 74mm Casters & Twin Skate Wheels
+      casterForks.forEach(({ group, baseX, sign }) => {
+        group.position.set(baseX + sign * exp * 50, 42 - exp * 35, 265 + exp * 55);
+      });
+      skateWheels.forEach(({ group, baseX, sign }) => {
+        group.position.set(baseX + sign * exp * 95, 32 - exp * 65, 255 + exp * 85);
+      });
+
+      // Update 180° Split-Saddle Hinges, Saddle Arms & Center Conical Latch
+      const saddleDist = 310 + lift;
+      const saddleY = BASE_Y + 20 + Math.cos(RAKE_RAD) * saddleDist;
+      const saddleZ = 20 + Math.sin(RAKE_RAD) * saddleDist;
+      const swingRad = (saddleDeg * Math.PI) / 180;
+
+      saddleHinges.forEach(({ mesh, x, sign }) => {
+        mesh.position.set(x + sign * exp * 60, saddleY, saddleZ - 10);
+      });
+
+      saddleArms.forEach(({ group, x, sign }) => {
+        group.position.set(x + sign * exp * 45, saddleY, saddleZ - 10 - exp * 50);
+        group.rotation.y = sign * swingRad;
+      });
+
+      latchParts.forEach(({ group, x, sign }) => {
+        group.position.set(x + sign * exp * 25, saddleY + exp * 30, saddleZ - 10 - exp * 75);
+        group.rotation.y = sign * swingRad;
+      });
+
+      // Update Upper Halo & MGN9C Slide-Bridge Kitchen Tray
+      const haloY = BASE_Y + 20 + Math.cos(RAKE_RAD) * (topDist + 18) + exp * 165;
+      const haloZ = 20 + Math.sin(RAKE_RAD) * (topDist + 18);
+      haloGroup.position.set(0, haloY, haloZ);
+
+      railsGroup.position.set(0, haloY + exp * 55, haloZ);
+      trayMesh.position.z = traySlide;
+    }
+
+    [slExplode, slLift, slSaddle, slTray].forEach(s => s.addEventListener("input", updateKinematics));
+
+    // =========================================================================
+    // UI TREE, PART SELECTION, X-RAY & SOLO MODE
+    // =========================================================================
+    function renderPartTree() {
+      const list = document.getElementById("partListContainer");
+      list.innerHTML = "";
+      PARTS_CATALOG.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "part-item" + (p.id === selectedPartId ? " active" : "");
+        div.onclick = () => selectPart(p.id, true);
+        div.innerHTML = `
+          <div style="display:flex; align-items:center; overflow:hidden;">
+            <span class="part-dot" style="background:${p.color}"></span>
+            <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.name}</span>
+          </div>
+          <span class="part-tag">${p.tag}</span>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function selectPart(partId, moveCam = false) {
+      selectedPartId = partId;
+      renderPartTree();
+
+      const item = PARTS_CATALOG.find(p => p.id === partId) || PARTS_CATALOG[0];
+      document.getElementById("partCodeBadge").textContent = item.tag;
+      document.getElementById("inspTitle").textContent = item.name;
+      document.getElementById("inspSub").textContent = item.sub;
+      document.getElementById("inspDesc").textContent = item.desc;
+      document.getElementById("inspBlueprintImg").src = item.bp;
+
+      const tbl = document.getElementById("inspTable");
+      tbl.innerHTML = item.specs.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("");
+
+      const links = document.getElementById("inspLinks");
+      links.innerHTML = item.links.map(l => `<a href="${l.url}" target="_blank">${l.label} ↗</a>`).join("");
+
+      // Update visibility / X-ray dimming in 3D scene
+      Object.entries(partGroups).forEach(([id, group]) => {
+        if (partId === "ALL") {
+          group.visible = true;
+        } else if (soloMode) {
+          group.visible = (id === partId);
+        } else {
+          group.visible = true;
+        }
+      });
+
+      // Automatically turn on X-Ray if user selects internal actuator or Delrin bushing!
+      if ((partId === "ACTUATOR_24V" || partId === "DELRIN_BUSHING") && !xrayMode) {
+        toggleXray(true);
+      }
+
+      if (moveCam && item.cam) {
+        animateCamera(item.cam, item.target);
+      }
+    }
+
+    function toggleSoloMode() {
+      soloMode = !soloMode;
+      const btn = document.getElementById("soloToggleBtn");
+      btn.textContent = `Solo Mode: ${soloMode ? "ON" : "OFF"}`;
+      btn.classList.toggle("active", soloMode);
+      selectPart(selectedPartId, false);
+    }
+
+    function toggleXray(forceState) {
+      xrayMode = typeof forceState === "boolean" ? forceState : !xrayMode;
+      mats.carbonOuter.opacity = xrayMode ? 0.22 : 1.0;
+      mats.carbonInner.opacity = xrayMode ? 0.28 : 1.0;
+      const btn = document.getElementById("xrayBtn");
+      btn.textContent = `X-Ray Carbon Tubes: ${xrayMode ? "ON" : "OFF"}`;
+      btn.classList.toggle("active", xrayMode);
+    }
+
+    function toggleGlideDemo() {
+      glideDemo = !glideDemo;
+      const btn = document.getElementById("glideBtn");
+      btn.classList.toggle("active", glideDemo);
+      if (glideDemo) {
+        slSaddle.value = 0; // Latch saddle for Seated Power-Glide
+        slExplode.value = 0;
+        updateKinematics();
+      } else {
+        rootWalker.position.z = 0;
+      }
+    }
+
+    function setCameraView(preset) {
+      const views = {
+        iso: { pos: [950, 720, 950], tgt: [0, 360, 0] },
+        front: { pos: [0, 420, 1250], tgt: [0, 380, 0] },
+        side: { pos: [1250, 420, 20], tgt: [0, 380, 20] },
+        top: { pos: [0, 1450, 10], tgt: [0, 360, 0] },
+        caster: { pos: [420, 180, 520], tgt: [180, 45, 270] },
+        column: { pos: [520, 420, 460], tgt: [0, 350, 60] },
+        hub: { pos: [520, 220, -520], tgt: [0, 85, -250] }
+      };
+      if (preset === "column" && !xrayMode) toggleXray(true);
+      const v = views[preset];
+      if (v) animateCamera(v.pos, v.tgt);
+    }
+
+    function animateCamera(pos, tgt) {
+      camera.position.set(...pos);
+      controls.target.set(...tgt);
+      controls.update();
+    }
+
+    function openBpModal(src) {
+      document.getElementById("bpModalImg").src = src;
+      document.getElementById("bpModal").style.display = "flex";
+    }
+
+    // Raycaster: Click any 3D part in the viewport to select & inspect it!
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    let downPos = { x: 0, y: 0 };
+
+    renderer.domElement.addEventListener("pointerdown", e => {
+      downPos = { x: e.clientX, y: e.clientY };
+    });
+    renderer.domElement.addEventListener("pointerup", e => {
+      if (Math.hypot(e.clientX - downPos.x, e.clientY - downPos.y) > 5) return;
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+      const hits = raycaster.intersectObjects(rootWalker.children, true);
+      if (hits.length > 0) {
+        let obj = hits[0].object;
+        while (obj && !obj.userData.partId) obj = obj.parent;
+        if (obj && obj.userData.partId) {
+          selectPart(obj.userData.partId, false);
+        }
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    // Initialize UI & Render Loop
+    renderPartTree();
+    selectPart("ALL", false);
+    updateKinematics();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (glideDemo) {
+        glidePhase += 0.025;
+        rootWalker.position.z = Math.sin(glidePhase) * 220;
+        rearWheels.forEach(({ group }) => { group.rotation.x += Math.cos(glidePhase) * 0.05; });
+      }
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
   </script>
 </body>
 </html>
