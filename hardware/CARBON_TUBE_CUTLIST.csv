@@ -1,10 +1,7 @@
 Part ID,Component / Tube Name,Material & Spec,Outer Dia / Profile (mm),Wall (mm),Exact Cut Length (mm),Qty,Target Subsystem & Notes
-CF-01,Lower Side Chassis Rails (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø30.0,2.5,640.0,2,Connects front Tente casters to rear FOC hub dropouts (fits 680mm elevator/bathroom depth)
-CF-02,Vertical Outer Telescoping Columns (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø30.0,2.5,540.0,2,Fixed vertical pillars; houses igus DryLin polymer bushings inside top collar
-CF-03,Vertical Inner Lifting Columns (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,2.5,520.0,2,Telescopes 300mm inside CF-02 (Saddle: 420mm->720mm; Tray: 580mm->880mm)
-CF-04,Upper Forearm Cockpit Support Tubes (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,2.0,420.0,2,Supports 24-bit Load-Cell Forearm Troughs & Slide-Bridge Kitchen Tray
+CF-01,Rear Lower Chassis Tubes (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø30.0,2.5,420.0,2,Connects rear ZLTECH hub dropouts to 75mm low-profile under-bed front nose rails
+CF-02,Fixed 495mm Front Lower Cross-Beam,3K Roll-Wrapped Autoclave Carbon Tube,Ø30.0,3.0,435.0,1,Sets outer frame width to 495mm (19.5in) -> clears every 20in+ Indian bathroom door
+CF-03,Fixed 495mm Front Upper Cockpit Bridge,3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,2.5,435.0,1,Links tops of left & right TiMOTION/LINAK columns; carries Slide-Bridge Kitchen Tray
+CF-04,Upper Forearm Cockpit & Waist Bolster Tubes (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,2.5,420.0,2,"Supports 24-bit Load-Cell Forearm Troughs, Bi-Level Rise Grips & MIT E-BAR Waist Bolsters"
 CF-05,Split-Saddle Cantilever Arms (L & R),3K Roll-Wrapped Autoclave Carbon Tube,Ø25.0,3.0,230.0,2,Pivots 90-deg on Fidlock 7075-T6 Hinge Block behind user's pelvis
-IG-01,Front Lower Width-Morphing Linear Rail,igus DryLin W Hard-Anodized Al Rail (WS-10-40),40.0 x 10.0,Solid,580.0,1,Allows continuous 480mm (18.9in) to 640mm (25.2in) doorway width morphing
-IG-02,Front Upper Synchronizer Linear Rail,igus DryLin W Hard-Anodized Al Rail (WS-10-40),40.0 x 10.0,Solid,580.0,1,Keeps vertical columns parallel during width morphing while leaving rear 100% open
-LK-01,Primary Sit-to-Stand Lifting Columns,LINAK LA23 / TiMOTION TA16 Medical Actuator,Compact Medical,IPX6,300.0 Stroke (455mm Retracted),2,Synchronized Hall-effect closed loop; 1500N each (3000N / 300kgf combined)
-LK-02,Horizontal Width-Morphing Actuator,LINAK / TiMOTION Micro Linear Actuator,Compact IP66,IP66,160.0 Stroke (245mm Retracted),1,Drives 480mm (Bathroom) <-> 550mm (Indoor) <-> 640mm (Hospital/Perch) presets
+LK-01,12-Deg Inclined Telescoping Medical Columns,TiMOTION TL18 / LINAK LC1 Factory Column,Anodized Extruded Al,IPX6,300.0 Stroke (440mm Retracted),2,Mounted at 12-deg forward incline (+293mm UP & +62mm FORWARD nose-over-toes trajectory)

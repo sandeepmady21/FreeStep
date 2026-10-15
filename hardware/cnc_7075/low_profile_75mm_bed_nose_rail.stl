@@ -1,0 +1,170 @@
+solid low_profile_75mm_bed_nose_rail
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 25.0000 0.0000
+      vertex 120.0000 58.0000 0.0000
+      vertex 120.0000 25.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 25.0000 0.0000
+      vertex 0.0000 58.0000 0.0000
+      vertex 120.0000 58.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 25.0000 14.0000
+      vertex 120.0000 25.0000 14.0000
+      vertex 120.0000 58.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 25.0000 14.0000
+      vertex 120.0000 58.0000 14.0000
+      vertex 0.0000 58.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 25.0000 0.0000
+      vertex 120.0000 25.0000 0.0000
+      vertex 120.0000 25.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 25.0000 0.0000
+      vertex 120.0000 25.0000 14.0000
+      vertex 0.0000 25.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 120.0000 58.0000 0.0000
+      vertex 0.0000 58.0000 0.0000
+      vertex 0.0000 58.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 120.0000 58.0000 0.0000
+      vertex 0.0000 58.0000 14.0000
+      vertex 120.0000 58.0000 14.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 25.0000 0.0000
+      vertex 0.0000 25.0000 14.0000
+      vertex 0.0000 58.0000 14.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 25.0000 0.0000
+      vertex 0.0000 58.0000 14.0000
+      vertex 0.0000 58.0000 0.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 120.0000 25.0000 0.0000
+      vertex 120.0000 58.0000 0.0000
+      vertex 120.0000 58.0000 14.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 120.0000 25.0000 0.0000
+      vertex 120.0000 58.0000 14.0000
+      vertex 120.0000 25.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 120.0000 0.0000 0.0000
+      vertex 340.0000 28.0000 0.0000
+      vertex 340.0000 0.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 120.0000 0.0000 0.0000
+      vertex 120.0000 28.0000 0.0000
+      vertex 340.0000 28.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 120.0000 0.0000 14.0000
+      vertex 340.0000 0.0000 14.0000
+      vertex 340.0000 28.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 120.0000 0.0000 14.0000
+      vertex 340.0000 28.0000 14.0000
+      vertex 120.0000 28.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 120.0000 0.0000 0.0000
+      vertex 340.0000 0.0000 0.0000
+      vertex 340.0000 0.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 120.0000 0.0000 0.0000
+      vertex 340.0000 0.0000 14.0000
+      vertex 120.0000 0.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 340.0000 28.0000 0.0000
+      vertex 120.0000 28.0000 0.0000
+      vertex 120.0000 28.0000 14.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 340.0000 28.0000 0.0000
+      vertex 120.0000 28.0000 14.0000
+      vertex 340.0000 28.0000 14.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 120.0000 0.0000 0.0000
+      vertex 120.0000 0.0000 14.0000
+      vertex 120.0000 28.0000 14.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 120.0000 0.0000 0.0000
+      vertex 120.0000 28.0000 14.0000
+      vertex 120.0000 28.0000 0.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 340.0000 0.0000 0.0000
+      vertex 340.0000 28.0000 0.0000
+      vertex 340.0000 28.0000 14.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 340.0000 0.0000 0.0000
+      vertex 340.0000 28.0000 14.0000
+      vertex 340.0000 0.0000 14.0000
+    endloop
+  endfacet
+endsolid low_profile_75mm_bed_nose_rail

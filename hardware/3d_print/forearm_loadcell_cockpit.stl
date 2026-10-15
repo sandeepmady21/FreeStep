@@ -335,4 +335,88 @@ solid forearm_loadcell_cockpit
       vertex 240.0000 15.0000 32.0000
     endloop
   endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 20.0000 30.0000 -145.0000
+      vertex 140.0000 65.0000 -145.0000
+      vertex 140.0000 30.0000 -145.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 20.0000 30.0000 -145.0000
+      vertex 20.0000 65.0000 -145.0000
+      vertex 140.0000 65.0000 -145.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 20.0000 30.0000 -115.0000
+      vertex 140.0000 30.0000 -115.0000
+      vertex 140.0000 65.0000 -115.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 20.0000 30.0000 -115.0000
+      vertex 140.0000 65.0000 -115.0000
+      vertex 20.0000 65.0000 -115.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 20.0000 30.0000 -145.0000
+      vertex 140.0000 30.0000 -145.0000
+      vertex 140.0000 30.0000 -115.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 20.0000 30.0000 -145.0000
+      vertex 140.0000 30.0000 -115.0000
+      vertex 20.0000 30.0000 -115.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 140.0000 65.0000 -145.0000
+      vertex 20.0000 65.0000 -145.0000
+      vertex 20.0000 65.0000 -115.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 140.0000 65.0000 -145.0000
+      vertex 20.0000 65.0000 -115.0000
+      vertex 140.0000 65.0000 -115.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 20.0000 30.0000 -145.0000
+      vertex 20.0000 30.0000 -115.0000
+      vertex 20.0000 65.0000 -115.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 20.0000 30.0000 -145.0000
+      vertex 20.0000 65.0000 -115.0000
+      vertex 20.0000 65.0000 -145.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 140.0000 30.0000 -145.0000
+      vertex 140.0000 65.0000 -145.0000
+      vertex 140.0000 65.0000 -115.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 140.0000 30.0000 -145.0000
+      vertex 140.0000 65.0000 -115.0000
+      vertex 140.0000 30.0000 -115.0000
+    endloop
+  endfacet
 endsolid forearm_loadcell_cockpit

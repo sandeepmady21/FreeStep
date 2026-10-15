@@ -1,0 +1,86 @@
+solid inclined_12deg_column_mount
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 145.0000 125.0000 0.0000
+      vertex 145.0000 0.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 125.0000 0.0000
+      vertex 145.0000 125.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 16.0000
+      vertex 145.0000 0.0000 16.0000
+      vertex 145.0000 125.0000 16.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 16.0000
+      vertex 145.0000 125.0000 16.0000
+      vertex 0.0000 125.0000 16.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 145.0000 0.0000 0.0000
+      vertex 145.0000 0.0000 16.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 145.0000 0.0000 16.0000
+      vertex 0.0000 0.0000 16.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 145.0000 125.0000 0.0000
+      vertex 0.0000 125.0000 0.0000
+      vertex 0.0000 125.0000 16.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 145.0000 125.0000 0.0000
+      vertex 0.0000 125.0000 16.0000
+      vertex 145.0000 125.0000 16.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 0.0000 16.0000
+      vertex 0.0000 125.0000 16.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 125.0000 16.0000
+      vertex 0.0000 125.0000 0.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 145.0000 0.0000 0.0000
+      vertex 145.0000 125.0000 0.0000
+      vertex 145.0000 125.0000 16.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 145.0000 0.0000 0.0000
+      vertex 145.0000 125.0000 16.0000
+      vertex 145.0000 0.0000 16.0000
+    endloop
+  endfacet
+endsolid inclined_12deg_column_mount

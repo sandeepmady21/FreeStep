@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="169.0mm" height="149.0mm" viewBox="-12.0 -12.0 169.0 149.0">
+  <title>CNC 7075-T6 12-Deg Forward-Inclined Column Mount (Nose-Over-Toes)</title>
+  <g fill="none" stroke="#0055ff" stroke-width="0.5">
+    <polygon points="0.000,125.000 145.000,125.000 145.000,87.000 115.000,0.000 22.000,20.000 0.000,87.000" />
+  </g>
+  <g fill="none" stroke="#e60000" stroke-width="0.4">
+    <circle cx="25.000" cy="107.000" r="4.100" />
+    <circle cx="72.000" cy="107.000" r="4.100" />
+    <circle cx="120.000" cy="107.000" r="4.100" />
+    <circle cx="45.000" cy="50.000" r="3.200" />
+    <circle cx="95.000" cy="39.000" r="3.200" />
+  </g>
+</svg>

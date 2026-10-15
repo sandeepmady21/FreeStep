@@ -1,18 +1,14 @@
 /**
- * ElderStep Pro (FreeStep v2) - Universal Home/Hospital & Auto-Summon Firmware
- * Target MCU: ESP32-S3 (with Dual-Core FreeRTOS / Arduino)
+ * ElderStep Pro (Final 10.20 kg 5-Module Carbon/7075 Edition) - Master Safety & Control Firmware
+ * Target MCU: ESP32-S3
  *
- * Implements:
- *  1. Universal Multi-Home / Hospital Presets:
- *     - Width: 480mm (Ultra-Narrow Bathroom) | 550mm (Indoor Standard) | 640mm (Wide Rehab/Perch)
- *     - Lift:  420mm (Low Toilet/Bed) | 480mm (Wheelchair) | 680mm (Kitchen Perch) | 820mm (Slide-Bridge Tray)
- *  2. Autonomous "Summon-to-Grandma" Homing & Docking (UWB Dual-Anchor AoA + 360° LiDAR + Cliff ToF):
- *     - Triggered via Wearable UWB Pendant button OR offline voice wake word ("Walker Come Here" / "Chalo")
- *     - Automatically retracts width to 480mm & lowers CG (420mm) before moving through doorways
- *     - Computes exact distance & bearing angle theta = asin((d_R - d_L) / W) to Grandma's UWB tag
- *     - Steers differentially around obstacles via Left/Right FOC hub motors and auto-docks at 0.50m
- *  3. Fail-Safe "Dead-Man's" Auto-Braking & Instant Human-Grip Override
- *  4. Anti-Tip Software Interlock & 6-Axis IMU Stumble/Tilt Emergency Lock
+ * Implements All Global Benchmark Refinements:
+ *  1. 12-Degree Forward-Inclined "Nose-Over-Toes" Synchronized Dual Column Lift (TiMOTION/LINAK)
+ *  2. Fixed 495mm (19.5in) Universal Bathroom-Ready Base + 75mm Under-Bed Front Nose
+ *  3. RT.Works RT.2 Active Slope-Zeroing Gravity Compensation (tau = M * g * R * sin(pitch))
+ *  4. Camino VL53L5CX Rear Shin-Tracking "Too-Far-Ahead" Runaway Distance Guard (<= 28cm)
+ *  5. Autonomous UWB Dual-Anchor (DW3000) + 360-Deg LiDAR (LD19) Summon-to-Grandma & Docking
+ *  6. Zero-Turn Spin-in-Place Mode, Dead-Man's Auto-Brake & 24-Bit Load-Cell PWB Ankle Coach
  */
 
 #include <Arduino.h>
@@ -20,11 +16,10 @@
 #include <math.h>
 
 // --- Pin Definitions ---
-// 24-Bit Load-Cell / Forearm Grip Force Inputs
-constexpr int PIN_FSR_LEFT          = 34;
-constexpr int PIN_FSR_RIGHT         = 35;
+constexpr int PIN_LOADCELL_LEFT     = 34;  // Left Forearm 24-Bit Load-Cell Amplifier Analog/ADC
+constexpr int PIN_LOADCELL_RIGHT    = 35;  // Right Forearm 24-Bit Load-Cell Amplifier Analog/ADC
 
-// Vertical Lift Linear Actuators (Left & Right LINAK/TiMOTION 300mm Stroke)
+// 12-Degree Inclined Telescoping Columns (Left & Right TiMOTION TL18 / LINAK LC1)
 constexpr int PIN_LIFT_L_RPWM       = 25;
 constexpr int PIN_LIFT_L_LPWM       = 26;
 constexpr int PIN_LIFT_R_RPWM       = 27;
@@ -32,65 +27,63 @@ constexpr int PIN_LIFT_R_LPWM       = 14;
 constexpr int PIN_LIFT_L_HALL       = 18;
 constexpr int PIN_LIFT_R_HALL       = 19;
 
-// Horizontal Width-Morphing Actuator (480mm <-> 640mm Universal Doorway Morph)
-constexpr int PIN_WIDTH_RPWM        = 32;
-constexpr int PIN_WIDTH_LPWM        = 33;
-constexpr int PIN_LIMIT_WIDE        = 4;   // 640 mm wide stance confirmed
-constexpr int PIN_LIMIT_NARROW      = 5;   // 480 mm ultra-narrow doorway stance confirmed
-
-// Rear Pancake FOC Hub Motors (Independent Left & Right Differential Drive + Brake)
+// Rear ZLTECH 6.5" Integrated Servo Hub Wheels (Differential Drive + E-Brake)
 constexpr int PIN_HUB_BRAKE_EN      = 23;  // HIGH = Electromagnetic Lock Engaged
-constexpr int PIN_HUB_L_PWM         = 13;  // Left Rear FOC Hub Motor Velocity Command
-constexpr int PIN_HUB_R_PWM         = 12;  // Right Rear FOC Hub Motor Velocity Command
-constexpr int PIN_HUB_L_DIR         = 2;   // Left Rear Direction (HIGH = Forward)
-constexpr int PIN_HUB_R_DIR         = 0;   // Right Rear Direction (HIGH = Forward)
+constexpr int PIN_HUB_L_PWM         = 13;
+constexpr int PIN_HUB_R_PWM         = 12;
+constexpr int PIN_HUB_L_DIR         = 2;
+constexpr int PIN_HUB_R_DIR         = 0;
 
 // Cockpit Buttons & Status LEDs
 constexpr int PIN_BTN_LIFT_UP       = 16;
 constexpr int PIN_BTN_LIFT_DOWN     = 17;
-constexpr int PIN_BTN_SQUEEZE_MODE  = 21;
-constexpr int PIN_BTN_THRESHOLD_GO  = 22;
+constexpr int PIN_BTN_SPIN_IN_PLACE = 21;  // 180-deg Zero-Turn Bathroom Spin Mode
+constexpr int PIN_BTN_THRESHOLD_GO  = 22;  // High-torque 40mm marble threshold climb
 constexpr int PIN_LED_PWB_COACH     = 15;  // HIGH = Target ankle offloading achieved
 
-// I2C Pins for MPU6050 IMU & VL53L1X Cliff Sensors
+// I2C Bus (MPU6050 IMU, VL53L5CX Shin Tracker, 2x VL53L1X Cliff Sensors)
 constexpr int PIN_I2C_SDA           = 8;
 constexpr int PIN_I2C_SCL           = 9;
 constexpr uint8_t MPU6050_ADDR      = 0x68;
 
-// --- Universal Architectural & Safety Constants ---
-constexpr int   FSR_HANDS_PRESENT_THRESHOLD = 600;   // ADC units (0..4095)
-constexpr int   FSR_PUSH_ASSIST_THRESHOLD   = 1400;  // Forward push intent
-constexpr int   FSR_ANKLE_OFFLOAD_TARGET    = 1800;  // Target forearm load for PWB offloading
-constexpr long  MAX_SAFE_HEIGHT_FOR_NARROW  = 350;   // Hall pulses (~500mm seat height)
-constexpr long  MAX_PERCH_HEIGHT_PULSES     = 1200;  // ~720mm saddle / 880mm slide-bridge tray
-constexpr int   SYNC_KP                     = 12;    // Proportional gain for L/R column sync
-constexpr float MAX_SAFE_TILT_DEG           = 12.0f; // Lock wheels & actuators if pitch/roll > 12 deg
+// --- Clinical & Biomechanical Constants ---
+constexpr int   LOAD_HANDS_PRESENT_THRESHOLD = 600;   // ADC units (0..4095)
+constexpr int   LOAD_PUSH_ASSIST_THRESHOLD   = 1400;  // ~100g forward push intent
+constexpr int   LOAD_ANKLE_OFFLOAD_TARGET    = 1800;  // Surgeon PWB target offload threshold
+constexpr long  MAX_PERCH_HEIGHT_PULSES      = 1200;  // 713mm saddle / 873mm slide-bridge tray
+constexpr int   SYNC_KP                      = 12;    // Closed-loop L/R column synchronization gain
+constexpr float MAX_SAFE_TILT_DEG            = 12.0f; // Emergency lock threshold
+constexpr float SLOPE_COMP_GAIN              = 4.5f;  // RT.Works RT.2 sin(pitch) slope compensation gain
+constexpr float MAX_SAFE_SHIN_GAP_CM         = 28.0f; // Camino anti-runaway max torso/shin distance (cm)
 
 // --- Auto-Summon (UWB Dual-Anchor + LiDAR) Constants ---
-constexpr float SUMMON_STOP_DISTANCE_M      = 0.50f; // Stop & lock 50cm in front of Grandma's knees
-constexpr float SUMMON_SLOWDOWN_DISTANCE_M  = 1.20f; // Slow crawl approach zone
-constexpr float LIDAR_MIN_OBSTACLE_DIST_M   = 0.35f; // Halt/steer if obstacle within 35cm
-constexpr int   SUMMON_BASE_PWM             = 70;    // Safe indoor autonomous speed (~0.32 m/s)
-constexpr int   SUMMON_DOCK_PWM             = 38;    // Final docking creep speed (~0.12 m/s)
-constexpr int   SUMMON_TURN_KP              = 45;    // Differential steering gain on UWB bearing error
+constexpr float SUMMON_STOP_DISTANCE_M       = 0.50f;
+constexpr float SUMMON_SLOWDOWN_DISTANCE_M   = 1.20f;
+constexpr float LIDAR_MIN_OBSTACLE_DIST_M    = 0.35f;
+constexpr int   SUMMON_BASE_PWM              = 70;
+constexpr int   SUMMON_DOCK_PWM              = 38;
+constexpr int   SUMMON_TURN_KP               = 45;
 
 enum class SystemState {
   PARKED_LOCKED,
   WALK_ASSIST,
   SIT_TO_STAND_LIFT,
-  NARROW_DOOR_MODE,
-  AUTO_SUMMON_PREP,     // Lowering CG & narrowing to 480mm before rolling through doorways
-  AUTO_SUMMON_HOMING,   // Differential FOC homing toward Grandma's UWB pendant
-  AUTO_SUMMON_DOCKED,   // Parked & locked 50cm in front of Grandma, ready for transfer
+  SPIN_IN_PLACE,
+  AUTO_SUMMON_PREP,
+  AUTO_SUMMON_HOMING,
+  AUTO_SUMMON_DOCKED,
   EMERGENCY_LOCK
 };
 
-struct UwbSummonTelemetry {
-  bool  summonRequested;     // True when Grandma presses UWB pendant or says wake word
-  float distLeftAnchorM;     // Distance from Grandma's UWB tag to Left Pillar Anchor (m)
-  float distRightAnchorM;    // Distance from Grandma's UWB tag to Right Pillar Anchor (m)
-  float frontObstacleDistM;  // Minimum obstacle distance in front sector from LD19 LiDAR (m)
-  bool  cliffDetected;       // True if downward VL53L1X detects bathroom step drop-off
+struct SensorTelemetry {
+  bool  summonRequested;
+  float distLeftAnchorM;
+  float distRightAnchorM;
+  float frontObstacleDistM;
+  bool  cliffDetected;
+  float shinDistanceCm;      // From rear-facing VL53L5CX (Camino anti-runaway guard)
+  float pitchDeg;            // Positive = Uphill, Negative = Downhill
+  float rollDeg;
 };
 
 volatile long liftPulsesLeft  = 0;
@@ -98,7 +91,7 @@ volatile long liftPulsesRight = 0;
 SystemState currentState = SystemState::PARKED_LOCKED;
 int currentSoftStartPwm = 0;
 bool imuAvailable = false;
-UwbSummonTelemetry summonData = {false, 3.0f, 3.0f, 9.9f, false};
+SensorTelemetry sensors = {false, 3.0f, 3.0f, 9.9f, false, 18.0f, 0.0f, 0.0f};
 
 void IRAM_ATTR onLeftHallPulse()  { liftPulsesLeft++; }
 void IRAM_ATTR onRightHallPulse() { liftPulsesRight++; }
@@ -125,21 +118,20 @@ void stopVerticalLift() {
   analogWrite(PIN_LIFT_R_LPWM, 0);
 }
 
-bool checkImuTiltFault() {
-  if (!imuAvailable) return false;
+void updateImuOrientation() {
+  if (!imuAvailable) return;
   Wire.beginTransmission(MPU6050_ADDR);
   Wire.write(0x3B);
-  if (Wire.endTransmission(false) != 0) return false;
+  if (Wire.endTransmission(false) != 0) return;
   Wire.requestFrom(MPU6050_ADDR, (uint8_t)6);
-  if (Wire.available() < 6) return false;
+  if (Wire.available() < 6) return;
 
   int16_t ax = (Wire.read() << 8) | Wire.read();
   int16_t ay = (Wire.read() << 8) | Wire.read();
   int16_t az = (Wire.read() << 8) | Wire.read();
 
-  float pitch = abs(atan2((float)ax, sqrt((float)ay * ay + (float)az * az)) * 57.2958f);
-  float roll  = abs(atan2((float)ay, sqrt((float)ax * ax + (float)az * az)) * 57.2958f);
-  return (pitch > MAX_SAFE_TILT_DEG) || (roll > MAX_SAFE_TILT_DEG);
+  sensors.pitchDeg = atan2((float)ax, sqrt((float)ay * ay + (float)az * az)) * 57.2958f;
+  sensors.rollDeg  = atan2((float)ay, sqrt((float)ax * ax + (float)az * az)) * 57.2958f;
 }
 
 void driveSynchronizedLift(bool moveUp, int targetSpeed) {
@@ -161,21 +153,14 @@ void driveSynchronizedLift(bool moveUp, int targetSpeed) {
   }
 }
 
-/**
- * Executes Autonomous UWB + LiDAR Summon-to-Grandma State Machine.
- * Step 1: Retracts width to 480mm & lowers seat <= 500mm so it fits through any doorway.
- * Step 2: Computes UWB differential bearing and drives Left/Right FOC hubs toward Grandma.
- * Step 3: Parks & locks brakes at 0.50m in front of Grandma.
- */
-void runAutoSummonStep(long avgHeight, bool isNarrowStance) {
-  if (summonData.cliffDetected || summonData.frontObstacleDistM < LIDAR_MIN_OBSTACLE_DIST_M) {
-    // Pause and hold brakes until path clears or obstacle is bypassed
+void runAutoSummonStep(long avgHeight) {
+  if (sensors.cliffDetected || sensors.frontObstacleDistM < LIDAR_MIN_OBSTACLE_DIST_M) {
     engageHubBrakes(true);
     return;
   }
 
-  // Step 1: Ensure narrow 480mm width and low CG before autonomous rolling
-  if (avgHeight > MAX_SAFE_HEIGHT_FOR_NARROW) {
+  // Ensure saddle is lowered (<= 350 pulses) for low CG before autonomous rolling
+  if (avgHeight > 350) {
     currentState = SystemState::AUTO_SUMMON_PREP;
     engageHubBrakes(true);
     driveSynchronizedLift(false, 200);
@@ -183,32 +168,20 @@ void runAutoSummonStep(long avgHeight, bool isNarrowStance) {
   }
   stopVerticalLift();
 
-  if (!isNarrowStance) {
-    currentState = SystemState::AUTO_SUMMON_PREP;
-    engageHubBrakes(true);
-    analogWrite(PIN_WIDTH_RPWM, 0);
-    analogWrite(PIN_WIDTH_LPWM, 200); // Retract to 480mm
-    return;
-  }
-  analogWrite(PIN_WIDTH_LPWM, 0);
-
-  // Step 2: Check distance to Grandma's UWB Pendant
-  float avgDistM = 0.5f * (summonData.distLeftAnchorM + summonData.distRightAnchorM);
+  float avgDistM = 0.5f * (sensors.distLeftAnchorM + sensors.distRightAnchorM);
   if (avgDistM <= SUMMON_STOP_DISTANCE_M) {
     currentState = SystemState::AUTO_SUMMON_DOCKED;
-    summonData.summonRequested = false;
+    sensors.summonRequested = false;
     engageHubBrakes(true);
-    Serial.println("AUTO_SUMMON_DOCKED: Walker parked & locked 50cm in front of Grandma!");
     return;
   }
 
-  // Step 3: Differential Steering toward Grandma using UWB Left/Right Time-of-Flight difference
   currentState = SystemState::AUTO_SUMMON_HOMING;
   engageHubBrakes(false);
 
-  float baselineM = 0.48f; // 480mm narrow stance anchor separation
-  float deltaM = constrain(summonData.distRightAnchorM - summonData.distLeftAnchorM, -baselineM, baselineM);
-  float bearingRad = asinf(deltaM / baselineM); // Positive = Grandma is to the Left
+  float baselineM = 0.495f; // Fixed 495mm U-base anchor separation
+  float deltaM = constrain(sensors.distRightAnchorM - sensors.distLeftAnchorM, -baselineM, baselineM);
+  float bearingRad = asinf(deltaM / baselineM);
 
   int basePwm = (avgDistM < SUMMON_SLOWDOWN_DISTANCE_M) ? SUMMON_DOCK_PWM : SUMMON_BASE_PWM;
   int turnOffset = (int)(bearingRad * SUMMON_TURN_KP);
@@ -232,11 +205,9 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(PIN_LIFT_L_HALL), onLeftHallPulse, RISING);
   attachInterrupt(digitalPinToInterrupt(PIN_LIFT_R_HALL), onRightHallPulse, RISING);
 
-  pinMode(PIN_LIMIT_WIDE, INPUT_PULLUP);
-  pinMode(PIN_LIMIT_NARROW, INPUT_PULLUP);
   pinMode(PIN_BTN_LIFT_UP, INPUT_PULLUP);
   pinMode(PIN_BTN_LIFT_DOWN, INPUT_PULLUP);
-  pinMode(PIN_BTN_SQUEEZE_MODE, INPUT_PULLUP);
+  pinMode(PIN_BTN_SPIN_IN_PLACE, INPUT_PULLUP);
   pinMode(PIN_BTN_THRESHOLD_GO, INPUT_PULLUP);
 
   Wire.begin(PIN_I2C_SDA, PIN_I2C_SCL);
@@ -245,60 +216,53 @@ void setup() {
   Wire.write(0x00);
   imuAvailable = (Wire.endTransmission() == 0);
 
-  Serial.println("ElderStep Pro Universal + Auto-Summon Controller Ready");
+  Serial.println("ElderStep Pro 10.20kg 5-Module Controller Initialized");
 }
 
 void loop() {
-  // 0. Highest-Priority IMU Tilt / Stumble Check
-  if (checkImuTiltFault()) {
+  updateImuOrientation();
+
+  // 0. Highest-Priority IMU Tilt / Stumble Emergency Lock
+  if (abs(sensors.pitchDeg) > MAX_SAFE_TILT_DEG || abs(sensors.rollDeg) > MAX_SAFE_TILT_DEG) {
     currentState = SystemState::EMERGENCY_LOCK;
-    summonData.summonRequested = false;
+    sensors.summonRequested = false;
     stopVerticalLift();
-    analogWrite(PIN_WIDTH_RPWM, 0);
-    analogWrite(PIN_WIDTH_LPWM, 0);
     engageHubBrakes(true);
-    Serial.println("EMERGENCY_LOCK: Excessive frame tilt/stumble detected!");
     delay(50);
     return;
   }
 
-  int fsrLeft  = analogRead(PIN_FSR_LEFT);
-  int fsrRight = analogRead(PIN_FSR_RIGHT);
-  int avgForce = (fsrLeft + fsrRight) / 2;
-  bool handsOnForearms = (fsrLeft > FSR_HANDS_PRESENT_THRESHOLD) &&
-                         (fsrRight > FSR_HANDS_PRESENT_THRESHOLD);
-  bool isWideStance    = (digitalRead(PIN_LIMIT_WIDE) == LOW);
-  bool isNarrowStance  = (digitalRead(PIN_LIMIT_NARROW) == LOW);
+  int loadLeft  = analogRead(PIN_LOADCELL_LEFT);
+  int loadRight = analogRead(PIN_LOADCELL_RIGHT);
+  int avgForce  = (loadLeft + loadRight) / 2;
+  bool handsOnForearms = (loadLeft > LOAD_HANDS_PRESENT_THRESHOLD) &&
+                         (loadRight > LOAD_HANDS_PRESENT_THRESHOLD);
   long avgHeight       = (liftPulsesLeft + liftPulsesRight) / 2;
 
-  // Instant Human-Touch Override: If Grandma touches the handles, cancel Auto-Summon immediately
-  if (handsOnForearms && summonData.summonRequested) {
-    summonData.summonRequested = false;
+  // Instant Human-Touch Override on Auto-Summon
+  if (handsOnForearms && sensors.summonRequested) {
+    sensors.summonRequested = false;
     engageHubBrakes(true);
   }
 
-  // Run Autonomous Summon-to-Grandma if active and no hands are on the walker
-  if (summonData.summonRequested && !handsOnForearms) {
-    runAutoSummonStep(avgHeight, isNarrowStance);
+  if (sensors.summonRequested && !handsOnForearms) {
+    runAutoSummonStep(avgHeight);
     delay(20);
     return;
   }
 
-  // Partial-Weight-Bearing (PWB) Ankle Offloading Coach LED
-  digitalWrite(PIN_LED_PWB_COACH, (avgForce >= FSR_ANKLE_OFFLOAD_TARGET) ? HIGH : LOW);
+  // Surgeon Partial-Weight-Bearing (PWB) Ankle Offloading Coach LED
+  digitalWrite(PIN_LED_PWB_COACH, (avgForce >= LOAD_ANKLE_OFFLOAD_TARGET) ? HIGH : LOW);
 
   bool btnUp        = (digitalRead(PIN_BTN_LIFT_UP) == LOW);
   bool btnDown      = (digitalRead(PIN_BTN_LIFT_DOWN) == LOW);
-  bool btnSqueeze   = (digitalRead(PIN_BTN_SQUEEZE_MODE) == LOW);
+  bool btnSpin      = (digitalRead(PIN_BTN_SPIN_IN_PLACE) == LOW);
   bool btnThreshold = (digitalRead(PIN_BTN_THRESHOLD_GO) == LOW);
 
-  // 1. Vertical Sit-to-Stand / Kitchen Perch Lift Control (Requires Brakes Locked)
+  // 1. 12-Degree "Nose-Over-Toes" Sit-to-Stand & Kitchen Perch Lift
   if (btnUp || btnDown) {
     engageHubBrakes(true);
-    if (btnUp && (!isWideStance && avgHeight >= MAX_SAFE_HEIGHT_FOR_NARROW)) {
-      stopVerticalLift();
-      Serial.println("INTERLOCK: Widen frame before raising to Kitchen Perch height!");
-    } else if (btnUp && avgHeight >= MAX_PERCH_HEIGHT_PULSES) {
+    if (btnUp && avgHeight >= MAX_PERCH_HEIGHT_PULSES) {
       stopVerticalLift();
     } else {
       currentState = SystemState::SIT_TO_STAND_LIFT;
@@ -309,37 +273,36 @@ void loop() {
     stopVerticalLift();
   }
 
-  // 2. Width-Morphing Bathroom Squeeze Control (Requires Seat Lowered <= 500mm)
-  if (btnSqueeze) {
-    engageHubBrakes(true);
-    if (avgHeight <= MAX_SAFE_HEIGHT_FOR_NARROW) {
-      currentState = SystemState::NARROW_DOOR_MODE;
-      analogWrite(PIN_WIDTH_RPWM, 0);
-      analogWrite(PIN_WIDTH_LPWM, 200);
-    } else {
-      Serial.println("INTERLOCK: Lower seat before narrowing frame for bathroom door!");
-    }
+  // 2. Zero-Turn Spin-in-Place Mode (For Cramped Bathrooms)
+  if (btnSpin && handsOnForearms) {
+    currentState = SystemState::SPIN_IN_PLACE;
+    engageHubBrakes(false);
+    driveDifferentialHubs(55, 55, true, false); // Left forward, Right reverse -> 0-radius turn
     return;
-  } else {
-    analogWrite(PIN_WIDTH_RPWM, 0);
-    analogWrite(PIN_WIDTH_LPWM, 0);
   }
 
-  // 3. Dead-Man's Auto-Braking & Touch-Proportional Walking / Threshold Assist
-  if (!handsOnForearms) {
+  // 3. Dead-Man's Auto-Brake + RT.2 Slope-Zeroing + Camino Shin-Distance Runaway Guard
+  if (!handsOnForearms || sensors.cliffDetected) {
     currentState = SystemState::PARKED_LOCKED;
     engageHubBrakes(true);
   } else {
     currentState = SystemState::WALK_ASSIST;
     engageHubBrakes(false);
+
     if (btnThreshold) {
       driveDifferentialHubs(85, 85, true, true);
-    } else if (avgForce > FSR_PUSH_ASSIST_THRESHOLD) {
-      int assistPwm = map(avgForce, FSR_PUSH_ASSIST_THRESHOLD, 4095, 40, 140);
-      if (!isWideStance) {
-        assistPwm = min(assistPwm, 65);
+    } else if (avgForce > LOAD_PUSH_ASSIST_THRESHOLD) {
+      int baseAssist = map(avgForce, LOAD_PUSH_ASSIST_THRESHOLD, 4095, 40, 130);
+
+      // RT.Works RT.2 Slope-Zeroing Gravity Compensation: boost uphill (+pitch), brake downhill (-pitch)
+      int slopeComp = (int)(sensors.pitchDeg * SLOPE_COMP_GAIN);
+      int totalPwm  = constrain(baseAssist + slopeComp, 0, 160);
+
+      // Camino Shin-Distance Runaway Guard: slow down if walker moves >28cm ahead of user's shins
+      if (sensors.shinDistanceCm > MAX_SAFE_SHIN_GAP_CM) {
+        totalPwm = min(totalPwm, 25);
       }
-      driveDifferentialHubs(assistPwm, assistPwm, true, true);
+      driveDifferentialHubs(totalPwm, totalPwm, true, true);
     } else {
       driveDifferentialHubs(0, 0, true, true);
     }

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="364.0mm" height="82.0mm" viewBox="-12.0 -12.0 364.0 82.0">
+  <title>CNC 7075-T6 75mm Slide-Under-Bed Front Nose Rail</title>
+  <g fill="none" stroke="#0055ff" stroke-width="0.5">
+    <polygon points="0.000,33.000 110.000,33.000 160.000,58.000 340.000,58.000 340.000,30.000 170.000,30.000 120.000,0.000 0.000,0.000" />
+  </g>
+  <g fill="none" stroke="#e60000" stroke-width="0.4">
+    <circle cx="25.000" cy="16.500" r="4.100" />
+    <circle cx="85.000" cy="16.500" r="4.100" />
+    <circle cx="210.000" cy="44.000" r="4.100" />
+    <circle cx="310.000" cy="44.000" r="4.100" />
+  </g>
+</svg>
