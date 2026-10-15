@@ -379,47 +379,47 @@
     },
     {
       "id": "P05",
-      "description": "Lower clevis ear",
+      "description": "Lower clevis ear; short nose clears motor",
       "kind": "custom",
       "material": "S355 / YSt355; mill certificate required",
-      "volume_mm3": 47772.81536969148,
+      "volume_mm3": 40772.81536969149,
       "dimensions": [
         70,
-        70,
+        60,
         10
       ],
       "holes": [
         [
           0,
-          12,
+          17,
           12.5,
           "actuator pin clearance; final match OEM eye"
         ]
       ],
       "quantity": 2,
-      "unit_mass_kg": 0.3750166006520781
+      "unit_mass_kg": 0.32006660065207815
     },
     {
       "id": "P06",
-      "description": "Upper clevis ear",
+      "description": "Upper clevis ear; short nose clears MLF housing",
       "kind": "custom",
       "material": "S355 / YSt355; mill certificate required",
-      "volume_mm3": 37272.81536969149,
+      "volume_mm3": 28872.815369691485,
       "dimensions": [
         70,
-        55,
+        43,
         10
       ],
       "holes": [
         [
           0,
-          -2.5,
+          -8.5,
           12.5,
           "actuator pin clearance; final match OEM eye"
         ]
       ],
       "quantity": 2,
-      "unit_mass_kg": 0.2925916006520782
+      "unit_mass_kg": 0.22665160065207815
     },
     {
       "id": "P07",
@@ -897,15 +897,15 @@
       "description": "LINAK LA40 PL manual-lowering own exclusion envelope; not vendor model",
       "kind": "purchased",
       "material": "OEM assembly",
-      "volume_mm3": 1986175.6048316145,
+      "volume_mm3": 2623939.3800004954,
       "quantity": 1
     },
     {
       "id": "ACT_ROD",
-      "description": "LA40 PL moving rod envelope; end joint fit is a supplier hold",
+      "description": "LA40 PL telescoping rod and MLF envelope; nominal housing ends19.1 below upper pin; supplier hold",
       "kind": "purchased",
       "material": "OEM assembly",
-      "volume_mm3": 88668.31105491833,
+      "volume_mm3": 326193.76433708577,
       "quantity": 1
     },
     {
@@ -1338,7 +1338,7 @@
       "xyz": [
         -24.25,
         40,
-        318
+        313
       ],
       "rotation": [
         [
@@ -1356,7 +1356,7 @@
       "xyz": [
         14.25,
         40,
-        318
+        313
       ],
       "rotation": [
         [
@@ -1596,7 +1596,7 @@
       "xyz": [
         -24.25,
         40,
-        856.5
+        862.5
       ],
       "rotation": [
         [
@@ -1676,7 +1676,7 @@
       "xyz": [
         14.25,
         40,
-        856.5
+        862.5
       ],
       "rotation": [
         [
@@ -1770,7 +1770,7 @@
       "xyz": [
         0,
         40,
-        710
+        460
       ],
       "rotation": null,
       "moving": true

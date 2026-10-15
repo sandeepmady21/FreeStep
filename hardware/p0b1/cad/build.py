@@ -91,8 +91,8 @@ def build(out, export=True):
         ("P02",200,1000,16,rail_holes,"Mast backing plate; machine guide face after welding"),
         ("P03",220,420,12,block_holes,"Moving bridge; mounting face machined after welding"),
         ("P04",100,100,12,[(x,y,13,"M12 clearance") for x in (-35,35) for y in (-35,35)],"Lower clevis removable base"),
-        ("P05",70,70,10,[(0,12,12.5,"actuator pin clearance; final match OEM eye")],"Lower clevis ear"),
-        ("P06",70,55,10,[(0,-2.5,12.5,"actuator pin clearance; final match OEM eye")],"Upper clevis ear"),
+        ("P05",70,60,10,[(0,17,12.5,"actuator pin clearance; final match OEM eye")],"Lower clevis ear; short nose clears motor"),
+        ("P06",70,43,10,[(0,-8.5,12.5,"actuator pin clearance; final match OEM eye")],"Upper clevis ear; short nose clears MLF housing"),
         ("P07",400,320,6,[(x,y,11,"M10 ballast restraint") for x in (-160,160) for y in (-110,110)],"Ballast pan; not a patient seat"),
         ("P08",70,350,10,ladder_holes,"Perch prop ladder plate; horizontal local = world Y"),
         ("P09",50,85,16,[],"Moving prop contact tab; rear edge Y935 clears relieved bridges"),
@@ -168,7 +168,7 @@ def build(out, export=True):
     inst("P10","lower_pedestal",(0,60,base_top))
     inst("P04","lower_clevis_base",(0,40,base_top+20))
     for side in (-1,1):
-        inst("P05",f"lower_clevis_ear_{side}",(side*19.25-5,40,318),((1,1,1),120))
+        inst("P05",f"lower_clevis_ear_{side}",(side*19.25-5,40,313),((1,1,1),120))
     inst("PIN12","lower_actuator_pin",(-35,40,330),((0,1,0),90),color=LOCK)
 
     # Purchased parts: interface envelopes, not redistributed vendor CAD.
@@ -188,9 +188,12 @@ def build(out, export=True):
     define("CASTER",caster,"Blickle LWK-TPA126G-FI-P25; own envelope only; pedal/sweep need physical check",kind="purchased",material="Vendor polymer/steel")
     for x in (-400,400):
         for y in (0,1000): inst("CASTER",f"caster_{x}_{y}",(x,y,0),color=VENDOR)
-    motor=cylinder(46,350).translate((0,0,30)).union(cq.Workplane("XY").box(95,150,109).translate((0,-42,65)))
+    # 0404022 reference envelope: housing starts16.4 above lower pin;
+    # transverse165.5, asymmetry conservatively enclosed by122mm width.
+    motor=cylinder(46,350).translate((0,0,30)).union(cq.Workplane("XY").box(122,165.5,109).translate((0,-49.25,70.9)))
     define("ACT_BODY",motor,"LINAK LA40 PL manual-lowering own exclusion envelope; not vendor model",kind="purchased",material="OEM assembly")
-    define("ACT_ROD",cylinder(28,144),"LA40 PL moving rod envelope; end joint fit is a supplier hold",kind="purchased",material="OEM assembly")
+    rod=cylinder(28,394).union(cylinder(46,79.9).translate((0,0,295)))
+    define("ACT_ROD",rod,"LA40 PL telescoping rod and MLF envelope; nominal housing ends19.1 below upper pin; supplier hold",kind="purchased",material="OEM assembly")
     inst("ACT_BODY","LA40_PL_body",(0,40,330),color=VENDOR)
     define("CTRL",cq.Workplane("XY").box(180,120,300),"Reserved CBJ2/BAJ enclosure volume; final brackets match-drilled",kind="purchased",material="OEM assembly")
     inst("CTRL","OEM_control_reservation",(0,-100,1000),color=VENDOR)
@@ -208,12 +211,12 @@ def build(out, export=True):
         for yy in (580,820):
             inst("T06",f"seat_drop_{side}_{yy}",(side*260,yy,424),moving=True)
         inst("P12",f"bridge_spacer_{side}",(side*80,203,centre+60),moving=True)
-        inst("P06",f"upper_clevis_ear_{side}",(side*19.25-5,40,centre+2.5),((1,1,1),120),moving=True)
+        inst("P06",f"upper_clevis_ear_{side}",(side*19.25-5,40,centre+8.5),((1,1,1),120),moving=True)
         inst("P09",f"prop_contact_{side}",(side*330,892.5,380),moving=True,color=LOCK)
     for yy in (580,820): inst("T07",f"seat_cross_{yy}",(-350,yy,394),((0,1,0),90),moving=True)
     inst("P07","secured_ballast_pan",(0,700,424),moving=True)
     inst("PIN12","upper_actuator_pin",(-35,40,centre),((0,1,0),90),moving=True,color=LOCK)
-    inst("ACT_ROD","LA40_PL_rod",(0,40,centre-144),moving=True,color=VENDOR)
+    inst("ACT_ROD","LA40_PL_rod",(0,40,centre-394),moving=True,color=VENDOR)
 
     # Props are manually indexed, not mechanically coupled to the carriage.
     for side in (-1,1):

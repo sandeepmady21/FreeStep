@@ -49,6 +49,18 @@ for e in range(0,251,5):
 check('selected fixed/moving solids across51 poses',not collisions,dict(intersections=tested,collisions=collisions))
 # Props manually indexed with carriage, no physical automatic linkage implied.
 check('notched bridge measured design clearance',941-935>=3,'6mm nominal Y gap to cap/tab; must remain>=3 measured under load')
+envelope_clashes=[]
+steel=[i for i in m['instances'] if parts[i['id']]['kind']=='custom' and i['id'] not in props|{'PIN12'}]
+actuators=[i for i in m['instances'] if i['id'] in {'ACT_BODY','ACT_ROD'}]
+for e in range(0,251,5):
+ for a in actuators:
+  sa=located(a,e);ba=sa.BoundingBox()
+  for b in steel:
+   sb=located(b,e);bb=sb.BoundingBox()
+   if any(min(getattr(ba,k+'max'),getattr(bb,k+'max'))-max(getattr(ba,k+'min'),getattr(bb,k+'min'))<=0.001 for k in 'xyz'):continue
+   if sa.intersect(sb).Volume()>0.1:envelope_clashes.append([e,a['name'],b['name']])
+check('authored actuator envelope vs steel sweep',not envelope_clashes,envelope_clashes)
+check('clevis nose clearance to authored envelopes',346.4-343>=3 and 841-834.9>=3,'lower3.4mm / upper6.1mm nominal; OEM drawing and deflected fit remain H01')
 # Stock nest: first fit descending,6000 stock,20 end trims each,3 saw kerf per part.
 groups=defaultdict(list)
 for p in parts.values():

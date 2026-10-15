@@ -91,6 +91,16 @@
       "detail": "6mm nominal Y gap to cap/tab; must remain>=3 measured under load"
     },
     {
+      "check": "authored actuator envelope vs steel sweep",
+      "pass_": true,
+      "detail": []
+    },
+    {
+      "check": "clevis nose clearance to authored envelopes",
+      "pass_": true,
+      "detail": "lower3.4mm / upper6.1mm nominal; OEM drawing and deflected fit remain H01"
+    },
+    {
       "check": "stock cuts fit with trim and kerf",
       "pass_": true,
       "detail": [
@@ -213,56 +223,56 @@
     }
   ],
   "mass": {
-    "nominal_custom_steel_kg": 151.950452712161,
-    "moving_custom_steel_kg": 58.309217706093584,
+    "nominal_custom_steel_kg": 151.708672712161,
+    "moving_custom_steel_kg": 58.17733770609358,
     "vendor_weld_guard_fastener_masses": "excluded; weigh actual device"
   },
   "screening": {
     "payload_study_kg": 75,
-    "moving_gravity_N": 1307.763425696778,
+    "moving_gravity_N": 1306.469682896778,
     "arm_section_I_mm4": 470698.6666666667,
     "arm_section_Z_mm3": 15689.955555555556,
-    "arm_simple_bending_MPa": 27.50561841630761,
+    "arm_simple_bending_MPa": 27.47840768760361,
     "arm_8000N_blocked_drive_MPa": 168.2605148658448,
-    "guide_couple_per_block_N": 2877.079536532912,
+    "guide_couple_per_block_N": 2874.2333023729116,
     "guide_8000N_fault_couple_per_block_N": 17600.0,
     "guide_catalogue_C0_N": 52820,
     "pin12_8000N_double_shear_MPa": 35.367765131532295,
     "pin16_8000N_double_shear_MPa": 19.89436788648692,
-    "three_caster_average_load_kg": 75.65015090405366,
+    "three_caster_average_load_kg": 75.56955757072033,
     "caster_catalogue_each_kg": 110,
     "stability": [
       {
         "extension": 0,
         "steel_plus_dummy_CG_mm": [
-          6.725399782281353e-09,
-          515.1678294005989,
-          558.7696788132035
+          6.732571275838412e-09,
+          515.6745858312995,
+          558.7111646553732
         ],
-        "min_edge_distance_mm": 359.9999999932746,
-        "restoring_Nm": 801.4982187832945,
+        "min_edge_distance_mm": 359.9999999932674,
+        "restoring_Nm": 800.6443485352944,
         "challenge_100N_at_1m_Nm": 100
       },
       {
         "extension": 125,
         "steel_plus_dummy_CG_mm": [
-          6.725409299997184e-09,
-          515.1678294005987,
-          634.8137078532752
+          6.73258030223804e-09,
+          515.6745858312994,
+          634.7635785768816
         ],
-        "min_edge_distance_mm": 359.99999999327457,
-        "restoring_Nm": 801.4982187832944,
+        "min_edge_distance_mm": 359.9999999932674,
+        "restoring_Nm": 800.6443485352944,
         "challenge_100N_at_1m_Nm": 100
       },
       {
         "extension": 250,
         "steel_plus_dummy_CG_mm": [
-          6.725414309321306e-09,
-          515.1678294005989,
-          710.857736893347
+          6.7325853169044995e-09,
+          515.6745858312995,
+          710.81599249839
         ],
-        "min_edge_distance_mm": 359.99999999327457,
-        "restoring_Nm": 801.4982187832944,
+        "min_edge_distance_mm": 359.9999999932674,
+        "restoring_Nm": 800.6443485352944,
         "challenge_100N_at_1m_Nm": 100
       }
     ]
