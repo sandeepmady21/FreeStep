@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ElderStep Pro — Interactive CAD Assembly Blueprints & Exploded Viewer</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --panel: #0f172a;
+      --border: #334155;
+      --cyan: #38bdf8;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--panel);
+      border: 1.5px solid var(--cyan);
+      padding: 16px 24px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+    h1 { font-size: 20px; color: var(--cyan); }
+    .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .badge {
+      background: #064e3b;
+      color: #6ee7b7;
+      border: 1px solid var(--green);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+    .ctrl-box label {
+      display: block;
+      font-size: 12px;
+      color: var(--cyan);
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    input[type="range"] { width: 100%; accent-color: var(--cyan); cursor: pointer; }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 12px;
+      transition: 0.15s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: #1e3a8a;
+      border-color: var(--cyan);
+      color: #fff;
+      font-weight: bold;
+    }
+    .viewer-box {
+      background: var(--panel);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      overflow-x: auto;
+    }
+    canvas {
+      background: #090d16;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      max-width: 100%;
+    }
+    .sheet-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .sheet-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .sheet-card h2 {
+      font-size: 15px;
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+    .sheet-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid #1e293b;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>ELDERSTEP PRO (9.85 kg STANDARD-COTS EDITION) — MASTER ASSEMBLY BLUEPRINTS</h1>
+      <div class="sub">Interactive Exploded Sub-Assembly CAD Viewer + All 6 Printable 1:1 Engineering Blueprint Sheets</div>
+    </div>
+    <div class="badge">100% STANDARD MULTI-VENDOR COTS | ₹55,200 | 1-WEEKEND BUILD</div>
+  </header>
+
+  <div class="controls">
+    <div class="ctrl-box">
+      <label>EXPLODE SUB-ASSEMBLIES: <span id="expVal">35%</span></label>
+      <input type="range" id="explodeSlider" min="0" max="100" value="35" />
+    </div>
+    <div class="ctrl-box">
+      <label>ACTUATOR LIFT STROKE (12° RAKE): <span id="liftVal">120 mm (Saddle: 537 mm)</span></label>
+      <input type="range" id="liftSlider" min="0" max="300" value="120" />
+    </div>
+    <div class="ctrl-box">
+      <label>KITCHEN TRAY FORWARD SLIDE: <span id="trayVal">100 mm</span></label>
+      <input type="range" id="traySlider" min="0" max="300" value="100" />
+    </div>
+  </div>
+
+  <div class="viewer-box">
+    <canvas id="cadCanvas" width="1120" height="520"></canvas>
+  </div>
+
+  <div class="sheet-grid">
+    <div class="sheet-card">
+      <h2>SHEET 1/6: Master Chassis Orthographic & Kinematic Envelope (495mm Width, 12° Rake)</h2>
+      <img src="../hardware/blueprints/blueprint_01_master_frame_orthographic.svg" alt="Blueprint 01" />
+    </div>
+    <div class="sheet-card">
+      <h2>SHEET 2/6: Telescoping Carbon Column (ø35/ø30mm) & Standard 24V 300mm IP65 Actuator Cartridge</h2>
+      <img src="../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg" alt="Blueprint 02" />
+    </div>
+    <div class="sheet-card">
+      <h2>SHEET 3/6: Rear 6.5" (165mm) Sealed IP65 BLDC Hub Wheel & ø16mm D-Axle Dropout</h2>
+      <img src="../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg" alt="Blueprint 03" />
+    </div>
+    <div class="sheet-card">
+      <h2>SHEET 4/6: Ultra-Low 74mm Front Twin-Skate Caster Assembly (SKF 51104 + 64mm 82A PU Wheels)</h2>
+      <img src="../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg" alt="Blueprint 04" />
+    </div>
+    <div class="sheet-card">
+      <h2>SHEET 5/6: 180° Split-Saddle Pivot Hinge & N52 + Conical Stainless Shear-Pin Latch (12 kN)</h2>
+      <img src="../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg" alt="Blueprint 05" />
+    </div>
+    <div class="sheet-card">
+      <h2>SHEET 6/6: MGN9C Slide-Bridge Kitchen Tray, Floating Delrin Mount & ESP32-S3 Master Wiring</h2>
+      <img src="../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg" alt="Blueprint 06" />
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('cadCanvas');
+    const ctx = canvas.getContext('2d');
+    const expSlider = document.getElementById('explodeSlider');
+    const liftSlider = document.getElementById('liftSlider');
+    const traySlider = document.getElementById('traySlider');
+
+    function draw() {
+      const exp = parseFloat(expSlider.value) / 100.0;
+      const lift = parseFloat(liftSlider.value);
+      const tray = parseFloat(traySlider.value);
+
+      const saddleH = Math.round(420 + lift * 0.978);
+      const fwdShift = Math.round(lift * 0.208);
+      document.getElementById('expVal').textContent = Math.round(exp * 100) + '%';
+      document.getElementById('liftVal').textContent = `${lift} mm (Saddle: ${saddleH} mm, +${fwdShift} mm FWD)`;
+      document.getElementById('trayVal').textContent = `${tray} mm`;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw Blueprint Grid
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 25) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 25) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+
+      // Floor Line
+      const floorY = 465;
+      ctx.strokeStyle = '#64748b';
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath(); ctx.moveTo(40, floorY); ctx.lineTo(1080, floorY); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Explode offsets
+      const eWheel = exp * 55;
+      const eCaster = exp * 50;
+      const eAct = exp * 75;
+      const eTop = exp * 45;
+
+      // 1. Rear 6.5" Sealed BLDC Hub Wheel
+      const rx = 220 - eWheel;
+      const ry = floorY - 52 + eWheel * 0.3;
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(rx, ry, 52, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath(); ctx.arc(rx, ry, 8, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#f43f5e';
+      ctx.font = '11px monospace';
+      ctx.fillText('6.5" IP65 Hub Wheel (ø16mm D-Axle)', rx - 80, ry + 72);
+
+      // 2. Rear 7075-T6 Dropout + Carbon U-Base Leg
+      ctx.fillStyle = '#334155';
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2;
+      ctx.fillRect(230, floorY - 56, 310, 14);
+      ctx.strokeRect(230, floorY - 56, 310, 14);
+
+      // Front LiFePO4 Battery Ballast
+      ctx.fillStyle = '#166534';
+      ctx.strokeStyle = '#22c55e';
+      ctx.fillRect(445, floorY - 78, 75, 22);
+      ctx.strokeRect(445, floorY - 78, 75, 22);
+      ctx.fillStyle = '#dcfce7';
+      ctx.fillText('24V LiFePO4', 450, floorY - 63);
+
+      // 3. Front 74mm Low-Profile Twin 64mm Skate Caster
+      const cx = 555 + eCaster;
+      const cy = floorY - 22 + eCaster * 0.25;
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#22c55e';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#22c55e';
+      ctx.fillText('74mm Skate Caster + 51104 Bearing', cx - 60, cy + 40);
+
+      // 4. 12-Deg Base Lug + Outer ø35mm Carbon Barrel
+      const bx = 375, by = floorY - 56;
+      const rakeRad = 12 * Math.PI / 180;
+      const colLen = 185;
+      const tx = bx + Math.sin(rakeRad) * colLen;
+      const ty = by - Math.cos(rakeRad) * colLen;
+
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 20;
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(tx, ty); ctx.stroke();
+
+      // Delrin Bushings (exploded slightly upward along axis)
+      const dx = tx + Math.sin(rakeRad) * (eAct * 0.4);
+      const dy = ty - Math.cos(rakeRad) * (eAct * 0.4);
+      ctx.fillStyle = '#22c55e';
+      ctx.beginPath(); ctx.arc(dx, dy, 11, 0, Math.PI * 2); ctx.fill();
+      ctx.fillText('Lathe-Turned Delrin Bushing + O-Ring', dx + 18, dy + 4);
+
+      // 5. Inner ø30mm Carbon Plunger + Standard 24V 300mm Actuator Cartridge
+      const liftPx = lift * 0.45 + eAct;
+      const px = tx + Math.sin(rakeRad) * liftPx;
+      const py = ty - Math.cos(rakeRad) * liftPx;
+
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 13;
+      ctx.beginPath();
+      ctx.moveTo(bx + Math.sin(rakeRad) * (40 + eAct * 0.5), by - Math.cos(rakeRad) * (40 + eAct * 0.5));
+      ctx.lineTo(px, py);
+      ctx.stroke();
+
+      // Internal Standard 24V Actuator Cartridge Callout (shown offset in exploded mode)
+      const ax = 790, ay = 260;
+      ctx.fillStyle = '#0f172a';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 1.5;
+      ctx.fillRect(680, 40, 410, 380);
+      ctx.strokeRect(680, 40, 410, 380);
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 13px monospace';
+      ctx.fillText('EXPLODED COLUMN CARTRIDGE DETAIL:', 700, 68);
+      ctx.font = '11px monospace';
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText('• Outer Tube: ø35x31mm 3K Carbon (460mm)', 700, 95);
+      ctx.fillText('• Guide: 2x CNC Turned POM (Delrin) Sleeves', 700, 118);
+      ctx.fillText('• Inner Tube: ø30x26mm 3K Carbon (440mm)', 700, 141);
+      ctx.fillStyle = '#fef08a';
+      ctx.fillText('• Core: Standard 24V 300mm IP65 Inline Actuator', 700, 164);
+      ctx.fillText('  pinned at top & bottom via 2x M8 Clevis Pins', 700, 184);
+      ctx.fillStyle = '#22c55e';
+      ctx.fillText('• Zero side-load on actuator; swaps in 3 mins!', 700, 210);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText(`• Current Lift: ${lift}mm / 300mm (Saddle: ${saddleH}mm)`, 700, 240);
+      ctx.fillText(`• Kitchen Tray Extension: +${tray}mm forward`, 700, 262);
+      ctx.fillStyle = '#f43f5e';
+      ctx.fillText('• Total Mass: 9.85 kg | Cost: ₹55,200', 700, 290);
+
+      // 6. 180-Deg Split Saddle on Inner Plunger
+      const sx = px - Math.sin(rakeRad) * 45;
+      const sy = py + Math.cos(rakeRad) * 45;
+      ctx.fillStyle = '#f59e0b';
+      ctx.strokeStyle = '#fef08a';
+      ctx.lineWidth = 2;
+      ctx.fillRect(sx - 85 - eTop * 0.4, sy - 8, 82, 16);
+      ctx.strokeRect(sx - 85 - eTop * 0.4, sy - 8, 82, 16);
+      ctx.fillStyle = '#fef08a';
+      ctx.fillText(`180° Split Saddle (${saddleH}mm)`, sx - 235 - eTop * 0.4, sy + 4);
+
+      // 7. Upper Halo + MGN9C Slide-Bridge Kitchen Tray
+      const hx = px;
+      const hy = py - eTop;
+      ctx.fillStyle = '#334155';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.fillRect(hx - 20, hy - 12, 135, 12);
+      ctx.strokeRect(hx - 20, hy - 12, 135, 12);
+
+      const trayPx = tray * 0.35;
+      ctx.fillStyle = '#06b6d4';
+      ctx.fillRect(hx + 10 + trayPx, hy - 24 - eTop * 0.3, 130, 9);
+      ctx.fillStyle = '#22d3ee';
+      ctx.fillText(`MGN9C Kitchen Tray (+${tray}mm)`, hx + 10 + trayPx, hy - 32 - eTop * 0.3);
+    }
+
+    expSlider.addEventListener('input', draw);
+    liftSlider.addEventListener('input', draw);
+    traySlider.addEventListener('input', draw);
+    draw();
+  </script>
+</body>
+</html>

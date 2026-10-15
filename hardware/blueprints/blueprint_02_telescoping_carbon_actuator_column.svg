@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.7"/>
+    </pattern>
+    <pattern id="grid100" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="url(#grid)"/>
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#334155" stroke-width="1.2"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="820" fill="#0b1120"/>
+  <rect x="20" y="20" width="1160" height="780" fill="url(#grid100)" stroke="#38bdf8" stroke-width="2"/>
+  <!-- Title Block Header -->
+  <rect x="20" y="20" width="1160" height="58" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 02: TELESCOPING CARBON COLUMN & STANDARD ACTUATOR CARTRIDGE</text>
+  <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">Cross-Section of ø35x31mm Outer Carbon Barrel + ø30x26mm Inner Plunger + Standard 24V 300mm IP65 Inline Actuator</text>
+  <text x="1160" y="46" fill="#22c55e" font-family="monospace" font-size="16" font-weight="bold" text-anchor="end">SHEET 2 OF 6</text>
+  <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">ELDERSTEP PRO (9.85 kg STANDARD-COTS EDITION) | UNITS: MM</text>
+
+  <!-- CROSS-SECTION DIAGRAM (HORIZONTAL EXPLODED / SECTIONED VIEW) -->
+  <text x="50" y="115" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] FULL SECTION VIEW: HOW THE STANDARD 24V ACTUATOR DROPS INSIDE THE CARBON TUBES</text>
+
+  <!-- 12-Deg Base Lug (Left Side / Bottom of Column) -->
+  <rect x="70" y="230" width="90" height="220" rx="10" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2.5"/>
+  <text x="115" y="215" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[1] 12° CNC BASE LUG</text>
+
+  <!-- Outer Carbon Tube (ø35mm OD x ø31mm ID x 460mm) -->
+  <rect x="130" y="250" width="460" height="22" fill="#334155" stroke="#e2e8f0" stroke-width="1.5"/>
+  <rect x="130" y="408" width="460" height="22" fill="#334155" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="360" y="240" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">[2] OUTER CARBON BARREL: ø35mm OD x ø31mm ID x 460mm (CF-01)</text>
+
+  <!-- Lathe-Turned POM (Delrin) Sleeve Bushings (x2 per column) -->
+  <rect x="530" y="272" width="60" height="16" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
+  <rect x="530" y="392" width="60" height="16" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
+  <rect x="290" y="272" width="60" height="16" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
+  <rect x="290" y="392" width="60" height="16" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
+  <!-- Silicone Wiper O-Ring -->
+  <circle cx="594" cy="280" r="6" fill="#f43f5e"/>
+  <circle cx="594" cy="400" r="6" fill="#f43f5e"/>
+  <text x="565" y="215" fill="#22c55e" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[3] LATHE-TURNED DELRIN SLEEVES + O-RING</text>
+
+  <!-- Inner Carbon Plunger Tube (ø30mm OD x ø26mm ID x 440mm) -->
+  <rect x="290" y="288" width="520" height="16" fill="#0284c7" stroke="#bae6fd" stroke-width="1.5"/>
+  <rect x="290" y="376" width="520" height="16" fill="#0284c7" stroke="#bae6fd" stroke-width="1.5"/>
+  <text x="680" y="275" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">[4] INNER CARBON PLUNGER: ø30mm OD x ø26mm ID x 440mm (CF-02)</text>
+
+  <!-- Standard 24V 300mm Inline Linear Actuator Cartridge Inside -->
+  <rect x="145" y="310" width="380" height="60" rx="6" fill="#475569" stroke="#f59e0b" stroke-width="2.5"/>
+  <text x="335" y="336" fill="#fef08a" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">[5] STANDARD 24V 300mm INLINE ACTUATOR CARTRIDGE</text>
+  <text x="335" y="354" fill="#e2e8f0" font-family="monospace" font-size="10" text-anchor="middle">(1500N Self-Locking, IP65 Waterproof, Built-In Hall Encoder)</text>
+
+  <!-- Extending Stainless Actuator Rod -->
+  <rect x="525" y="326" width="295" height="28" fill="#94a3b8" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="670" y="344" fill="#0f172a" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">STAINLESS INNER ROD (300mm STROKE)</text>
+
+  <!-- Top CNC Clevis Cap (inhouse_sfu1204_ballscrew_column_cap.dxf) -->
+  <rect x="810" y="280" width="75" height="120" rx="8" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2.5"/>
+  <text x="847" y="255" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[6] TOP CNC CAP</text>
+
+  <!-- Bottom & Top M8 Quick-Release Clevis Pins -->
+  <circle cx="115" cy="340" r="12" fill="#f43f5e" stroke="#ffffff" stroke-width="2"/>
+  <text x="115" y="344" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">M8</text>
+  <circle cx="835" cy="340" r="12" fill="#f43f5e" stroke="#ffffff" stroke-width="2"/>
+  <text x="835" y="344" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">M8</text>
+
+  <text x="115" y="480" fill="#f43f5e" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[7] LOWER M8 CLEVIS PIN</text>
+  <text x="835" y="430" fill="#f43f5e" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">[8] UPPER M8 CLEVIS PIN</text>
+
+  <!-- CALLOUT TABLE AT BOTTOM -->
+  <rect x="50" y="515" width="1100" height="205" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+  <text x="70" y="542" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">SUB-ASSEMBLY 02 BILL OF MATERIALS & STEP-BY-STEP ASSEMBLY PROCEDURE (PER LEG, BUILD 2X):</text>
+  <text x="70" y="568" fill="#e2e8f0" font-family="monospace" font-size="12">[1] 12° Base Lug (12deg_incline_base_lug.dxf): Bond ø35mm outer carbon barrel [2] into 35.2mm socket using 3M DP420 epoxy.</text>
+  <text x="70" y="592" fill="#22c55e" font-family="monospace" font-size="12">[3] Lathe-Turned POM (Delrin) Bushings (delrin_telescoping_column_bushing.stl): 31.0mm OD x 30.05mm ID x 40mm. Press-fit 2 per leg.</text>
+  <text x="70" y="616" fill="#38bdf8" font-family="monospace" font-size="12">[4] Inner Carbon Plunger (ø30x26mm x 440mm): Glides inside Delrin bushings [3]—carries 100% of Grandma's side/bending loads!</text>
+  <text x="70" y="640" fill="#fef08a" font-family="monospace" font-size="12">[5] Standard 24V 300mm Inline Actuator (ACT-01): Slide inside carbon tubes; secure bottom & top eyes with M8x45mm clevis pins [7][8].</text>
+  <text x="70" y="664" fill="#f43f5e" font-family="monospace" font-size="12">[7][8] 3-Minute Maintenance Swap: Pull upper & lower M8 clevis pins to remove/replace the standard actuator cartridge anytime!</text>
+  <text x="70" y="692" fill="#94a3b8" font-family="monospace" font-size="12">LIFT SPEED & FORCE: 32 mm/s (9.3s full stroke) | 1500 N (150 kgf) per leg = 300 kgf total lift | Self-locking worm gear (zero back-drive)</text>
+  <!-- Engineering Title Block Footer -->
+  <rect x="20" y="745" width="1160" height="55" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+  <line x1="620" y1="745" x2="620" y2="800" stroke="#38bdf8" stroke-width="1"/>
+  <text x="35" y="768" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold">STRUCTURAL PRINCIPLE: Bending Decoupling via Carbon/Delrin Telescoping Sleeves</text>
+  <text x="35" y="788" fill="#94a3b8" font-family="monospace" font-size="11">The internal 24V actuator experiences pure axial compression; carbon tubes take 100% bending moment.</text>
+  <text x="635" y="768" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">WATERPROOFING: IP65 Sealed Actuator Cartridge + Top 30mmx2.5mm Silicone Wiper O-Ring</text>
+  <text x="635" y="788" fill="#94a3b8" font-family="monospace" font-size="11">100% immune to wet Indian bathroom floors and humidity.</text>
+</svg>
