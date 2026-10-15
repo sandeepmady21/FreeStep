@@ -1,11 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="102.0mm" height="92.0mm" viewBox="-12.0 -12.0 102.0 92.0">
-  <title>In-House Twin-64mm Skate PU Wheel Swivel Caster Fork (<74mm Bed Clearance)</title>
-  <g fill="none" stroke="#0055ff" stroke-width="0.5">
-    <polygon points="0.000,68.000 78.000,68.000 78.000,0.000 0.000,0.000" />
-  </g>
-  <g fill="none" stroke="#e60000" stroke-width="0.4">
-    <circle cx="39.000" cy="16.000" r="10.000" />
-    <circle cx="18.000" cy="50.000" r="4.100" />
-    <circle cx="60.000" cy="50.000" r="4.100" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="116mm" height="124mm" viewBox="0 0 116 124">
+<rect width="100%" height="100%" fill="#0f172a"/>
+<text x="10" y="14" fill="#38bdf8" font-family="monospace" font-size="5">74mm Low-Profile Twin 64mm Skate Caster Fork (1:1 mm)</text>
+<polygon points="20.00,104.00 96.00,104.00 96.00,36.00 78.00,20.00 38.00,20.00 20.00,36.00" fill="#1e293b" stroke="#38bdf8" stroke-width="0.8"/>
+<circle cx="58.00" cy="38.00" r="5.05" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="58.00" cy="38.00" r="17.50" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="36.00" cy="82.00" r="4.05" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
+<circle cx="80.00" cy="82.00" r="4.05" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
 </svg>

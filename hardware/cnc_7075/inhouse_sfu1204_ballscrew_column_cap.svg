@@ -1,14 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="169.0mm" height="152.0mm" viewBox="-12.0 -12.0 169.0 152.0">
-  <title>In-House SFU1204 Ballscrew Column Base & 12-Deg Mount</title>
-  <g fill="none" stroke="#0055ff" stroke-width="0.5">
-    <polygon points="0.000,128.000 145.000,128.000 145.000,86.000 115.000,0.000 22.000,20.000 0.000,86.000" />
-  </g>
-  <g fill="none" stroke="#e60000" stroke-width="0.4">
-    <circle cx="25.000" cy="110.000" r="4.100" />
-    <circle cx="72.000" cy="110.000" r="4.100" />
-    <circle cx="120.000" cy="110.000" r="4.100" />
-    <circle cx="68.000" cy="50.000" r="14.000" />
-    <circle cx="48.000" cy="50.000" r="2.600" />
-    <circle cx="88.000" cy="50.000" r="2.600" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="110mm" height="110mm" viewBox="0 0 110 110">
+<rect width="100%" height="100%" fill="#0f172a"/>
+<text x="10" y="14" fill="#38bdf8" font-family="monospace" font-size="5">Standard Actuator Clevis / Carbon Plunger Cap (1:1 mm)</text>
+<polygon points="20.00,80.00 30.00,90.00 80.00,90.00 90.00,80.00 90.00,30.00 80.00,20.00 30.00,20.00 20.00,30.00" fill="#1e293b" stroke="#38bdf8" stroke-width="0.8"/>
+<circle cx="55.00" cy="55.00" r="15.10" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="55.00" cy="55.00" r="4.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="37.00" cy="73.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="73.00" cy="73.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="73.00" cy="37.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="37.00" cy="37.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
 </svg>

@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="154.0mm" height="114.0mm" viewBox="-12.0 -12.0 154.0 114.0">
-  <title>In-House N52 Magnet + Conical Shear-Pin Split-Saddle Hinge</title>
-  <g fill="none" stroke="#0055ff" stroke-width="0.5">
-    <polygon points="0.000,90.000 105.000,90.000 130.000,68.000 130.000,22.000 105.000,0.000 0.000,0.000" />
-  </g>
-  <g fill="none" stroke="#e60000" stroke-width="0.4">
-    <circle cx="26.000" cy="45.000" r="15.100" />
-    <circle cx="100.000" cy="45.000" r="5.000" />
-    <circle cx="68.000" cy="45.000" r="6.000" />
-    <circle cx="100.000" cy="13.000" r="6.000" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="128mm" height="94mm" viewBox="0 0 128 94">
+<rect width="100%" height="100%" fill="#0f172a"/>
+<text x="10" y="14" fill="#38bdf8" font-family="monospace" font-size="5">N52 + Conical Stainless Shear-Pin Latch (1:1 mm)</text>
+<polygon points="20.00,74.00 108.00,74.00 108.00,20.00 20.00,20.00" fill="#1e293b" stroke="#38bdf8" stroke-width="0.8"/>
+<circle cx="64.00" cy="47.00" r="10.05" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="40.00" cy="47.00" r="5.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="88.00" cy="47.00" r="5.00" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="30.00" cy="64.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="98.00" cy="64.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="30.00" cy="30.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="98.00" cy="30.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
 </svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150mm" height="185mm" viewBox="0 0 150 185">
+<rect width="100%" height="100%" fill="#0f172a"/>
+<text x="10" y="14" fill="#38bdf8" font-family="monospace" font-size="5">Standard 6.5in Sealed Hub Wheel 16mm Dropout (1:1 mm)</text>
+<polygon points="20.00,165.00 130.00,165.00 130.00,20.00 40.00,20.00 20.00,55.00" fill="#1e293b" stroke="#38bdf8" stroke-width="0.8"/>
+<circle cx="75.00" cy="127.00" r="8.05" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
+<circle cx="55.00" cy="127.00" r="3.20" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
+<circle cx="95.00" cy="127.00" r="3.20" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
+<circle cx="55.00" cy="107.00" r="3.20" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
+<circle cx="95.00" cy="107.00" r="3.20" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
+<circle cx="75.00" cy="55.00" r="15.10" fill="none" stroke="#f43f5e" stroke-width="0.6"/>
+<circle cx="45.00" cy="55.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+<circle cx="105.00" cy="55.00" r="2.60" fill="none" stroke="#22c55e" stroke-width="0.6"/>
+</svg>
