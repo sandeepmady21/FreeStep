@@ -1,0 +1,11 @@
+Hold,Blocks,Required_evidence,Responsible,Status
+H01,Ordering actuator and clevis machining,OEM full LA40PL code matched controls safety nut spline manual lowering force/duty selflock and524mm pin geometry,LINAK integrator,OPEN
+H02,Any OEM electrical connection,Approved command inhibit health pinout independent stop and emergency lowering terminal drawing,OEM electrical integrator,OPEN
+H03,Caster plate release,Confirm744589 mounting dimensions actual163 versus164 height pedal sweep wheel/swivel brake and stock,Blickle India,OPEN
+H04,Guide machining and purchase,Matched genuine HGR25 rail and2 HGW25CC preload end distance holes tolerances lube combined loads and torque,Guide supplier,OPEN
+H05,Steel cutting and welding,Certified materials actual section properties full loadpath weld/bolt/thread/local failure review and signed WPS,Mechanical engineer fabricator,OPEN
+H06,Proof/sensor/ballast interface machining,Received sensor drawings calibrated linkage independent limit cams caster/pin proof brackets restraint eyes and mount details,System integrator,OPEN
+H07,Loaded perch testing,One-prop full-load capacity tab weld block thread pin bearing cap retention friction and recovery trial review,Mechanical engineer,OPEN
+H08,First powered movement,Independent P17 endstop bolts/dynamic load review verified mechanical retention and stopping before contact,Mechanical engineer,OPEN
+H09,Any powered motion,Signed final schematic IO board harness component values fuses watchdog latch startup isolation welded-contact fault tests,Electrical safety integrator,OPEN
+H10,Powered or dummy testing,Guarded test-cell installation floor recovery hoist rated tethers fixture restraint and staged test limits signed,Test lead,OPEN

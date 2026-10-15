@@ -18,7 +18,7 @@ and [the authoritative specification](hardware/PROTOTYPE_SPEC.md) define why.
 | “PWB coach” inferred ankle force from forearms | Remove clinical loading computation and feedback | Limb-specific measurement research, if later justified |
 | Knee-scooter and powered seated transport added multiple failure cases | Removed from P0; walking separately specified as future validation | Dedicated support continuity/gait work |
 | 9.65 kg/₹54,250/12-hour/hospital-grade/fall-proof claims | Withdrawn; quote-based BOM with explicit unknowns | Actual supplier quotes, measured mass, full validation |
-| STL plate bores absent; incomplete latch/clamp geometry | No P0 manufacturing exports; legacy generators saved as reference text | Complete reviewed geometry and export comparisons |
+| STL plate bores absent; incomplete latch/clamp geometry | P0-B1 bored STEP/DXF review exports; legacy generators saved as reference text | Complete reviewed geometry and export comparisons |
 
 ## Why one lift and an OEM controller
 
@@ -37,8 +37,13 @@ rolling. Do not add a “walk” button without reviewing the changed load cases
 
 ## Remaining release blockers
 
-No specific actuator/guide/support pairing, safe working load, frame dimensions,
+P0-B1 selects an actuator/guide and bench frame dimensions. No safe working load,
+human support pairing,
 rest-lock unloading mechanism, safety circuit or production drawing is approved.
 These cannot be settled by rewriting documentation or compiling firmware.
 Follow [the validation gates](hardware/VALIDATION_PLAN.md) before fabrication,
 loaded trials and any human study.
+
+P0-B1 now adds editable bench CAD, India source evidence, dimensional drawings,
+assembly/weld mapping, screw-prop recovery, geometry screening and dummy procedures.
+See [the package](hardware/p0b1/README.md) for remaining supplier/engineering holds.

@@ -18,6 +18,7 @@ freestep::Config makeConfig() {
 }
 freestep::LiftController controller(makeConfig());
 bool heartbeatLevel = false;
+bool loopAliveLevel = false;
 bool imuInitialized = false;
 constexpr uint8_t IMU_ADDRESS = 0x68;
 
@@ -66,6 +67,8 @@ void applyOutputs(const freestep::Outputs& o) {
 
 void setup() {
   for (int p : pins::outputs) { digitalWrite(p, LOW); pinMode(p, OUTPUT); }
+  digitalWrite(pins::loopAlive, LOW);
+  pinMode(pins::loopAlive, OUTPUT);
   // External 10k pulldowns are also required; open contacts are unhealthy.
   for (int p : pins::inputs) pinMode(p, INPUT_PULLDOWN);
   analogReadResolution(12);
@@ -106,6 +109,12 @@ void loop() {
   i.imuHealthy = readImu(i);
   const auto o = controller.step(i, millis());
   applyOutputs(o);
+  // Separate liveness channel prevents an always-enabled external watchdog
+  // tripping during healthy idle and creating a startup/reset deadlock.
+  // It carries NO motion permission. Fault stops still remove every request
+  // and the motion heartbeat on GPIO38. Never generate this from an ISR/timer.
+  loopAliveLevel = !loopAliveLevel;
+  digitalWrite(pins::loopAlive, loopAliveLevel ? HIGH : LOW);
   // No blocking logging in the motion path. External hardware heartbeat timeout
   // must remove permission independently of this CPU and its I2C/loop timing.
   delay(10);

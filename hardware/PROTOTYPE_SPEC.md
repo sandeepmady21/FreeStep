@@ -1,5 +1,7 @@
 # P0 authoritative prototype specification
 
+> P0-B1 update: the [bench build package](p0b1/README.md) now fixes a steel test-fixture geometry with secured ballast. Human interfaces below remain future requirements; the rigid pan is not their implementation.
+
 Revision: 15 October 2026. **Bench only. All dimensions and loads need engineering
 release.** In case of disagreement, this document replaces archived drawings,
 the original STEP model, and old browser animations.
@@ -91,8 +93,9 @@ home-fit gate; consider a different route, environment adaptation, or another ai
 
 ## What has not been released
 
-No production dimensions, rated patient load, approved sling/attachment pairing,
-castor model, actuator SKU, lift speed, human stop distance, noise/IP rating,
+P0-B1 has review dimensions, but no rated patient load, approved sling/attachment pairing,
+confirmed caster fit/current revision, complete actuator configuration code,
+validated lift speed, human stop distance, noise/IP rating,
 finished mass, price, or build duration is established. Software fixture travel
 and timeout values are placeholders; they do not define clinical motion settings.
 See [validation](VALIDATION_PLAN.md) and [product research](../research/CURRENT_PRODUCTS_AND_DESIGN.md).

@@ -17,6 +17,7 @@ Clinical weight-bearing restrictions remain individual.
 
 | Document | Purpose |
 | --- | --- |
+| [P0-B1 India build review package](hardware/p0b1/README.md) | Editable CAD, dimensioned PDF,60-row BOM, assembly and dummy-test plans; supplier/engineering holds remain open |
 | [Product research](research/CURRENT_PRODUCTS_AND_DESIGN.md) | Current commercial products, availability caveats, sit-to-stand mechanics, and a staged walking solution; checked 15 October 2026 |
 | [Prototype specification](hardware/PROTOTYPE_SPEC.md) | One authoritative architecture, adjustments, use sequence, and exclusions |
 | [Hardware and wiring](hardware/WIRING_AND_ASSEMBLY_GUIDE.md) | Independent safety circuit and actual ESP32-S3 pin map |
@@ -32,7 +33,8 @@ Clinical weight-bearing restrictions remain individual.
 - Brake, body-support attachment, guard, OEM health, and hardware safety feedback.
 - Absolute position instead of increment-only Hall counters; direction limits,
   stale/missing/invalid IMU rejection, tilt stop, progress and run timeouts.
-- Every stop removes **all** lift requests and the external watchdog heartbeat.
+- Every stop removes **all** lift requests and motion heartbeat GPIO38. A separate
+  loop-alive GPIO2 drives the external watchdog during idle and motion.
 - No powered wheels, autonomous fetch, knee-scooter mode, width morphing, or
   inferred ankle-loading measurements.
 
@@ -83,4 +85,5 @@ are **not P0 manufacturing files**. The original project is
 Previous BOMs, generated geometry, plans, viewer, firmware, and model tests are
 preserved in [archive/pre-prototype](archive/pre-prototype/README.md). Their
 9.65 kg, ₹54,250, 12-hour build, clinical suitability, and fall-proof claims are
-withdrawn. No complete P0 CAD assembly or manufacturing cutlist has been released.
+withdrawn. P0-B1 now includes review CAD and a tube cutlist; fabrication and powered
+tests remain blocked by the recorded supplier, structural and electrical holds.

@@ -1,6 +1,8 @@
 # P0 validation and release record
 
-Status on 15 October 2026: **software verification only; all physical gates open.**
+Status on 15 October 2026: **software and CAD screening only; all physical gates open.**
+Detailed [P0-B1 dummy procedures](p0b1/BENCH_TEST_PLAN.md) propose measurable
+criteria and load stages; these are unperformed and require test-lead release.
 No test in this repository authorizes use with a person. Successful source-level
 tests do not establish sensor integrity, brake force, stop distance, clinical
 suitability, or medical-device compliance.

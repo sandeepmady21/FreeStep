@@ -1,0 +1,11 @@
+Part_ID,Description,Qty,Width_mm,Height_mm,Wall_mm,Cut_Length_mm,Cut,Material
+T01,Base longitudinal leg,2,40,80,4,1100,square both ends; no mitres,S355 / YSt355; mill certificate required
+T02,Front base cross member,1,80,40,4,760,square both ends; no mitres,S355 / YSt355; mill certificate required
+T03,Mast post,2,80,40,4,1200,square both ends; no mitres,S355 / YSt355; mill certificate required
+T04,Moving front cross member,1,60,60,4,580,square both ends; no mitres,S355 / YSt355; mill certificate required
+T10,Moving middle cross member; fits between continuous side arms,1,60,60,4,460,square both ends; no mitres,S355 / YSt355; mill certificate required
+T05,Moving side arm; square-cut butt joints,2,60,60,4,790,square both ends; no mitres,S355 / YSt355; mill certificate required
+T06,Ballast support drop,4,60,60,4,460,square both ends; no mitres,S355 / YSt355; mill certificate required
+T07,Ballast cross member,2,60,60,4,700,square both ends; no mitres,S355 / YSt355; mill certificate required
+T08,Stationary prop support post,2,60,60,4,500,square both ends; no mitres,S355 / YSt355; mill certificate required
+T09,Prop-post base outrigger,2,60,60,4,100,square both ends; no mitres,S355 / YSt355; mill certificate required

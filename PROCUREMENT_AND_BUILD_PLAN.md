@@ -1,53 +1,23 @@
-# P0 procurement and construction plan
+# P0-B1 procurement and build plan
 
-**Bench-only development. No fixed cost, mass, one-weekend build duration or
-human load rating is asserted.** The active [BOM](hardware/INDIA_BOM_SOURCING.csv)
-is a request-for-quote register. Blank prices/masses mean unknown, never zero.
+Use the [India build review package](hardware/p0b1/README.md),
+[60-row BOM](hardware/INDIA_BOM_SOURCING.csv),
+[dated India selections and prepared RFQ](hardware/p0b1/procurement/INDIA_SELECTION.md),
+[cutlist](hardware/p0b1/cutlist.csv) and
+[assembly plan](hardware/p0b1/ASSEMBLY_PLAN.md).
 
-## Order of work
+Actual selections include LINAK LA40PL matched OEM kit, HGR25/HGW25CC guide,
+Blickle744589 casters, Pilz751103 relay and TI TPS3431EVM. India sales channels
+are identified; key components remain RFQ. Four listing-price rows totalINR16413.15
+with mixed tax bases, not a build total. Missing prices are blank, not zero.
+Custom steel alone is about152kg nominal, before OEM parts, welds and guards.
 
-1. Run software checks using existing development equipment. Do not order the
-   archived CNC profiles, carbon stock or split-seat latch.
-2. Resolve the [prototype specification](hardware/PROTOTYPE_SPEC.md): adult fit,
-   seated support access, load/trajectory envelope, mechanical rest lock and
-   emergency recovery. Build a non-load-bearing adjustable geometry mock-up.
-3. Request matched OEM lift-system quotations and manuals; review their controller
-   input contract and permitted use. Obtain supplier confirmation of actuator
-   load/duty cycle, self-lock/secondary retention, emergency lowering, travel
-   limits, overload/thermal behavior and required inspection/service.
-4. Select compatible body-support/seat interfaces with the system engineer and
-   clinical adviser. Obtain explicit dimensions and attachment constraints; a
-   sling is not universally compatible with arbitrary custom hooks.
-5. Issue one reviewed CAD/drawing/BOM revision, including materials, tolerances,
-   fasteners, guide moment ratings, guards, weld/bond details if any, and the
-   complete electrical safety circuit. Populate a new cutlist from that revision.
-6. Construct/commission the unloaded rig under the validation plan. Record
-   wiring, calibration, stopping travel and fault-injection results. Only then
-   consider dummy loads. Human testing is a separate, currently open release gate.
+Order: supplier drawings and quotes -> H01-H06 structural/fit review -> released
+cutting/weld/machining -> mechanical dry-fit -> final stops/guard/electrical
+integration -> unloaded commissioning -> reviewed dummy stages. No human use.
+No parts ordered, supplier messages sent, stock reserved or physical tests performed.
 
-## Quote and mass records
-
-Use `Unit_Cost_INR` for one listed procurement unit and `Unit_Mass_g` for its
-installed unit mass. `Qty` multiplies each. Kits have quantity 1 and a documented
-kit composition. `Installed=0` excludes engineering/test equipment from assembled
-device mass, but not development cost. Do not count a supplier price without
-SKU/quote reference and quote date. Record tax/freight inclusion in `Notes`.
-
-```sh
-python3 tools/validate_repository.py
-```
-
-This checks quantity and numeric fields, sums known costs/masses, and explicitly
-reports an **incomplete** total while any required quote or mass is missing.
-It does not infer that unknown items can be bought at the old estimated prices.
-
-## Fabrication status
-
-There is no P0 tube cutlist yet because frame dimensions and guide geometry are
-not released. The carbon architecture is retired, so buying one extra carbon tube
-would not resolve the design mismatch. For historical audit only, its 30 mm
-cutlist required 2,375 mm while the old order contained 2,000 mm; its BOM actually
-had 20 rows, ₹54,450 and 9,700 g assuming row-total mass. These are not P0 estimates.
-
-See [drawing status](hardware/ASSEMBLY_BLUEPRINTS.md). Invalid plate STLs are kept
-only as archived reference; no production exports are generated from them.
+The CAD source and generated files are a single review revision; they are not
+certified fabrication drawings. The [hold register](hardware/p0b1/RELEASE_HOLDS.csv)
+identifies exactly what is still needed before cutting or powered motion.
+Historical carbon cutlists/BOMs are retired and must not be used for this build.

@@ -9,7 +9,7 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 errors = []
 
-for path in list(ROOT.glob("*.md")) + list((ROOT / "hardware").glob("*.md")) + list((ROOT / "research").glob("*.md")):
+for path in list(ROOT.glob("*.md")) + list((ROOT / "hardware").rglob("*.md")) + list((ROOT / "research").glob("*.md")):
     text = path.read_text()
     for link in re.findall(r"\]\(([^)]+)\)", text):
         target = link.split("#")[0]
@@ -59,8 +59,10 @@ for row in rows:
                     raise ValueError(field)
                 if field == "Unit_Cost_INR":
                     known_cost += qty * numeric
-                    if not row["SKU_Or_Quote"] or not row["Quote_Date"]:
-                        errors.append(f"{ident}: price needs quote reference and date")
+                    if not row["SKU_Or_Quote"] or not row["Checked_Date"]:
+                        errors.append(f"{ident}: price needs dated SKU/quote reference")
+                    if not row.get("Source_URL") or not row.get("Price_Basis"):
+                        errors.append(f"{ident}: numeric listing price needs source and tax basis")
                 elif row["Installed"] == "1":
                     known_mass += qty * numeric
             elif field == "Unit_Cost_INR":
@@ -71,8 +73,16 @@ for row in rows:
         errors.append(f"Invalid BOM quantity/value in {ident}")
 
 print(f"BOM: {len(rows)} procurement rows")
+import json
+manifest = json.loads((ROOT / "hardware/p0b1/cad/parts_manifest.json").read_text())
+bom_by_id = {r["Item_ID"]: r for r in rows}
+for part in manifest["parts"]:
+    if part["kind"] == "custom":
+        row = bom_by_id.get(part["id"])
+        if row is None or int(row["Qty"]) != part["quantity"]:
+            errors.append(f"CAD/BOM quantity mismatch: {part['id']}")
 if unknown_cost:
-    print(f"Cost INCOMPLETE: {unknown_cost} unquoted rows; known subtotal INR {known_cost}; total unavailable")
+    print(f"Cost INCOMPLETE: {unknown_cost} unpriced rows; dated listing subtotal INR {known_cost}; mixed tax bases; total unavailable")
 else:
     print(f"Quoted development procurement total INR {known_cost}; review tax/freight notes")
 if unknown_mass:

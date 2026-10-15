@@ -12,12 +12,17 @@ void arm(){for(int n=0;n<52;++n)loop();pinValues[pins::resetButton]=HIGH;loop();
 int main(){
  setup();off();healthy();arm();pinValues[pins::upButton]=HIGH;loop();off();
  std::cout<<"PASS shipped Arduino adapter is disabled\n";
+ const int idleAlive=pinValues[pins::loopAlive];loop();
+ require(pinValues[pins::loopAlive]!=idleAlive);off();
+ std::cout<<"PASS independent loop watchdog pulses in disabled idle without motion permission\n";
  // Replace the supervisor ONLY inside this host-side test fixture.
  freestep::Config c;c.commissioned=true;controller=freestep::LiftController(c);
  pinValues[pins::upButton]=LOW;arm();pinValues[pins::upButton]=HIGH;loop();
  require(pinValues[pins::permit]==HIGH && pinValues[pins::upRequest]==HIGH);
  require(pinValues[pins::downRequest]==LOW);
  Wire.healthy=false;loop();off();
+ const int faultAlive=pinValues[pins::loopAlive];loop();
+ require(pinValues[pins::loopAlive]!=faultAlive);off();
  std::cout<<"PASS actual adapter deasserts all outputs on I2C failure\n";
  Wire.healthy=true;pinValues[pins::upButton]=LOW;arm();
  pinValues[pins::downButton]=HIGH;loop();require(pinValues[pins::downRequest]==HIGH);

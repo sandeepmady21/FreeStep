@@ -18,8 +18,9 @@ approval. Do not replace the OEM controller's protection with the ESP32.
   direction independently. Software limits supplement them.
 - An independent edge-sensitive watchdog removes run permission on a missing or
   stuck heartbeat, including a CPU hung with UP and PERMIT still high. Its final
-  timeout is derived from measured stopping travel; 100 ms is the bench design
-  target, not a validated human safety value. A constant HIGH cannot satisfy it.
+  timeout is derived from measured stopping travel. P0-B1 selects the TI preset
+  200 ms (170–230 ms) on independent loop-alive GPIO2; see
+  [electrical integration](p0b1/ELECTRICAL_INTEGRATION.md). A constant HIGH cannot satisfy it.
 - Electrically/mechanically interlock opposite motion requests. No welded relay
   or single output fault may bypass the independent stop path. Choose the hardware
   safety architecture with the OEM/system engineer before applying loaded power.
@@ -36,7 +37,8 @@ Outputs require external pulldowns so reset/boot/disconnection removes requests.
 
 | GPIO | Direction | Signal and healthy/active level |
 | --- | --- | --- |
-| 1 | ADC1 input | Absolute position wiper, ratiometric 3.3 V sensor; 10 kΩ pulldown detects open wiper as out of range |
+| 1 | ADC1 input | Buffered absolute position: see P0-B1 MCP6002 conditioning with end resistors and1MΩ wiper bias;10kΩ ADC pulldown after buffer |
+| 2 | Output | Independent main-loop alive pulses, including idle/fault; external watchdog WDI, never motion permission |
 | 4 | Output | Isolated OEM UP request, HIGH requests |
 | 5 | Output | Isolated OEM DOWN request, HIGH requests |
 | 6 | Output | Additional motion permission, HIGH requests |
@@ -50,7 +52,7 @@ Outputs require external pulldowns so reset/boot/disconnection removes requests.
 | 16 / 17 | I2C | SDA/SCL, 3.3 V pullups, correctly oriented MPU6050 fixture IMU |
 | 18 | Input | Deliberate reset button, HIGH pressed |
 | 21 | Input | OEM controller health feedback, HIGH healthy |
-| 38 | Output | Alternating heartbeat only during requested motion |
+| 38 | Output | Motion-only heartbeat; stops on every motion stop; commissioning monitor, not always-on watchdog input |
 | 39 | Input | Positive mechanical perch lock proof, HIGH engaged, inhibits motion |
 
 Brake groups must cover every wheel/swivel lock required by the stability design.
@@ -92,8 +94,7 @@ walking mode without additional design and validation.
 
 ## Assembly release
 
-There are no current manufacturing DXFs/STLs or issued tube lengths. Resolve
-the mast/yoke moment load, seated support access, rest-lock unloading procedure,
-guarding, full travel clearance, and stability before detailed CAD release.
-The [historical geometry](../archive/pre-prototype/README.md) must not be ordered
-as P0 parts. See [system drawing status](ASSEMBLY_BLUEPRINTS.md).
+The [P0-B1 CAD and assembly package](p0b1/README.md) supplies mechanical review
+geometry and tube lengths. Final OEM interface, safety schematic, IO hardware,
+harness terminal BOM, matched sensor/proof brackets and guarding are still open.
+Follow [H01-H10](p0b1/RELEASE_HOLDS.csv); mechanical CAD does not authorize power.
