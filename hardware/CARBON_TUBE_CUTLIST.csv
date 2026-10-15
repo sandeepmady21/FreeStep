@@ -1,7 +1,0 @@
-Tube_ID,Sub_Assembly,Carbon_Tube_Spec,Outer_Dia_mm,Inner_Dia_mm,Wall_mm,Cut_Length_mm,Qty,End_Prep_Notes
-CF-01,Left & Right Outer Telescoping Column Barrels (12-deg rake),3K Roll-Wrapped Twill Carbon,35.0,31.0,2.0,460,2,Press-fit lathe-turned POM (Delrin) bushing + 30mm silicone wiper O-ring; clip on cane/IV quiver
-CF-02,Left & Right Inner Telescoping Plunger Tubes (houses standard 24V 300mm actuator),3K Roll-Wrapped Twill Carbon,30.0,26.0,2.0,440,2,Clamps 3-Mode Saddle Hinge (0/90/180 deg) + retractable pelvic safety belt
-CF-03,Lower U-Base Left & Right Legs (74mm low-profile nose),3K Roll-Wrapped Twill Carbon,30.0,26.0,2.0,540,2,Includes fold-down aluminum footrest pegs for Seated Power-Glide mode
-CF-04,Lower Front Cross-Nose Bridge (495mm total outer width),3K Roll-Wrapped Twill Carbon,30.0,26.0,2.0,415,1,Houses 24V 6Ah LiFePO4 battery ballast + VL53L1X cliff/ToF + 2AM PIR motion nightlight
-CF-05,Upper Ergonomic Halo Left & Right Arms (8-deg forearm support troughs),3K Roll-Wrapped Twill Carbon,25.0,21.0,2.0,420,2,Supports contoured EVA forearm troughs + FSR406 PWB Rehab Coach pressure sensors
-CF-06,Upper Halo Deep-Bow Front Cross-Bridge,3K Roll-Wrapped Twill Carbon,25.0,21.0,2.0,415,1,Open torso lean zone for sit-to-stand; accepts 2-second snap-on swing-away cup/meal tray

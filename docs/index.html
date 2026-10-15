@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FreeStep P0 — bench prototype</title>
+<style>body{margin:0;background:#f4f6f7;color:#17313a;font:17px/1.6 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:40px 24px}h1{font-size:44px;line-height:1.15}h2{font-size:23px}a{color:#08637a}section{background:white;border:1px solid #d8e1e5;border-radius:12px;padding:24px;margin:24px 0}.notice{border-left:6px solid #b65e16;background:#fff2d7;padding:18px 24px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}.tag{font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}small{color:#465c65}li{margin:8px 0}</style>
+</head>
+<body>
+<main>
+<p class="tag">FreeStep P0 / 15 October 2026</p>
+<h1>Assisted rise.<br>Stationary kitchen perch.</h1>
+<div class="notice">
+<strong>Bench engineering prototype — no human-use release.</strong>
+<br>No patient load rating or manufacturing drawings are approved. Firmware is disabled by default.</div>
+<p>One guided lift, compatible pelvic support, caregiver hold-to-run controls and passive mechanical wheel locks. Adjustable adult fit is a design requirement that still needs testing.</p>
+<section>
+<h2>One architecture</h2>
+<p>Locked metal base → single guided mast → fitted body support and mechanical perch lock.</p>
+<p>Independent E-stop and watchdog → OEM lift controller ← isolated requests from the bench supervisor.</p>
+<small>System topology only. No structural geometry is released. The ESP32 is secondary bench supervision, not a safety-rated controller.</small>
+</section>
+<div class="grid">
+<section>
+<h2>Implemented</h2>
+<p>Hold-to-run requests, latched faults, deliberate reset, absolute position and brake/support/guard/tilt/travel checks.</p>
+<a href="https://github.com/sandeepmady21/FreeStep/tree/main/firmware">Inspect controller and tests</a>
+</section>
+<section>
+<h2>Required next</h2>
+<p>OEM selection, reviewed CAD, seated support access, stable load path, rest-lock recovery and physical tests.</p>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/hardware/VALIDATION_PLAN.md">Read validation gates</a>
+</section>
+<section>
+<h2>Walking later</h2>
+<p>P0 allows only unoccupied repositioning. Supported gait needs continuous pelvic support, stride clearance and a separately validated brake configuration.</p>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/research/CURRENT_PRODUCTS_AND_DESIGN.md">Read current-product research</a>
+</section>
+</div>
+<section>
+<h2>Evidence, not a simulated safety pass</h2>
+<p>The former viewers and Python model represented incompatible concepts. This page replaces them; there is no clinical simulator. Software tests do not establish physical safety.</p>
+<ul>
+<li>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/hardware/PROTOTYPE_SPEC.md">Authoritative prototype specification</a>
+</li>
+<li>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/PROCUREMENT_AND_BUILD_PLAN.md">Procurement: costs and mass remain unknown</a>
+</li>
+<li>
+<a href="https://github.com/sandeepmady21/FreeStep/blob/main/README.md">Repository and verification commands</a>
+</li>
+</ul>
+<small>Original CAD and historical concepts remain archived for attribution. They are not P0 build files.</small>
+</section>
+</main>
+</body>
+</html>
