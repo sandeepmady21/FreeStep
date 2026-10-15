@@ -244,3 +244,33 @@ When the priority is **minimum weight (`11.0 kg` total vs. `20+ kg` steel frames
 25. **One-Tap Voice Intercom / WhatsApp Call Button on Handle:** Built-in `ESP32` speaker/mic button on the handlebar for instant hands-free calling from the kitchen or bathroom.
 26. **Pill & Hydration Reminder Chime on Cockpit:** Gentle voice/LED reminder on the handlebar display with a built-in compartment for post-surgery tablets and a water bottle.
 27. **Swap-in Power-Tool Battery Architecture:** Use a slide-in **20V/24V power-tool battery cartridge** so a charged spare can be swapped in 3 seconds without plugging the walker into a wall outlet.
+
+
+---
+
+## 8. Global Competitive Benchmark & Feature Audit (MIT, Rifton, RT.Works, Camino, Zeen)
+
+We benchmarked the world's leading commercial and academic robotic walkers to audit our feature list, cut unnecessary complexity, and incorporate proven biomechanical breakthroughs:
+
+### 8.1 Global Products & Research Systems Analyzed
+1. **MIT *E-BAR* (Elderly Bodily Assistance Robot — MIT MechE):** Rear-entry open U-base that supports weight under the arms/torso along a **forward-and-upward biomechanical sit-to-stand trajectory** with lateral fall-catching bolsters.
+2. **Rifton *TRAM* (Clinical Transfer & Mobility Device):** Uses an **ultra-low-profile base (`<80 mm`)** that slides underneath beds/sofas so the frame reaches the user's hips while seated, plus a **built-in load-cell scale** for partial-weight-bearing (PWB) verification and directional caster locks.
+3. **RT.Works *RT.2* (Japan):** Uses a **6-axis IMU + grip sensors** to provide automatic **slope-zeroing gravity compensation** ($\tau = M g R \sin\alpha$)—boosting uphill and braking downhill so every slope feels flat.
+4. **Camino Smart Walker (USA):** Uses **leg-tracking depth sensors** aimed at the user's shins/ankles to prevent the walker from rolling too far ahead of the user's center of mass and to log daily gait symmetry during injury recovery.
+5. **Waterloo *SkyWalker* & IEEE *Moby*:** Introduces **bi-level sit-to-stand handles** (lower push-up handles for rising from a toilet/bed, upper forearm troughs for walking) paired with a $10^\circ\text{–}12^\circ$ inclined lifting column.
+6. **Exokinetics *Zeen* (USA):** Passive gas-strut barstool/walker/coaster hybrid; proves the massive daily value of a **counter-height hands-free perch saddle**, though limited by its wide `25.5"` frame and manual leg-push requirement.
+
+---
+
+### 8.2 Feature-by-Feature Engineering Audit (What We Keep, Upgrade, or Simplify)
+
+| Feature | Audit Decision | Engineering Rationale & Refinement |
+| :--- | :---: | :--- |
+| **1. Vertical Lift Columns** | 🔧 **UPGRADE TO $12^\circ$ FORWARD INCLINE** | Pure $90^\circ$ vertical lift pushes the user backward if their feet are ahead of their knees. Tilting the `TiMOTION/LINAK` columns **$12^\circ$ forward** translates the hips **`+293 mm` UP and `+62 mm` FORWARD** ("nose-over-toes" natural standing biomechanics). |
+| **2. Doorway Width Mechanism** | ✂️ **SIMPLIFY TO FIXED `495 mm` FOR v1** | A `495 mm (19.5")` wide U-base with low-mounted hub motors and battery (`65 mm` CG height) already fits through every `20"+` Indian bathroom door AND remains stable at kitchen perch height—eliminating 1 actuator, 2 rails, and 4 carriages from Build #1. |
+| **3. Front Bed/Sofa Clearance** | 🚀 **NEW: `75 mm` "Slide-Under" Front Nose** | Inspired by *Rifton TRAM*: stepping the front `200 mm` of the lower side rails down to `<75 mm (3")` height lets the walker nose slide **directly underneath low Indian beds and sofas**, bringing the saddle and handles `15 cm` closer to Grandma before she stands up. |
+| **4. Handlebar Geometry** | 🚀 **NEW: Bi-Level Sit-to-Stand Grips** | Inspired by *Waterloo SkyWalker*: adds secondary lower push-handles `150 mm` below the upper forearm troughs so Grandma can push down comfortably with her arms while seated on a low toilet or bed. |
+| **5. Lateral Stability** | 🚀 **NEW: Contoured Hip/Waist Bolsters** | Inspired by *MIT E-BAR*: two soft memory-foam lateral bolsters mounted inside the upper columns cradle her waist from left and right so she cannot lose balance sideways toward her fractured ankle. |
+| **6. Slope & Wet-Floor Control** | 🚀 **NEW: IMU Slope-Zeroing ($\sin\alpha$)** | Inspired by *RT.Works RT.2*: uses real-time pitch angle $\alpha$ from the `MPU6050` to automatically inject uphill assist torque and downhill regenerative braking torque. |
+| **7. Gait & Distance Guard** | 🚀 **NEW: Rear Shin-Tracking `VL53L5CX` ToF** | Inspired by *Camino*: tracks her shin distance inside the U-frame; gently slows the wheels if the walker gets $>28\text{ cm}$ ahead of her hips (preventing forward tip falls) and logs daily ankle limp/symmetry recovery. |
+| **8. Teacup Gimbal & Calf Rest** | ✂️ **SIMPLIFY TO PASSIVE MECHANICAL** | Replace the moving teacup gimbal with a **Recessed Insulated Silicone Cup Well + Anti-Slosh Lid**, and use a **1-Hand Mechanical Ratchet Elevating Calf Rest** instead of a 4th electric motor near floor splashes. |
