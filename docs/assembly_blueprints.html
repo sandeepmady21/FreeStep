@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FreeStep Air — 3D CAD Assembly & Part Inspector</title>
+  <title>FreeStep Air — 3D CAD Assembly & Sub-Part Inspector (True FreeStep Kinematics)</title>
   <script src="./three.min.js"></script>
   <script src="./OrbitControls.js"></script>
   <style>
     :root {
       --bg: #070b14;
       --panel: #0f172a;
-      --panel2: #1e293b;
+      --panel-2: #1e293b;
       --border: #334155;
       --cyan: #38bdf8;
       --green: #22c55e;
@@ -34,38 +34,44 @@
       justify-content: space-between;
       align-items: center;
       background: var(--panel);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1.5px solid var(--cyan);
       padding: 10px 20px;
-      height: 56px;
       flex-shrink: 0;
     }
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .brand h1 { font-size: 17px; color: var(--cyan); font-weight: 800; letter-spacing: 0.4px; }
-    .brand span { font-size: 12px; color: var(--muted); }
-    .badges { display: flex; gap: 8px; align-items: center; }
+    .brand h1 {
+      font-size: 17px;
+      color: var(--cyan);
+      letter-spacing: 0.4px;
+    }
+    .brand span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .badges {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
     .badge {
-      background: rgba(34, 197, 94, 0.14);
-      color: #4ade80;
+      background: #064e3b;
+      color: #6ee7b7;
       border: 1px solid var(--green);
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 6px;
       font-size: 11px;
       font-weight: 700;
     }
     .badge.cyan {
-      background: rgba(56, 189, 248, 0.14);
-      color: var(--cyan);
+      background: #0c4a6e;
+      color: #bae6fd;
       border-color: var(--cyan);
     }
-
     .workspace {
       display: grid;
-      grid-template-columns: 310px 1fr 370px;
+      grid-template-columns: 310px 1fr 360px;
       flex: 1;
       min-height: 0;
     }
-
-    /* Left Sidebar: 16-Part CAD Tree */
     .sidebar-left {
       background: var(--panel);
       border-right: 1px solid var(--border);
@@ -74,41 +80,43 @@
       min-height: 0;
     }
     .panel-title {
-      padding: 12px 14px;
+      padding: 10px 14px;
       font-size: 12px;
       font-weight: 700;
       color: var(--cyan);
       border-bottom: 1px solid var(--border);
+      background: #0b1324;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(15, 23, 42, 0.9);
     }
     .part-list {
       overflow-y: auto;
       flex: 1;
       padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
     .part-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 9px 10px;
-      margin-bottom: 4px;
-      border-radius: 7px;
+      padding: 8px 10px;
+      border-radius: 6px;
       border: 1px solid transparent;
+      background: #131c31;
       cursor: pointer;
+      transition: 0.15s;
       font-size: 12px;
-      transition: all 0.15s;
-      background: rgba(30, 41, 59, 0.45);
     }
     .part-item:hover {
-      background: var(--panel2);
-      border-color: #475569;
+      border-color: var(--cyan);
+      background: #1e293b;
     }
     .part-item.active {
-      background: rgba(56, 189, 248, 0.18);
-      border-color: var(--cyan);
+      background: #1d4ed8;
+      border-color: #60a5fa;
       color: #fff;
       font-weight: 600;
     }
@@ -116,27 +124,26 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      display: inline-block;
       margin-right: 8px;
       flex-shrink: 0;
+      display: inline-block;
     }
     .part-tag {
       font-size: 10px;
       padding: 2px 6px;
       border-radius: 4px;
-      background: #0f172a;
+      background: rgba(255,255,255,0.08);
       color: var(--muted);
-      border: 1px solid #334155;
-      margin-left: 6px;
-      flex-shrink: 0;
     }
-
-    /* Center 3D Viewport */
+    .part-item.active .part-tag {
+      background: rgba(0,0,0,0.25);
+      color: #e2e8f0;
+    }
     .viewport-wrap {
       position: relative;
       display: flex;
       flex-direction: column;
-      background: radial-gradient(circle at center, #111c33 0%, #060911 100%);
+      background: radial-gradient(circle at center, #111a2e 0%, #060911 100%);
       min-height: 0;
     }
     #webgl-container {
@@ -147,78 +154,75 @@
       cursor: grab;
     }
     #webgl-container:active { cursor: grabbing; }
-
-    /* Floating Top Camera & Mode Bar */
     .cam-bar {
       position: absolute;
       top: 12px;
       left: 12px;
       right: 12px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      justify-content: space-between;
       pointer-events: none;
       z-index: 10;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-    .btn {
-      pointer-events: auto;
+    .cam-group {
+      display: flex;
+      gap: 6px;
       background: rgba(15, 23, 42, 0.88);
       backdrop-filter: blur(8px);
-      color: var(--text);
+      padding: 6px;
+      border-radius: 8px;
       border: 1px solid var(--border);
-      padding: 7px 11px;
+      pointer-events: auto;
+      flex-wrap: wrap;
+    }
+    .btn {
+      background: #1e293b;
+      color: var(--text);
+      border: 1px solid #475569;
+      padding: 6px 11px;
       border-radius: 6px;
       font-size: 11px;
       font-weight: 600;
       cursor: pointer;
       transition: 0.15s;
     }
-    .btn:hover, .btn.active {
-      background: #0284c7;
-      border-color: var(--cyan);
-      color: #fff;
-    }
-    .btn.amber.active {
-      background: #d97706;
-      border-color: #fde047;
-    }
-    .btn.green.active {
-      background: #15803d;
-      border-color: #4ade80;
-    }
-
-    /* Floating Bottom Kinematic & Explode Sliders */
+    .btn:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn.active { background: #0284c7; border-color: var(--cyan); color: #fff; }
+    .btn.amber { background: #78350f; border-color: var(--amber); color: #fde68a; }
+    .btn.amber.active { background: var(--amber); color: #000; }
+    .btn.green { background: #064e3b; border-color: var(--green); color: #a7f3d0; }
+    .btn.green.active { background: var(--green); color: #000; }
     .slider-dock {
       background: rgba(15, 23, 42, 0.95);
       border-top: 1px solid var(--border);
-      padding: 12px 18px;
+      padding: 10px 16px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      gap: 14px;
       z-index: 10;
     }
     .slider-group label {
       display: flex;
       justify-content: space-between;
       font-size: 11px;
-      font-weight: 700;
       color: var(--cyan);
-      margin-bottom: 5px;
+      font-weight: 700;
+      margin-bottom: 4px;
     }
     .slider-group input[type="range"] {
       width: 100%;
       accent-color: var(--cyan);
       cursor: pointer;
     }
-
-    /* Right Sidebar: Selected Part Inspector & 2D Blueprint Sheet */
     .sidebar-right {
       background: var(--panel);
       border-left: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      overflow-y: auto;
       min-height: 0;
+      overflow-y: auto;
     }
     .inspector-card {
       padding: 14px;
@@ -231,48 +235,87 @@
     }
     .inspector-sub {
       font-size: 11px;
-      color: var(--amber);
-      font-weight: 600;
+      color: var(--cyan);
       margin-bottom: 10px;
+      font-weight: 600;
     }
     .spec-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 11.5px;
-      margin-bottom: 10px;
+      margin-top: 8px;
     }
     .spec-table td {
       padding: 6px 4px;
-      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+      border-bottom: 1px solid #1e293b;
     }
-    .spec-table td:first-child { color: var(--muted); width: 42%; }
-    .spec-table td:last-child { color: var(--text); font-weight: 600; }
+    .spec-table td:first-child {
+      color: var(--muted);
+      width: 44%;
+    }
+    .spec-table td:last-child {
+      color: #fff;
+      font-weight: 600;
+    }
     .desc-box {
-      background: rgba(30, 41, 59, 0.6);
-      border-left: 3px solid var(--cyan);
-      padding: 9px 10px;
-      border-radius: 4px;
-      font-size: 11.5px;
+      background: #131c31;
+      border: 1px solid #263554;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 12px;
       line-height: 1.45;
       color: #cbd5e1;
-      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+    .ref-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ref-card {
+      background: #131c31;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .ref-card:hover { border-color: var(--cyan); }
+    .ref-card img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .ref-card span {
+      display: block;
+      font-size: 10px;
+      color: var(--cyan);
+      margin-top: 4px;
+      font-weight: 700;
     }
     .cad-links {
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
     }
     .cad-links a {
       text-decoration: none;
-      background: #1e3a8a;
-      color: #fff;
+      background: #1e293b;
+      color: var(--cyan);
       border: 1px solid var(--cyan);
-      padding: 6px 10px;
+      padding: 5px 9px;
       border-radius: 5px;
       font-size: 11px;
       font-weight: 600;
     }
-    .cad-links a:hover { background: #0284c7; }
+    .cad-links a:hover {
+      background: var(--cyan);
+      color: #000;
+    }
     .bp-preview {
       padding: 12px;
     }
@@ -280,23 +323,23 @@
       width: 100%;
       border-radius: 6px;
       border: 1px solid var(--border);
-      cursor: zoom-in;
-      transition: transform 0.2s;
+      cursor: pointer;
+      transition: 0.15s;
     }
     .bp-preview img:hover { border-color: var(--cyan); }
     .hint-pill {
       position: absolute;
-      bottom: 82px;
-      left: 16px;
+      bottom: 74px;
+      left: 50%;
+      transform: translateX(-50%);
       background: rgba(15, 23, 42, 0.85);
       border: 1px solid var(--border);
-      padding: 6px 12px;
-      border-radius: 6px;
+      color: #cbd5e1;
+      padding: 5px 14px;
+      border-radius: 999px;
       font-size: 11px;
-      color: var(--muted);
       pointer-events: none;
     }
-    /* Fullscreen Modal for Blueprint Sheet */
     #bpModal {
       display: none;
       position: fixed;
@@ -320,21 +363,21 @@
 <body>
   <header>
     <div class="brand">
-      <h1>FREESTEP AIR — 3D CAD ASSEMBLY & PART INSPECTOR</h1>
-      <span>Drag to Rotate 360° • Scroll to Zoom • Click Any Part in Tree or 3D Viewport to Isolate</span>
+      <h1>FREESTEP AIR — TRUE FREESTEP 3D CAD ASSEMBLY & SUB-PART INSPECTOR</h1>
+      <span>Exact FreeStep Open-U Parallelogram + Diagonal Linear Actuators + Sliding & Folding U-Seat Bar ("FreeStep_close" vs "FreeStep_open")</span>
     </div>
     <div class="badges">
-      <div class="badge cyan">495 mm (19.5") Universal Width</div>
+      <div class="badge cyan">100% Open Walk-In U-Bay</div>
       <div class="badge">9.65 kg Featherweight</div>
-      <div class="badge">₹54,250 Clinical & Home Mastery</div>
+      <div class="badge">₹54,250 Standard-COTS Build</div>
     </div>
   </header>
 
   <div class="workspace">
-    <!-- LEFT SIDEBAR: 16-PART CAD ASSEMBLY TREE -->
+    <!-- LEFT SIDEBAR: 12-PART CAD ASSEMBLY TREE -->
     <div class="sidebar-left">
       <div class="panel-title">
-        <span>3D ASSEMBLY TREE (16 PARTS)</span>
+        <span>FREESTEP 3D ASSEMBLY TREE</span>
         <button class="btn" id="soloToggleBtn" onclick="toggleSoloMode()" style="padding:3px 8px; font-size:10px;">Solo Mode: OFF</button>
       </div>
       <div class="part-list" id="partListContainer"></div>
@@ -343,58 +386,74 @@
     <!-- CENTER: INTERACTIVE 3D THREE.JS VIEWPORT -->
     <div class="viewport-wrap">
       <div class="cam-bar">
-        <button class="btn active" id="modeSeatBtn" onclick="setWalkerMode('seat')">🪑 Mode: Seated / Lift (Flaps Closed)</button>
-        <button class="btn" id="modeWalkBtn" onclick="setWalkerMode('walk')">🚶 Mode: Open Walk-In (Flaps Folded 180°)</button>
-        <button class="btn amber" id="kneeBtn" onclick="setWalkerMode('knee')">🦵 Mode: 90° Knee-Scooter</button>
-        <button class="btn" onclick="setCameraView('iso')">3D Isometric</button>
-        <button class="btn" onclick="setCameraView('seatZoom')">Zoom: Seat Flaps & Latch</button>
-        <button class="btn" onclick="setCameraView('side')">Side (12° Rake)</button>
-        <button class="btn" onclick="setCameraView('top')">Top View</button>
-        <button class="btn amber" id="xrayBtn" onclick="toggleXray()">X-Ray Carbon: OFF</button>
-        <button class="btn green" id="glideBtn" onclick="toggleGlideDemo()">Demo: Seated Power-Glide</button>
+        <div class="cam-group">
+          <button class="btn active" id="btnStateClose" onclick="setFreeStepState('close')">🪑 FreeStep_close (Lowered + U-Seat Bar Down)</button>
+          <button class="btn" id="btnStateLift" onclick="setFreeStepState('lift')">⬆️ Sit-to-Stand Lift (Raised + U-Seat Bar Down)</button>
+          <button class="btn green" id="btnStateOpen" onclick="setFreeStepState('open')">🚶 FreeStep_open (Standing + Seat Bar Folded Back)</button>
+        </div>
+        <div class="cam-group">
+          <button class="btn" onclick="setCameraView('iso')">3D View (Like Photo)</button>
+          <button class="btn" onclick="setCameraView('seat')">Zoom: U-Seat Flap</button>
+          <button class="btn" onclick="setCameraView('side')">Side Linkage</button>
+          <button class="btn" onclick="setCameraView('top')">Top View</button>
+        </div>
       </div>
 
       <div id="webgl-container"></div>
-      <div class="hint-pill">🖱️ Left-Drag: Orbit 3D | Right-Drag: Pan | Scroll: Zoom | Click Any 3D Part to Inspect</div>
+      <div class="hint-pill">🖱️ Left-Drag: Rotate 360° | Right-Drag: Pan | Scroll: Zoom | Click Any 3D Part to Inspect</div>
 
       <div class="slider-dock">
         <div class="slider-group">
-          <label><span>EXPLODE 3D PARTS</span><span id="valExplode">0%</span></label>
+          <label><span>1. PARALLELOGRAM LIFT HEIGHT</span><span id="valLift">15% (Lowered / Seated)</span></label>
+          <input type="range" id="slLift" min="0" max="100" value="15" />
+        </div>
+        <div class="slider-group">
+          <label><span>2. U-SEAT BAR FOLD (0°=DOWN, 90°=UP)</span><span id="valFold">0° (Seat Bar Hanging Down)</span></label>
+          <input type="range" id="slFold" min="0" max="90" value="0" />
+        </div>
+        <div class="slider-group">
+          <label><span>3. U-SEAT SLIDE ALONG TOP RAIL</span><span id="valSlide">0% (Forward Seated Pos)</span></label>
+          <input type="range" id="slSlide" min="0" max="100" value="0" />
+        </div>
+        <div class="slider-group">
+          <label><span>4. EXPLODE SUB-ASSEMBLIES</span><span id="valExplode">0%</span></label>
           <input type="range" id="slExplode" min="0" max="100" value="0" />
-        </div>
-        <div class="slider-group">
-          <label><span>SEAT LIFT HEIGHT (12° RAKE)</span><span id="valLift">80 mm (Seat: 498mm)</span></label>
-          <input type="range" id="slLift" min="0" max="300" value="80" />
-        </div>
-        <div class="slider-group">
-          <label><span>SEAT FLAPS SWING (0°=SIT, 180°=WALK)</span><span id="valSaddle">0° (Flaps Closed — Ready to Sit!)</span></label>
-          <input type="range" id="slSaddle" min="0" max="180" value="0" />
-        </div>
-        <div class="slider-group">
-          <label><span>SHIN PADS & TRAY SWING-AWAY</span><span id="valTray">180° (Swung Clear of Legs)</span></label>
-          <input type="range" id="slTray" min="0" max="180" value="180" />
         </div>
       </div>
     </div>
 
-    <!-- RIGHT SIDEBAR: SELECTED PART INSPECTOR & 2D BLUEPRINT -->
+    <!-- RIGHT SIDEBAR: REFERENCE PHOTOS & PART SPECS -->
     <div class="sidebar-right">
+      <div class="panel-title">
+        <span>ORIGINAL FREESTEP REFERENCE (CLICK TO ENLARGE)</span>
+      </div>
+      <div class="ref-photos">
+        <div class="ref-card" onclick="openBpModal('./FreeStep_close.jpg')">
+          <img src="./FreeStep_close.jpg" alt="FreeStep_close" />
+          <span>FreeStep_close.jpg (Seat Down)</span>
+        </div>
+        <div class="ref-card" onclick="openBpModal('./FreeStep_open.jpg')">
+          <img src="./FreeStep_open.jpg" alt="FreeStep_open" />
+          <span>FreeStep_open.jpg (Seat Stowed)</span>
+        </div>
+      </div>
+
       <div class="panel-title">
         <span>SELECTED PART ENGINEERING SPECS</span>
         <span id="partCodeBadge" style="color:#fde047;">ALL</span>
       </div>
       <div class="inspector-card">
         <h2 id="inspTitle">Full FreeStep Air Assembly</h2>
-        <div class="inspector-sub" id="inspSub">Complete 9.65 kg Open-Stride Sit-to-Stand, Knee-Scooter & Power-Glide Walker</div>
+        <div class="inspector-sub" id="inspSub">Exact FreeStep Open-U Linkage + Sliding/Folding U-Seat Bar Architecture</div>
         <div class="desc-box" id="inspDesc">
-          100% Open-Stride Floor Channel: Zero low front crossbar near the ankles or shins! Click any of the 16 sub-assemblies in the left tree (or click directly on any 3D part) to inspect its specs and CAD files.
+          Use the 3 mode buttons at the top-left to switch between <b>FreeStep_close</b> (frame lowered, hanging U-seat bar deployed in the middle for sitting), <b>Sit-to-Stand Lift</b> (diagonal actuators raise the upper U-rail and U-seat bar to lift her to standing), and <b>FreeStep_open</b> (U-seat bar unlatches at the center, swings 90° up, and slides to the rear corners so the walking bay is 100% open!).
         </div>
         <table class="spec-table" id="inspTable"></table>
         <div class="cad-links" id="inspLinks"></div>
       </div>
 
       <div class="panel-title">
-        <span>ASSOCIATED 2D BLUEPRINT (CLICK TO ENLARGE)</span>
+        <span>2D ENGINEERING BLUEPRINT (CLICK TO ENLARGE)</span>
       </div>
       <div class="bp-preview">
         <img id="inspBlueprintImg" src="../hardware/blueprints/blueprint_01_master_frame_orthographic.svg" onclick="openBpModal(this.src)" alt="Blueprint Preview" />
@@ -402,342 +461,197 @@
     </div>
   </div>
 
-  <!-- Enlarged Blueprint Modal -->
+  <!-- Enlarged Image / Blueprint Modal -->
   <div id="bpModal" onclick="this.style.display='none'">
-    <img id="bpModalImg" src="" alt="Full Blueprint" />
-    <div style="margin-top:12px; color:#38bdf8; font-size:13px; font-weight:bold;">Click anywhere to close fullscreen blueprint</div>
+    <img id="bpModalImg" src="" alt="Full View" />
+    <div style="margin-top:12px; color:#38bdf8; font-size:13px; font-weight:bold;">Click anywhere to close fullscreen view</div>
   </div>
 
   <script>
     // =========================================================================
-    // CATALOG OF ALL 16 3D ASSEMBLY PARTS & ENGINEERING METADATA
+    // CATALOG OF THE 12 TRUE FREESTEP SUB-ASSEMBLIES
     // =========================================================================
     const PARTS_CATALOG = [
       {
         id: "ALL",
-        name: "00. Full FreeStep Air Assembly",
+        name: "00. Complete FreeStep Assembly",
         tag: "9.65 kg",
         color: "#38bdf8",
-        sub: "Complete 16-Part Open-Stride Standard-COTS Cartridge + 3K Carbon & 7075-T6 Walker",
-        desc: "100% Open-Stride Floor-to-Hip Channel! By eliminating the low ankle-height crossbar and bridging the stationary ø35mm outer columns at y = 505 mm (above the knees) with a Deep Forward-Bowed Arch (z = +320 mm), her feet and shins have 100% unobstructed walking stride clearance.",
+        sub: "True FreeStep Open-U Parallelogram + Sliding & Folding U-Seat Bar",
+        desc: "Faithfully reproduces the exact FreeStep mechanism: (1) The front entry between the two single caster wheels is 100% OPEN from floor to top—zero rods in front of the legs! (2) The rear closed end has the bottom carbon cross-tube with the blue battery box and the curved top U-halo. (3) The U-shaped Seat Bar hangs down from two blue sliding collars on the upper rails in FreeStep_close, lifts the user to standing, then splits in the middle, rotates 90° up, and slides to the back corners in FreeStep_open!",
         specs: [
-          ["Outer Width / Inside Clear", "495.0 mm (19.5\") / 430.0 mm (17.0\")"],
-          ["Walking Stride Channel", "100% Open Floor (0 to 505 mm height, +320 mm fwd)"],
-          ["Front Under-Bed Nose", "74.0 mm (2.9\" clearance)"],
-          ["Saddle Lift Range", "420 mm (Toilet/Bed) -> 713 mm (Perch)"],
-          ["Total Mass / Budget", "9.65 kg / ₹54,250 Complete Build"]
+          ["Walk-In Entry Side", "100% Open Floor-to-Top U-Bay (Zero Front Rods!)"],
+          ["Lifting Linkage", "4-Bar Carbon Parallelogram + 2x Diagonal 24V Actuators"],
+          ["Retractable Seat Bar", "Split J-Arm U-Bar (Drops to Sit, Slides Back to Walk)"],
+          ["Total Width / Weight", "495 mm (19.5\") / 9.65 kg / ₹54,250"]
         ],
         links: [
-          { label: "View Full BOM (CSV)", url: "../hardware/INDIA_BOM_SOURCING.csv" },
-          { label: "Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }
+          { label: "Full BOM (CSV)", url: "../hardware/INDIA_BOM_SOURCING.csv" },
+          { label: "Carbon Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }
         ],
         bp: "../hardware/blueprints/blueprint_01_master_frame_orthographic.svg",
-        cam: [950, 720, 950], target: [0, 360, 0]
+        cam: [-920, 620, 880], target: [0, 320, 0]
       },
       {
-        id: "CF_BASE",
-        name: "01. Open-Stride Base Legs & High Arch",
-        tag: "CF-03/04",
-        color: "#334155",
-        sub: "Open-Floor Side Rails (ø30mm) + High-Clearance Forward-Bowed Portal Arch (y=505mm, z=+320mm)",
-        desc: "Zero low crossbar at ankle height! The left and right ø30 mm lower carbon legs are completely open down the center floor channel so feet and ankles never hit a bar. Frame lateral rigidity is provided by the High-Clearance Forward-Bowed Arch clamped across the top of the ø35 mm outer barrels at y = 505 mm (above knee height, bowed +320 mm forward).",
+        id: "U_SEAT_BAR",
+        name: "01. Retractable U-Seat Bar ('The Flap')",
+        tag: "SEAT LOOP",
+        color: "#f59e0b",
+        sub: "Split J-Arm Hanging U-Seat Cradle + Center Blue Latch + Padded Saddle",
+        desc: "THIS is how FreeStep lets her sit without blocking walking! Two curved J-shaped tubular arms hang down from the blue sliding collars on the upper side rails and lock together at the bottom center (forming a sturdy U-shaped seat bar under her thighs/hips). Once she stands up, the center latch releases, the two J-arms swing 90° upward, and slide all the way to the back corners of the upper halo (see FreeStep_open.jpg)!",
         specs: [
-          ["Side Base Legs (CF-03)", "2x 540 mm (ø30x26 mm, 100% open floor between legs)"],
-          ["High Portal Arch (CF-04)", "y = 505 mm height, bowed +320 mm ahead of columns"],
-          ["Fold-Down Footrests", "2x Anodized Aluminum Pegs for Seated Power-Glide"],
-          ["Bonding Adhesive", "3M DP420 Epoxy + 110 µm Glass Beads"]
-        ],
-        links: [{ label: "Carbon Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }],
-        bp: "../hardware/blueprints/blueprint_01_master_frame_orthographic.svg",
-        cam: [650, 320, 650], target: [0, 180, 100]
-      },
-      {
-        id: "CNC_BASE_LUG",
-        name: "02. 12° Inclined CNC Base Lugs",
-        tag: "CNC 7075",
-        color: "#2563eb",
-        sub: "Billet 7075-T6 Aluminum (12 mm Thick) — 12deg_incline_base_lug.dxf",
-        desc: "Joins the horizontal ø30 mm lower carbon leg to the 12° forward-inclined ø35 mm outer carbon lifting barrel. Includes the lower M8 clevis pin boss that anchors the bottom eye of the internal 24V linear actuator.",
-        specs: [
-          ["Material", "7075-T6 Aircraft Aluminum (12.0 mm plate)"],
-          ["Column Rake Angle", "12.0° Forward ('Nose-Over-Toes' arc)"],
-          ["Tube Sockets", "ø30.2 mm base + ø35.2 mm inclined bore"],
-          ["Actuator Anchor", "M8x45 mm Quick-Release Clevis Pin"]
+          ["Closed State (FreeStep_close)", "Hangs down in center; supports 120 kgf seated load"],
+          ["Open State (FreeStep_open)", "Splits in middle, swings 90° up & slides to rear"],
+          ["Center Lock", "Blue Self-Aligning N52 + Stainless Conical Shear Latch"],
+          ["Cushioning", "Snap-on Wipe-Clean EVA Saddle Pad on U-Bar"]
         ],
         links: [
-          { label: "Download DXF", url: "../hardware/cnc_7075/12deg_incline_base_lug.dxf" },
-          { label: "Download 3D STL", url: "../hardware/cnc_7075/12deg_incline_base_lug.stl" },
-          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/12deg_incline_base_lug.svg" }
+          { label: "Download Hinge DXF", url: "../hardware/cnc_7075/saddle_180_pivot_hinge.dxf" },
+          { label: "Download Latch DXF", url: "../hardware/cnc_7075/inhouse_n52_conical_saddle_latch.dxf" }
         ],
-        bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
-        cam: [550, 260, 450], target: [0, 120, 40]
+        bp: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg",
+        cam: [-650, 520, 550], target: [0, 350, -40]
       },
       {
-        id: "CF_OUTER_COL",
-        name: "03. Outer ø35mm Carbon Barrels",
-        tag: "CF-01",
+        id: "SLIDING_COLLARS",
+        name: "02. Upper Rail Sliding Collars & Leadscrews",
+        tag: "SLIDE-01",
+        color: "#60a5fa",
+        sub: "Blue Sliding Carriage Collars + Parallel Black Guide/Leadscrew Rods",
+        desc: "Mounted on the left and right upper white side tubes. In Seated/Lift mode, the collars position the U-Seat Bar forward at the ideal hip balance point. In Open Walking mode, the collars slide the folded J-arms all the way back to the rear corners so the user's hips and arms have 100% room inside the frame.",
+        specs: [
+          ["Slide Stroke", "280 mm along left & right upper horizontal rails"],
+          ["Guide Rod", "ø10 mm Black Anodized Linear Guide / Leadscrew Rod"],
+          ["Bushing", "Lathe-Turned Delrin Low-Friction Liner Sleeve"]
+        ],
+        links: [{ label: "Delrin Sleeve STL", url: "../hardware/3d_print/delrin_telescoping_column_bushing.stl" }],
+        bp: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg",
+        cam: [-580, 640, 480], target: [0, 460, 0]
+      },
+      {
+        id: "UPPER_U_HALO",
+        name: "03. Upper White U-Shaped Handlebar Halo",
+        tag: "HALO-U",
+        color: "#e2e8f0",
+        sub: "Left & Right Horizontal Side Tubes + Curved Rear Connecting Halo + Front End-Caps",
+        desc: "Matches the white/cream upper U-tube of FreeStep! Open at the front entry (with blue/orange sensor end-caps) and curved into a continuous U-loop at the rear. Stays 100% level as the parallelogram linkage raises it from seated height (480 mm) to standing height (880 mm).",
+        specs: [
+          ["Tube Spec", "ø32 mm Matte White Composite / Aluminum U-Frame"],
+          ["Front Entry", "100% Open between Left & Right Front End-Caps"],
+          ["Height Range", "480 mm (Closed) -> 880 mm (Open Standing)"]
+        ],
+        links: [{ label: "Handle Pod STL", url: "../hardware/3d_print/ergo_handle_pod_left_right.stl" }],
+        bp: "../hardware/blueprints/blueprint_01_master_frame_orthographic.svg",
+        cam: [-780, 720, 680], target: [0, 520, 0]
+      },
+      {
+        id: "PARALLELOGRAM_STRUTS",
+        name: "04. Twin Carbon Parallelogram Struts",
+        tag: "CF-LINK",
         color: "#475569",
-        sub: "3K Roll-Wrapped Carbon Tube (ø35mm OD x ø31mm ID x 460mm)",
-        desc: "The stationary outer telescoping barrels inclined at 12° forward. Tip: Click 'X-Ray Carbon' in the top bar to make these barrels transparent and see the internal 24V actuator & Delrin bushings inside!",
+        sub: "Front & Rear Folding Vertical Carbon Strut Pairs (Left & Right Sides)",
+        desc: "Just like FreeStep_close.jpg and FreeStep_open.jpg, each side uses a twin-strut front upright and twin-strut rear upright that fold down flat along the lower side rails when lowered, and stand vertically when raised!",
         specs: [
-          ["Dimensions", "ø35.0 mm OD x ø31.0 mm ID x 460 mm (x2)"],
-          ["Role", "Absorbs 100% of lateral/bending load"],
-          ["Top Seal", "30 mm ID x 2.5 mm Silicone Wiper O-Ring"],
-          ["Weight (Pair)", "410 g"]
+          ["Strut Material", "3K Twill Roll-Wrapped Carbon Fiber Tubes (ø18 mm)"],
+          ["Kinematics", "4-Bar Parallelogram keeps Upper U-Halo 100% horizontal"],
+          ["Pivot Bearings", "Sealed Stainless Flanged Ball Bearings (M6 Shoulder Bolts)"]
         ],
         links: [{ label: "Carbon Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }],
         bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
-        cam: [600, 420, 500], target: [0, 320, 50]
+        cam: [-680, 450, 680], target: [0, 320, 0]
       },
       {
-        id: "DELRIN_BUSHING",
-        name: "04. Lathe-Turned Delrin Bushings",
-        tag: "POM CNC",
-        color: "#22c55e",
-        sub: "CNC Lathe-Turned POM (Delrin) Acetal Sleeves (4x) + Wiper O-Rings",
-        desc: "Precision self-lubricating acetal guide bushings pressed between the ø35 mm outer carbon barrel (31.0 mm ID) and the ø30.0 mm inner carbon plunger. Eliminates carbon-on-carbon friction and lateral play.",
+        id: "DIAGONAL_ACTUATORS",
+        name: "05. Diagonal 24V Inline Linear Actuators",
+        tag: "ACT-24V",
+        color: "#94a3b8",
+        sub: "2x Standard 24V 300mm Self-Locking Tubular Actuators (Grey Motor + Cream Telescoping Tube)",
+        desc: "Look at the diagonal cylinder on each side of FreeStep_open.jpg: anchored near the front lower leg, pushing diagonally upward against the rear vertical strut! Uses 100% standard off-the-shelf 24V 300mm IP65 self-locking linear actuators (1,500 N per side = 300 kgf combined lift).",
         specs: [
-          ["Outer / Inner Dia", "31.00 mm OD x 30.05 mm ID x 40 mm length"],
-          ["Material", "Virgin POM-C (Delrin) Acetal Rod (Lathe-Turned)"],
-          ["Quantity", "4 pieces (2 per telescoping column)"],
-          ["Cost (Set of 4)", "₹1,200"]
+          ["Standard Part", "24V 300mm Stroke Tubular Inline Linear Actuator (IP65)"],
+          ["Force & Lock", "1,500 N per side; worm-gear self-locking (zero drop)"],
+          ["Sync Control", "Dual Hall-Sensor PID Synchronization (ESP32-S3)"]
         ],
-        links: [
-          { label: "Download 3D STL", url: "../hardware/3d_print/delrin_telescoping_column_bushing.stl" }
-        ],
+        links: [{ label: "Sheet 2 Actuator Blueprint", url: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg" }],
         bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
-        cam: [480, 460, 420], target: [0, 390, 60]
+        cam: [-620, 380, 620], target: [0, 260, 0]
       },
       {
-        id: "CF_INNER_COL",
-        name: "05. Inner ø30mm Carbon Plungers",
-        tag: "CF-02",
-        color: "#0284c7",
-        sub: "3K Roll-Wrapped Carbon Tube (ø30mm OD x ø26mm ID x 440mm)",
-        desc: "Telescopes smoothly out of the ø35 mm barrels on the Delrin bushings across the 300 mm stroke (+293 mm UP, +62 mm FORWARD). Carries both the 180° split-saddle and the upper handlebar halo.",
+        id: "LOWER_CARBON_FRAME",
+        name: "06. Lower Carbon U-Base & Tension Rods",
+        tag: "CF-BASE",
+        color: "#334155",
+        sub: "Left & Right ø30mm Lower Carbon Side Tubes + Rear Cross-Tube (100% Open Front!)",
+        desc: "Look at FreeStep_open.jpg: the two lower carbon side tubes run from the front casters to the rear wheel bogies, with lower parallel carbon tension rods underneath. They are connected ONLY at the rear by a single horizontal carbon cross-tube—leaving the front walking floor 100% open!",
         specs: [
-          ["Dimensions", "ø30.0 mm OD x ø26.0 mm ID x 440 mm (x2)"],
-          ["Stroke", "300 mm along 12° rake"],
-          ["Bending Stiffness", "Carries 150 kgf off-axis load without flexing"]
+          ["Main Side Tubes", "2x ø30 mm 3K Carbon Fiber Tubes (560 mm length)"],
+          ["Rear Cross-Tube", "1x ø30 mm 3K Carbon Tube bridging the rear bogies"],
+          ["Front Floor Clearance", "100% Open Walk-In Bay (Zero Front Crossbar!)"]
         ],
-        links: [{ label: "Carbon Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }],
-        bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
-        cam: [620, 580, 520], target: [0, 460, 80]
+        links: [{ label: "Base Lug DXF", url: "../hardware/cnc_7075/12deg_incline_base_lug.dxf" }],
+        bp: "../hardware/blueprints/blueprint_01_master_frame_orthographic.svg",
+        cam: [-680, 280, 680], target: [0, 120, 0]
       },
       {
-        id: "ACTUATOR_24V",
-        name: "06. Standard 24V 300mm Actuators",
-        tag: "COTS IP65",
-        color: "#f59e0b",
-        sub: "Standard 24V 300mm Tubular Inline Linear Actuator (1500N, IP65, Hall Sensor)",
-        desc: "Housed completely INSIDE the telescoping carbon tubes! Pinned at the bottom base lug and top cap with two M8 quick-release clevis pins. 100% mechanically self-locking worm drive (cannot drop under load) and swaps in 3 minutes.",
-        specs: [
-          ["Standard Spec", "24V DC, 300 mm Stroke, 1500 N (150 kgf) / leg"],
-          ["Combined Lift", "3,000 N (300 kgf total), 32 mm/s (9.3s lift)"],
-          ["Protection & Sync", "IP65 Waterproof + Built-in Hall Quadrature Encoder"],
-          ["Cost (Pair)", "₹5,200 (Robu.in / Amazon / Multi-Vendor)"]
-        ],
-        links: [{ label: "View Sheet 2 Blueprint", url: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg" }],
-        bp: "../hardware/blueprints/blueprint_02_telescoping_carbon_actuator_column.svg",
-        cam: [520, 420, 460], target: [0, 350, 60]
-      },
-      {
-        id: "CNC_TOP_CAP",
-        name: "07. Top Actuator Clevis & Float Caps",
-        tag: "CNC 7075",
+        id: "REAR_BATTERY_BOX",
+        name: "07. Rear Blue Electronics & LiFePO4 Box",
+        tag: "BAT/MCU",
         color: "#3b82f6",
-        sub: "Top M8 Clevis Cap (inhouse_sfu1204_ballscrew_column_cap.dxf) + +-1.5mm Delrin Float",
-        desc: "Transfers the upward push of the internal 24V actuator rod into the top of the ø30 mm inner carbon plunger and upper halo. The right-side cap includes a +-1.5 mm floating Delrin sleeve so the two columns never bind.",
+        sub: "Central Blue Enclosure Mounted on the Rear Carbon Cross-Tube",
+        desc: "Positioned on the rear cross-tube between the rear wheel fenders (exactly as shown in FreeStep_close.jpg and FreeStep_open.jpg) so it never touches the user's feet or legs! Houses the 24V 6Ah LiFePO4 battery, ESP32-S3 controller, Dual FOC hub motor driver, and 2:00 AM PIR floor nightlight.",
         specs: [
-          ["Material", "7075-T6 Aluminum (12 mm) + Delrin Float Sleeve"],
-          ["Clevis Pin", "M8x45 mm Stainless Quick-Release Pin"],
-          ["Anti-Bind Float", "+-1.5 mm lateral compliance on Right Column"]
+          ["Battery Spec", "24V 6Ah LiFePO4 (1.04 kg, 3000-cycle fire-safe)"],
+          ["Controller", "ESP32-S3 + Dual BTS7960 Lift Drivers + Dual FOC"],
+          ["Location", "Mounted on Rear Cross-Tube (Out of Leg Swing Path)"]
         ],
-        links: [
-          { label: "Download DXF", url: "../hardware/cnc_7075/inhouse_sfu1204_ballscrew_column_cap.dxf" },
-          { label: "Download 3D STL", url: "../hardware/cnc_7075/inhouse_sfu1204_ballscrew_column_cap.stl" },
-          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/inhouse_sfu1204_ballscrew_column_cap.svg" }
-        ],
+        links: [{ label: "Sheet 6 Wiring Schematic", url: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg" }],
         bp: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg",
-        cam: [520, 680, 480], target: [0, 580, 100]
+        cam: [0, 380, 750], target: [0, 160, 200]
       },
       {
-        id: "CNC_REAR_DROPOUT",
-        name: "08. Rear ø16mm Hub Axle Dropouts",
-        tag: "CNC 7075",
-        color: "#2563eb",
-        sub: "4-Bolt Split Clamp Dropout (rear_16mm_hub_axle_dropout.dxf)",
-        desc: "Clamps onto the rear of the ø30 mm carbon base legs and holds the universal ø16 mm D-flat stator shaft of the standard 6.5\" BLDC hub motor wheel using four M6x35 Grade 10.9 bolts (torqued to 12 Nm).",
+        id: "FRONT_CASTERS",
+        name: "08. Front Swivel Casters & Blue Shrouds",
+        tag: "CASTER-F",
+        color: "#60a5fa",
+        sub: "2x Front Swivel Caster Wheels + Blue Sensor Shrouds (At Open Entry End)",
+        desc: "Located at the open front tips of the lower carbon rails with contoured light-blue shrouds housing dual VL53L1X obstacle/cliff sensors and a 0° directional anti-yaw detent.",
         specs: [
-          ["Material", "7075-T6 Aluminum (12.0 mm thickness)"],
-          ["Axle Bore", "ø16.05 mm D-Flat Split Clamp"],
-          ["Clamp Fasteners", "4x M6x35 mm Grade 10.9 + Loctite 243 (12 Nm)"]
+          ["Wheel Diameter", "125 mm / Twin 64 mm 82A Polyurethane Swivel Caster"],
+          ["Swivel Bearing", "SKF 51104 Axial Thrust Bearing + 0° Yaw Detent"],
+          ["Sensors in Shroud", "VL53L1X Time-of-Flight Cliff & Doorway Sensor"]
         ],
-        links: [
-          { label: "Download DXF", url: "../hardware/cnc_7075/rear_16mm_hub_axle_dropout.dxf" },
-          { label: "Download 3D STL", url: "../hardware/cnc_7075/rear_16mm_hub_axle_dropout.stl" },
-          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/rear_16mm_hub_axle_dropout.svg" }
-        ],
-        bp: "../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg",
-        cam: [460, 220, -480], target: [0, 85, -240]
+        links: [{ label: "Caster Fork DXF", url: "../hardware/cnc_7075/inhouse_twin_64mm_caster_fork.dxf" }],
+        bp: "../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg",
+        cam: [-520, 240, -580], target: [-210, 90, -250]
       },
       {
-        id: "REAR_HUB_WHEELS",
-        name: "09. Rear 6.5\" Sealed BLDC Hub Wheels",
-        tag: "COTS IP65",
-        color: "#f43f5e",
-        sub: "Standard 6.5\" (165mm) 24V Hall-Sensor Sealed BLDC Hub Motors (DRV-01)",
-        desc: "Global commodity standard hoverboard/AMR robot wheel. Provides active forward walking assist, uphill boost, 40 Nm instant parking brake, Valet Park/Fetch, and Seated Power-Glide—with 100% IP65 bathroom waterproofing and zero exposed belts to snag a saree!",
-        specs: [
-          ["Diameter / Tire", "165 mm (6.5\") Solid High-Grip Shock PU Rubber"],
-          ["Motor & Control", "24V 3-Phase BLDC + 5-Pin Hall + Sinusoidal FOC"],
-          ["Holding Torque", "40 Nm Combined Active Electromagnetic Brake"],
-          ["Cost (Pair + FOC)", "₹4,400 Wheels + ₹2,200 Dual FOC Driver"]
-        ],
-        links: [{ label: "View Sheet 3 Blueprint", url: "../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg" }],
-        bp: "../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg",
-        cam: [520, 220, -520], target: [0, 85, -250]
-      },
-      {
-        id: "CNC_CASTER_FORK",
-        name: "10. Front 74mm Anti-Yaw Caster Forks",
-        tag: "CNC 7075",
+        id: "REAR_WHEEL_BOGIES",
+        name: "09. Rear Twin-Wheel Motor Bogies & Fenders",
+        tag: "HUB-REAR",
         color: "#3b82f6",
-        sub: "Low-Profile Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) + SKF 51104 + 0° Yaw Detent",
-        desc: "Custom low-slung 7075-T6 swivel fork with an SKF 51104 axial thrust bearing AND an M6 spring ball-plunger 0° directional detent so the walker tracks straight on wet sloped bathroom tiles without sideways fishtailing.",
+        sub: "Active Motorized Rear Wheel Assemblies + Contoured Light-Blue Fenders",
+        desc: "Located at the closed rear corners under the curved U-halo, featuring sculpted light-blue protective fenders (100% saree/clothing safe) and active 24V BLDC motorized drive + 40 Nm electronic dead-man's braking.",
         specs: [
-          ["Total Nose Height", "74.0 mm (2.9\") from floor to top of carbon leg"],
-          ["Anti-Yaw Detent", "0° Ball-Plunger (breaks out smoothly >18 N turn)"],
-          ["Caster Trail", "18.0 mm trail for flutter-free tracking"]
+          ["Drive Motors", "24V Sealed Hall-Sensor BLDC Hub Motors (IP65)"],
+          ["Active Modes", "Walking Assist, Slope Auto-Brake & Seated Power-Glide"],
+          ["Holding Brake", "40 Nm Instant Electronic Parking Brake"]
         ],
-        links: [
-          { label: "Download DXF", url: "../hardware/cnc_7075/inhouse_twin_64mm_caster_fork.dxf" },
-          { label: "Download 3D STL", url: "../hardware/cnc_7075/inhouse_twin_64mm_caster_fork.stl" },
-          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/inhouse_twin_64mm_caster_fork.svg" }
-        ],
-        bp: "../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg",
-        cam: [420, 180, 520], target: [180, 45, 270]
-      },
-      {
-        id: "SKATE_WHEELS",
-        name: "11. Twin 64mm Wheels & Hair Shields",
-        tag: "DECATHLON",
-        color: "#10b981",
-        colorHex: 0x10b981,
-        sub: "4x Oxelo 64mm 82A Inline Skate PU Wheels + ABEC-9 608RS + Labyrinth Anti-Hair Shields",
-        desc: "Twin 64 mm soft 82A polyurethane skate wheels per front fork with snap-fit Labyrinth Anti-Hair Axle Shields so floor hair never jams the bearings.",
-        specs: [
-          ["Wheel Spec", "64 mm Dia x 24 mm Width, 82A Durometer PU"],
-          ["Bearings & Shield", "ABEC-9 608RS + Labyrinth Anti-Hair Caps"],
-          ["Cost (4 Wheels + Bearings)", "₹1,550 (Decathlon India + Amazon)"]
-        ],
-        links: [{ label: "View Sheet 4 Blueprint", url: "../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg" }],
-        bp: "../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg",
-        cam: [400, 160, 520], target: [180, 35, 270]
-      },
-      {
-        id: "CNC_SADDLE_HINGE",
-        name: "12. 3-Mode Saddle & Shin Pivot Hinges",
-        tag: "CNC 7075",
-        color: "#2563eb",
-        sub: "3-Position Detent Hinge (0° Seated / 90° Knee-Scooter / 180° Open) — saddle_180_pivot_hinge.dxf",
-        desc: "Clamps onto the carbon columns with 3 precision pin-detent positions: 180° (swung flush outward against the side tubes for 100% open walking stride), 90° (Single-Leg Ankle-Fracture Knee-Scooter mode), and 0° (latched seat/shin support).",
-        specs: [
-          ["Material", "7075-T6 Aluminum (12 mm) + 4x 608RS Bearings"],
-          ["3 Detent Angles", "0° (Seated) / 90° (Knee-Scooter) / 180° (Walking)"],
-          ["Seat Switch", "Waterproof IP67 Cushion Micro-Switch + Reed Switch"]
-        ],
-        links: [
-          { label: "Download DXF", url: "../hardware/cnc_7075/saddle_180_pivot_hinge.dxf" },
-          { label: "Download 3D STL", url: "../hardware/cnc_7075/saddle_180_pivot_hinge.stl" },
-          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/saddle_180_pivot_hinge.svg" }
-        ],
-        bp: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg",
-        cam: [480, 520, -350], target: [0, 420, 0]
-      },
-      {
-        id: "SADDLE_PADS",
-        name: "13. 180° Split-Saddle & Flip-Away Shin Pads",
-        tag: "PAD-01/03",
-        color: "#f59e0b",
-        sub: "Split EVA Saddle Pads + Split 180° Flip-Away Anterior Tibial Shin Pads (Zero Leg Obstruction!)",
-        desc: "Both the Split-Saddle Pads AND the Anterior Tibial Shin Pads swing 180° outward flush against the side columns during walking so your legs, knees, and shins NEVER hit a front bar! Swing them inward (0°) only when rising from a low toilet or sitting.",
-        specs: [
-          ["Walking Mode (180°)", "Swung flush against side tubes (100% open stride)"],
-          ["Toilet Rise Mode (0°)", "Shin pads brace tibia at 340mm; saddle lifts to 713mm"],
-          ["Knee-Scooter (90°)", "1 pad locked at 450mm for fractured ankle offloading"]
-        ],
-        links: [{ label: "View Sheet 5 Blueprint", url: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg" }],
-        bp: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg",
-        cam: [0, 680, -450], target: [0, 420, 0]
-      },
-      {
-        id: "CNC_SADDLE_LATCH",
-        name: "14. N52 + Stainless Conical Latch",
-        tag: "12 kN LOCK",
-        color: "#22c55e",
-        sub: "N52 Neodymium Magnet + Twin 10mm 304SS Conical Shear Pins (inhouse_n52_conical_saddle_latch.dxf)",
-        desc: "Self-centering magnetic snap lock at the center of the split saddle. Two 20x5 mm N52 magnets pull the halves together while twin 10 mm 304 stainless steel 45° conical pins lock into tapered sockets with 1,200 kgf vertical shear strength.",
-        specs: [
-          ["Shear Rating", "12.0 kN (1,200 kgf) in solid 304SS / 7075 shear"],
-          ["Auto-Alignment", "2x N52 Ring Magnets (20x5 mm) + 45° Tapers"],
-          ["Safety Interlock", "Reed switch confirms lock to ESP32-S3"]
-        ],
-        links: [
-          { label: "Download DXF", url: "../hardware/cnc_7075/inhouse_n52_conical_saddle_latch.dxf" },
-          { label: "Download 3D STL", url: "../hardware/cnc_7075/inhouse_n52_conical_saddle_latch.stl" },
-          { label: "View 1:1 SVG", url: "../hardware/cnc_7075/inhouse_n52_conical_saddle_latch.svg" }
-        ],
-        bp: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg",
-        cam: [0, 560, -320], target: [0, 420, 0]
-      },
-      {
-        id: "UPPER_HALO",
-        name: "15. Deep-Bowed Halo & 8° Forearm Troughs",
-        tag: "CF-05/06",
-        color: "#38bdf8",
-        sub: "Deep-Bowed ø25mm Torso Halo (z=+320mm) + Contoured 8° EVA Forearm Support Troughs (PWB Coach)",
-        desc: "Bowed +320 mm forward at the front so the user can step deep inside the frame without chest or knee interference. Features contoured 8° EVA Forearm Troughs with embedded FSR406 sensors for the Graduated Weight-Bearing (PWB) Rehab Coach.",
-        specs: [
-          ["Forward Bow Depth", "+320 mm ahead of columns (deep torso clearance)"],
-          ["Forearm Troughs", "8° Upward Tilt EVA Cuffs + Velcro Straps"],
-          ["Embedded Sensors", "2x FSR406 PWB Rehab Coach + Thumb Glide Rocker"]
-        ],
-        links: [
-          { label: "Download Handle Pod STL", url: "../hardware/3d_print/ergo_handle_pod_left_right.stl" }
-        ],
-        bp: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg",
-        cam: [550, 750, 550], target: [0, 580, 100]
-      },
-      {
-        id: "KITCHEN_TRAY_AND_SENSORS",
-        name: "16. Swing-Away Tray, Side LiFePO4 & 2AM LED",
-        tag: "TRY/BAT/TOF",
-        color: "#06b6d4",
-        sub: "90° Swing-Away Polycarbonate Tray + Twin Side-Rail LiFePO4 Pods + Dual VL53L1X + 2AM PIR LED",
-        desc: "The 5 mm polycarbonate utility tray pivots 90° outward to the side so it never blocks torso lean or foot visibility! And the 24V LiFePO4 battery is split into two slim side-rail pods along the outer left/right base tubes so the center floor walking channel is 100% open.",
-        specs: [
-          ["Swing-Away Tray", "380 x 220 x 5 mm Lexan (pivots 0° to 110° aside)"],
-          ["Side-Rail Battery Pods", "2x Slim 500g LiFePO4 Pods on outer side rails"],
-          ["Safety & Nightlight", "Dual VL53L1X ToF + RF Valet Remote + 2AM PIR LED"]
-        ],
-        links: [
-          { label: "View Sheet 6 Wiring", url: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg" }
-        ],
-        bp: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg",
-        cam: [580, 680, 620], target: [0, 520, 220]
+        links: [{ label: "Rear Dropout DXF", url: "../hardware/cnc_7075/rear_16mm_hub_axle_dropout.dxf" }],
+        bp: "../hardware/blueprints/blueprint_03_rear_65in_hub_wheel_dropout.svg",
+        cam: [-620, 280, 680], target: [-210, 110, 240]
       }
     ];
 
     // =========================================================================
-    // THREE.JS 3D CAD SCENE INITIALIZATION
+    // THREE.JS 3D SCENE — EXACT FREESTEP GEOMETRY & KINEMATICS
     // =========================================================================
     const container = document.getElementById("webgl-container");
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x070b14);
 
-    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 5, 6000);
-    camera.position.set(950, 720, 950);
+    const camera = new THREE.PerspectiveCamera(38, container.clientWidth / container.clientHeight, 5, 6000);
+    // Camera angle matching FreeStep_close.jpg / FreeStep_open.jpg (looking at front-left open entry)
+    camera.position.set(-920, 620, -880);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -746,525 +660,400 @@
     container.appendChild(renderer.domElement);
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 360, 0);
+    controls.target.set(0, 320, 0);
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
 
-    // Studio CAD Lighting
-    scene.add(new THREE.AmbientLight(0xdbeafe, 0.75));
-    const dir1 = new THREE.DirectionalLight(0xffffff, 0.95);
-    dir1.position.set(800, 1400, 900);
+    // Studio Lighting matching CAD renders
+    scene.add(new THREE.AmbientLight(0xe2e8f0, 0.85));
+    const dir1 = new THREE.DirectionalLight(0xffffff, 1.0);
+    dir1.position.set(-800, 1400, -900);
     scene.add(dir1);
-    const dir2 = new THREE.DirectionalLight(0x38bdf8, 0.45);
-    dir2.position.set(-900, 600, -800);
+    const dir2 = new THREE.DirectionalLight(0x93c5fd, 0.55);
+    dir2.position.set(900, 700, 800);
     scene.add(dir2);
 
-    // Millimeter CAD Floor Grid + 510mm Bathroom Doorway Reference Outline
     const grid = new THREE.GridHelper(1600, 32, 0x38bdf8, 0x1e293b);
     scene.add(grid);
 
-    // Bathroom Door Frame Reference (510mm wide)
-    const doorMat = new THREE.LineBasicMaterial({ color: 0xf43f5e, transparent: true, opacity: 0.45 });
-    const doorGeo = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(-255, 0, 340),
-      new THREE.Vector3(-255, 920, 340),
-      new THREE.Vector3(255, 920, 340),
-      new THREE.Vector3(255, 0, 340)
-    ]);
-    scene.add(new THREE.Line(doorGeo, doorMat));
-
-    // Materials Library
+    // Materials matching the exact colors of FreeStep_close.jpg & FreeStep_open.jpg:
+    // - Sky Blue anodized/molded structural brackets & fenders (0x7dd3fc / 0x60a5fa)
+    // - Cream/Off-White upper U-halo & J-seat bar tubes (0xe7e5e4)
+    // - Dark Charcoal 3K Carbon Fiber tubes & struts (0x334155)
+    // - Brushed Aluminum linkage brackets (0xd6d3d1)
+    // - Orange/Amber end-cap accents & seat cushion (0xf59e0b)
     const mats = {
-      carbon: new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.35, metalness: 0.45 }),
-      carbonOuter: new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.3, metalness: 0.5, transparent: true, opacity: 1.0 }),
-      carbonInner: new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.3, metalness: 0.4, transparent: true, opacity: 1.0 }),
-      cncBlue: new THREE.MeshStandardMaterial({ color: 0x2563eb, roughness: 0.25, metalness: 0.75 }),
-      delrin: new THREE.MeshStandardMaterial({ color: 0x22c55e, roughness: 0.2, metalness: 0.1 }),
-      actuatorBody: new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.3, metalness: 0.7 }),
-      stainless: new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.15, metalness: 0.9 }),
-      clevisPin: new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.2, metalness: 0.8 }),
-      tire: new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.85, metalness: 0.1 }),
-      hubShell: new THREE.MeshStandardMaterial({ color: 0xe11d48, roughness: 0.25, metalness: 0.8 }),
-      skatePU: new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.2, metalness: 0.1, transparent: true, opacity: 0.88 }),
-      thrustBrg: new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.25, metalness: 0.85 }),
-      saddlePad: new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.45, metalness: 0.1 }),
-      shinPadMat: new THREE.MeshStandardMaterial({ color: 0x0ea5e9, roughness: 0.4, metalness: 0.1 }),
-      latchGreen: new THREE.MeshStandardMaterial({ color: 0x16a34a, roughness: 0.25, metalness: 0.75 }),
-      lexanTray: new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.1, metalness: 0.1, transparent: true, opacity: 0.55 }),
-      battery: new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.35, metalness: 0.3 }),
-      lidar: new THREE.MeshStandardMaterial({ color: 0x06b6d4, roughness: 0.25, metalness: 0.7 })
+      skyBlue: new THREE.MeshStandardMaterial({ color: 0x7ab8f5, roughness: 0.3, metalness: 0.25 }),
+      deepBlue: new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.3, metalness: 0.4 }),
+      creamWhite: new THREE.MeshStandardMaterial({ color: 0xe7e5e0, roughness: 0.25, metalness: 0.15 }),
+      carbon: new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.35, metalness: 0.55 }),
+      blackRod: new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.25, metalness: 0.7 }),
+      aluSilver: new THREE.MeshStandardMaterial({ color: 0xd6d3d1, roughness: 0.25, metalness: 0.8 }),
+      motorGrey: new THREE.MeshStandardMaterial({ color: 0x57534e, roughness: 0.4, metalness: 0.6 }),
+      orangeCap: new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.3, metalness: 0.2 }),
+      tireBlack: new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.85, metalness: 0.1 })
     };
 
-    // Registry of meshes per part ID for raycasting, highlighting, and exploding
     const partGroups = {};
     PARTS_CATALOG.forEach(p => { if (p.id !== "ALL") partGroups[p.id] = new THREE.Group(); });
-
     const rootWalker = new THREE.Group();
     scene.add(rootWalker);
     Object.values(partGroups).forEach(g => rootWalker.add(g));
 
-    function tagMesh(mesh, partId) {
-      mesh.userData.partId = partId;
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
-      partGroups[partId].add(mesh);
-      return mesh;
+    function addMesh(geo, mat, partId, parent = null) {
+      const m = new THREE.Mesh(geo, mat);
+      m.userData.partId = partId;
+      m.castShadow = true;
+      m.receiveShadow = true;
+      (parent || partGroups[partId]).add(m);
+      return m;
     }
 
-    // Geometry Helpers
-    function makeTube(r, len, mat, partId) {
-      const geo = new THREE.CylinderGeometry(r, r, len, 28);
-      return tagMesh(new THREE.Mesh(geo, mat), partId);
-    }
-    function makeBox(w, h, d, mat, partId) {
-      const geo = new THREE.BoxGeometry(w, h, d);
-      return tagMesh(new THREE.Mesh(geo, mat), partId);
-    }
+    // =========================================================================
+    // COORDINATE SYSTEM (Matching FreeStep_open.jpg & FreeStep_close.jpg):
+    // X: Left (-220 mm) to Right (+220 mm) -> 440 mm center-to-center width
+    // Z: Front Open Walk-In Entry (-280 mm) to Rear Closed End (+280 mm)
+    // Y: Floor (0 mm) upwards
+    // =========================================================================
+    const SIDE_X = 220;
+    const BASE_Y = 125;
+    const FRONT_Z = -260;
+    const REAR_Z = 240;
 
-    // Key Walker Dimensions (1 unit = 1 mm)
-    const COL_X = 215;
-    const BASE_Y = 66;
-    const RAKE_RAD = (12 * Math.PI) / 180;
+    // 1. LOWER_CARBON_FRAME: Left & Right ø30mm Lower Carbon Side Tubes + Lower Tension Rods + Rear Cross-Tube
+    //    Notice: NO crossbar at FRONT_Z (-260)! The front entry is 100% OPEN!
+    [-SIDE_X, SIDE_X].forEach(x => {
+      // Main lower carbon tube (front caster to rear wheel bogie)
+      const mainTube = addMesh(new THREE.CylinderGeometry(16, 16, 520, 24), mats.carbon, "LOWER_CARBON_FRAME");
+      mainTube.rotation.x = Math.PI / 2;
+      mainTube.position.set(x, BASE_Y, -10);
 
-    // 1. CF_BASE: Open-Stride Lower ø30mm Side Base Rails (ZERO low front crossbar at ankle height!)
-    //    Instead, left & right stationary outer barrels are bridged at y = 505 mm (above knee height)
-    //    by a Deep Forward-Bowed Carbon Portal Arch (z = +320 mm) so feet & shins have 100% open stride clearance!
-    [-COL_X, COL_X].forEach(x => {
-      const leg = makeTube(15, 520, mats.carbon, "CF_BASE");
-      leg.rotation.x = Math.PI / 2;
-      leg.position.set(x, BASE_Y, 10);
-
-      // Forward-extending side arms of the High-Clearance Portal Arch (at y = 505 mm, top of ø35mm outer barrel)
-      const highArchSide = makeTube(13, 210, mats.carbon, "CF_BASE");
-      highArchSide.rotation.x = Math.PI / 2;
-      highArchSide.position.set(x, 505, 215);
-    });
-    const highArchFront = makeTube(13, 430, mats.carbon, "CF_BASE");
-    highArchFront.rotation.z = Math.PI / 2;
-    highArchFront.position.set(0, 505, 320);
-
-    // 2. CNC_BASE_LUG: 12-Deg Forward-Inclined CNC 7075-T6 Base Lugs (Left & Right)
-    [-COL_X, COL_X].forEach(x => {
-      const lug = makeBox(38, 72, 110, mats.cncBlue, "CNC_BASE_LUG");
-      lug.position.set(x, BASE_Y + 18, 20);
-      const socket = makeTube(21, 68, mats.cncBlue, "CNC_BASE_LUG");
-      socket.rotation.x = RAKE_RAD;
-      socket.position.set(x, BASE_Y + 35, 25);
+      // Lower thin carbon tension rod underneath main tube
+      const tensionRod = addMesh(new THREE.CylinderGeometry(5, 5, 480, 16), mats.carbon, "LOWER_CARBON_FRAME");
+      tensionRod.rotation.x = Math.PI / 2;
+      tensionRod.position.set(x - Math.sign(x) * 18, BASE_Y - 36, -10);
     });
 
-    // 3. CF_OUTER_COL: Outer ø35mm Telescoping Carbon Barrels (460mm long, inclined 12° forward)
-    const outerColLen = 440;
-    [-COL_X, COL_X].forEach(x => {
-      const barrel = makeTube(17.5, outerColLen, mats.carbonOuter, "CF_OUTER_COL");
-      barrel.rotation.x = RAKE_RAD;
-      barrel.position.set(
-        x,
-        BASE_Y + 20 + Math.cos(RAKE_RAD) * (outerColLen / 2),
-        20 + Math.sin(RAKE_RAD) * (outerColLen / 2)
-      );
-    });
+    // Rear Carbon Cross-Tube (ONLY at the rear closed end, Z = +175 mm!)
+    const rearCrossTube = addMesh(new THREE.CylinderGeometry(16, 16, SIDE_X * 2, 24), mats.carbon, "LOWER_CARBON_FRAME");
+    rearCrossTube.rotation.z = Math.PI / 2;
+    rearCrossTube.position.set(0, BASE_Y + 10, 175);
 
-    // 4. DELRIN_BUSHING: Lathe-Turned POM (Delrin) Sleeve Bushings (2 per column + O-ring)
-    const delrinMeshes = [];
-    [-COL_X, COL_X].forEach(x => {
-      [0.45, 0.96].forEach(frac => {
-        const dPos = outerColLen * frac;
-        const bush = makeTube(16.2, 38, mats.delrin, "DELRIN_BUSHING");
-        bush.rotation.x = RAKE_RAD;
-        bush.position.set(
-          x,
-          BASE_Y + 20 + Math.cos(RAKE_RAD) * dPos,
-          20 + Math.sin(RAKE_RAD) * dPos
-        );
-        delrinMeshes.push({ mesh: bush, baseX: x, dPos });
-      });
-    });
+    // 2. REAR_BATTERY_BOX: Central Sky-Blue Electronics & 24V LiFePO4 Box on the Rear Cross-Tube
+    const batGroup = partGroups["REAR_BATTERY_BOX"];
+    const batMain = addMesh(new THREE.BoxGeometry(175, 115, 110), mats.skyBlue, "REAR_BATTERY_BOX", batGroup);
+    batMain.position.set(0, BASE_Y + 20, 175);
+    const batLid = addMesh(new THREE.BoxGeometry(185, 16, 120), mats.skyBlue, "REAR_BATTERY_BOX", batGroup);
+    batLid.position.set(0, BASE_Y + 82, 175);
+    const batOval = addMesh(new THREE.CylinderGeometry(24, 24, 6, 24), mats.creamWhite, "REAR_BATTERY_BOX", batGroup);
+    batOval.rotation.x = Math.PI / 2;
+    batOval.scale.set(1.4, 1, 0.7);
+    batOval.position.set(0, BASE_Y + 25, 119);
 
-    // 5. CF_INNER_COL: Inner ø30mm Telescoping Carbon Plunger Tubes (moves with Lift Stroke!)
-    const innerColLen = 420;
-    const innerCols = [];
-    [-COL_X, COL_X].forEach(x => {
-      const plunger = makeTube(15, innerColLen, mats.carbonInner, "CF_INNER_COL");
-      plunger.rotation.x = RAKE_RAD;
-      innerCols.push({ mesh: plunger, x });
-    });
-
-    // 6. ACTUATOR_24V: Standard 24V 300mm IP65 Inline Linear Actuator Cartridges + M8 Clevis Pins
-    const actuatorParts = [];
-    [-COL_X, COL_X].forEach(x => {
-      const body = makeTube(12.5, 310, mats.actuatorBody, "ACTUATOR_24V");
-      body.rotation.x = RAKE_RAD;
-      const rod = makeTube(8, 320, mats.stainless, "ACTUATOR_24V");
-      rod.rotation.x = RAKE_RAD;
-      const pinBot = makeTube(5, 48, mats.clevisPin, "ACTUATOR_24V");
-      pinBot.rotation.z = Math.PI / 2;
-      const pinTop = makeTube(5, 48, mats.clevisPin, "ACTUATOR_24V");
-      pinTop.rotation.z = Math.PI / 2;
-      actuatorParts.push({ body, rod, pinBot, pinTop, x });
-    });
-
-    // 7. CNC_TOP_CAP: Top CNC 7075-T6 Actuator Clevis Caps + Right Floating Delrin Sleeve
-    const topCaps = [];
-    [-COL_X, COL_X].forEach((x, idx) => {
-      const cap = makeBox(44, 34, 52, idx === 1 ? mats.delrin : mats.cncBlue, "CNC_TOP_CAP");
-      topCaps.push({ mesh: cap, x });
-    });
-
-    // 8. CNC_REAR_DROPOUT: Rear ø16mm D-Axle Clamp Dropouts
-    [-COL_X, COL_X].forEach(x => {
-      const drop = makeBox(24, 68, 56, mats.cncBlue, "CNC_REAR_DROPOUT");
-      drop.position.set(x, BASE_Y + 6, -245);
-    });
-
-    // 9. REAR_HUB_WHEELS: Standard 6.5" (165mm) Sealed IP65 BLDC Hub Motor Wheels
-    const rearWheels = [];
-    [-COL_X, COL_X].forEach(x => {
-      const sign = Math.sign(x);
-      const wGroup = new THREE.Group();
-      const tire = new THREE.Mesh(new THREE.CylinderGeometry(82.5, 82.5, 38, 36), mats.tire);
-      tire.rotation.z = Math.PI / 2;
-      tire.userData.partId = "REAR_HUB_WHEELS";
-      const hub = new THREE.Mesh(new THREE.CylinderGeometry(54, 54, 41, 32), mats.hubShell);
+    // 3. FRONT_CASTERS: 2x Front Single Swivel Casters + Contoured Sky-Blue Sensor Shrouds (at Z = FRONT_Z)
+    [-SIDE_X, SIDE_X].forEach(x => {
+      const cGroup = new THREE.Group();
+      // Black 5-spoke front wheel
+      const wheel = addMesh(new THREE.CylinderGeometry(62, 62, 28, 32), mats.tireBlack, "FRONT_CASTERS", cGroup);
+      wheel.rotation.z = Math.PI / 2;
+      wheel.position.set(0, 62, 0);
+      const hub = addMesh(new THREE.CylinderGeometry(16, 16, 32, 16), mats.aluSilver, "FRONT_CASTERS", cGroup);
       hub.rotation.z = Math.PI / 2;
-      hub.userData.partId = "REAR_HUB_WHEELS";
-      const axle = new THREE.Mesh(new THREE.CylinderGeometry(8, 8, 65, 16), mats.stainless);
-      axle.rotation.z = Math.PI / 2;
-      axle.userData.partId = "REAR_HUB_WHEELS";
-      wGroup.add(tire, hub, axle);
-      wGroup.position.set(x + sign * 28, 82.5, -245);
-      partGroups["REAR_HUB_WHEELS"].add(wGroup);
-      rearWheels.push({ group: wGroup, baseX: x + sign * 28, sign });
-    });
-
-    // 10 & 11. CNC_CASTER_FORK + SKATE_WHEELS: Front 74mm Low-Profile Twin 64mm Skate Casters
-    const casterForks = [];
-    const skateWheels = [];
-    [-COL_X, COL_X].forEach(x => {
-      const sign = Math.sign(x);
-      // SKF 51104 Thrust Bearing + CNC Fork
-      const fGroup = new THREE.Group();
-      const brg = new THREE.Mesh(new THREE.CylinderGeometry(17.5, 17.5, 10, 24), mats.thrustBrg);
-      brg.position.y = 22;
-      brg.userData.partId = "CNC_CASTER_FORK";
-      const crown = new THREE.Mesh(new THREE.BoxGeometry(58, 12, 44), mats.cncBlue);
-      crown.position.y = 12;
-      crown.userData.partId = "CNC_CASTER_FORK";
-      const legL = new THREE.Mesh(new THREE.BoxGeometry(8, 38, 34), mats.cncBlue);
-      legL.position.set(-24, -6, -10);
-      legL.userData.partId = "CNC_CASTER_FORK";
-      const legR = new THREE.Mesh(new THREE.BoxGeometry(8, 38, 34), mats.cncBlue);
-      legR.position.set(24, -6, -10);
-      legR.userData.partId = "CNC_CASTER_FORK";
-      fGroup.add(brg, crown, legL, legR);
-      fGroup.position.set(x, 42, 265);
-      partGroups["CNC_CASTER_FORK"].add(fGroup);
-      casterForks.push({ group: fGroup, baseX: x, sign });
-
-      // Twin 64mm 82A Inline Skate PU Wheels
-      const swGroup = new THREE.Group();
-      [-11, 11].forEach(wx => {
-        const w = new THREE.Mesh(new THREE.CylinderGeometry(32, 32, 16, 28), mats.skatePU);
-        w.rotation.z = Math.PI / 2;
-        w.position.x = wx;
-        w.userData.partId = "SKATE_WHEELS";
-        const core = new THREE.Mesh(new THREE.CylinderGeometry(14, 14, 17, 20), mats.stainless);
-        core.rotation.z = Math.PI / 2;
-        core.position.x = wx;
-        core.userData.partId = "SKATE_WHEELS";
-        swGroup.add(w, core);
+      hub.position.set(0, 62, 0);
+      // Silver caster fork legs
+      [-18, 18].forEach(fx => {
+        const forkLeg = addMesh(new THREE.BoxGeometry(6, 55, 22), mats.aluSilver, "FRONT_CASTERS", cGroup);
+        forkLeg.position.set(fx, 82, 0);
       });
-      const axleM8 = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 62, 14), mats.clevisPin);
-      axleM8.rotation.z = Math.PI / 2;
-      axleM8.userData.partId = "SKATE_WHEELS";
-      swGroup.add(axleM8);
-      swGroup.position.set(x, 32, 255);
-      partGroups["SKATE_WHEELS"].add(swGroup);
-      skateWheels.push({ group: swGroup, baseX: x, sign });
+      // Sky-blue front sensor shroud + orange reflector dots (just like FreeStep_open.jpg!)
+      const shroud = addMesh(new THREE.BoxGeometry(74, 42, 95), mats.skyBlue, "FRONT_CASTERS", cGroup);
+      shroud.position.set(0, 122, 10);
+      const topClamp = addMesh(new THREE.BoxGeometry(52, 24, 80), mats.skyBlue, "FRONT_CASTERS", cGroup);
+      topClamp.position.set(0, 152, 15);
+      const orangeReflector = addMesh(new THREE.BoxGeometry(26, 14, 4), mats.orangeCap, "FRONT_CASTERS", cGroup);
+      orangeReflector.position.set(0, 116, -38);
+
+      cGroup.position.set(x, 0, FRONT_Z);
+      partGroups["FRONT_CASTERS"].add(cGroup);
     });
 
-    // 12, 13, 14. 180° SPLIT-SADDLE HINGES, PADS, SPLIT FLIP-AWAY SHIN PADS & N52 CONICAL LATCH
-    const saddleHinges = [];
-    const saddleArms = [];
-    const shinFlipPads = [];
-    const latchParts = [];
-
-    [-COL_X, COL_X].forEach((x, idx) => {
+    // 4. REAR_WHEEL_BOGIES: Twin-Wheel Rear Bogies + Sculpted Sky-Blue Fenders (at Z = REAR_Z)
+    [-SIDE_X, SIDE_X].forEach(x => {
       const sign = Math.sign(x);
-      // CNC Pivot Hinge Bracket on Inner Column
-      const hinge = makeBox(48, 36, 56, mats.cncBlue, "CNC_SADDLE_HINGE");
-      saddleHinges.push({ mesh: hinge, x, sign });
+      const rGroup = new THREE.Group();
+      // Inner & Outer Twin Rear Wheels per side (matching FreeStep photos!)
+      [-38, 38].forEach(wx => {
+        const rw = addMesh(new THREE.CylinderGeometry(82, 82, 26, 36), mats.tireBlack, "REAR_WHEEL_BOGIES", rGroup);
+        rw.rotation.z = Math.PI / 2;
+        rw.position.set(wx, 82, 0);
+        // 5-spoke star hub detail
+        for (let s = 0; s < 5; s++) {
+          const spoke = addMesh(new THREE.BoxGeometry(30, 72, 10), mats.tireBlack, "REAR_WHEEL_BOGIES", rGroup);
+          spoke.rotation.x = (s * Math.PI * 2) / 5;
+          spoke.position.set(wx, 82, 0);
+        }
+        const rHub = addMesh(new THREE.CylinderGeometry(16, 16, 30, 16), mats.aluSilver, "REAR_WHEEL_BOGIES", rGroup);
+        rHub.rotation.z = Math.PI / 2;
+        rHub.position.set(wx, 82, 0);
+      });
+      // Sculpted Sky-Blue Twin Fender over the rear wheels
+      const fenderTop = addMesh(new THREE.BoxGeometry(108, 28, 175), mats.skyBlue, "REAR_WHEEL_BOGIES", rGroup);
+      fenderTop.position.set(0, 162, -5);
+      const fenderSlope = addMesh(new THREE.BoxGeometry(104, 45, 75), mats.skyBlue, "REAR_WHEEL_BOGIES", rGroup);
+      fenderSlope.rotation.x = -0.35;
+      fenderSlope.position.set(0, 142, -75);
 
-      // Pivoting Cushioned Seat Flap Group (Left & Right Split-Saddle Seat Halves)
-      const pivotGroup = new THREE.Group();
-      const armBar = new THREE.Mesh(new THREE.BoxGeometry(185, 16, 60), mats.stainless);
-      armBar.position.set(-sign * 95, 0, -45);
-      armBar.userData.partId = "SADDLE_PADS";
-
-      // Main Contoured Seat Flap Cushion (180mm wide x 38mm thick x 210mm front-to-back depth)
-      const pad = new THREE.Mesh(new THREE.BoxGeometry(178, 38, 210), mats.saddlePad);
-      pad.position.set(-sign * 98, 24, -45);
-      pad.userData.partId = "SADDLE_PADS";
-
-      // Raised Rear Pelvic / Lower-Back Support Lip on the back of each Seat Flap
-      const backLip = new THREE.Mesh(new THREE.BoxGeometry(174, 48, 28), mats.saddlePad);
-      backLip.position.set(-sign * 98, 52, -136);
-      backLip.userData.partId = "SADDLE_PADS";
-
-      // Raised Outer Hip-Bolster Side Edge
-      const sideBolster = new THREE.Mesh(new THREE.BoxGeometry(24, 22, 195), mats.actuatorBody);
-      sideBolster.position.set(-sign * 22, 46, -45);
-      sideBolster.userData.partId = "SADDLE_PADS";
-
-      pivotGroup.add(armBar, pad, backLip, sideBolster);
-      partGroups["SADDLE_PADS"].add(pivotGroup);
-      saddleArms.push({ group: pivotGroup, x, sign });
-
-      // Split 180° Flip-Away Anterior Tibial Shin Pads (on outer column at y=340mm)
-      // Controlled by Slider #4 so they stay swung 180° OUT of the way unless braced in for Toilet Rise!
-      const shinGroup = new THREE.Group();
-      const shinArm = new THREE.Mesh(new THREE.BoxGeometry(135, 12, 24), mats.stainless);
-      shinArm.position.set(-sign * 72, 0, 38);
-      shinArm.userData.partId = "SADDLE_PADS";
-      const sPad = new THREE.Mesh(new THREE.BoxGeometry(125, 52, 24), mats.shinPadMat);
-      sPad.position.set(-sign * 76, 0, 26);
-      sPad.userData.partId = "SADDLE_PADS";
-      shinGroup.add(shinArm, sPad);
-      shinGroup.position.set(x, 340, 68);
-      partGroups["SADDLE_PADS"].add(shinGroup);
-      shinFlipPads.push({ group: shinGroup, x, sign });
-
-      // Center N52 + Conical Stainless Shear-Pin Latch Half (locks the 2 Seat Flaps together in the middle)
-      const lGroup = new THREE.Group();
-      const latchBlock = new THREE.Mesh(new THREE.BoxGeometry(32, 34, 90), mats.latchGreen);
-      latchBlock.position.set(-sign * 184, 14, -45);
-      latchBlock.userData.partId = "CNC_SADDLE_LATCH";
-      lGroup.add(latchBlock);
-      if (idx === 0) {
-        [-22, 22].forEach(pz => {
-          const pin = new THREE.Mesh(new THREE.ConeGeometry(7, 26, 16), mats.stainless);
-          pin.rotation.z = -Math.PI / 2;
-          pin.position.set(170, 14, -45 + pz);
-          pin.userData.partId = "CNC_SADDLE_LATCH";
-          lGroup.add(pin);
-        });
-      }
-      partGroups["CNC_SADDLE_LATCH"].add(lGroup);
-      latchParts.push({ group: lGroup, x, sign });
-    });
-
-    // 15. UPPER_HALO: Deep-Bowed ø25mm Carbon Support Halo (z = +320mm), 8° EVA Forearm Troughs & Grip Posts
-    const haloGroup = new THREE.Group();
-    [-COL_X, COL_X].forEach(x => {
-      const sideArm = new THREE.Mesh(new THREE.CylinderGeometry(12.5, 12.5, 480, 24), mats.carbon);
-      sideArm.rotation.x = Math.PI / 2;
-      sideArm.position.set(x, 0, -20);
-      sideArm.userData.partId = "UPPER_HALO";
-      // Contoured 8-Deg EVA Forearm Support Gutter Trough
-      const trough = new THREE.Mesh(new THREE.BoxGeometry(74, 18, 220), mats.saddlePad);
-      trough.rotation.x = -0.14; // 8-deg upward anatomical forearm tilt
-      trough.position.set(x, 18, -110);
-      trough.userData.partId = "UPPER_HALO";
-      // Upright Hand Grip Post with FSR406 PWB Rehab Coach Sensor
-      const gripPost = new THREE.Mesh(new THREE.CylinderGeometry(14, 14, 95, 20), mats.hubShell);
-      gripPost.position.set(x, 58, 35);
-      gripPost.userData.partId = "UPPER_HALO";
-      haloGroup.add(sideArm, trough, gripPost);
-    });
-    // Deep-bowed front torso bar at z = +220mm relative to column top (= +320mm ahead of base)
-    const topCross = new THREE.Mesh(new THREE.CylinderGeometry(12.5, 12.5, 430, 24), mats.carbon);
-    topCross.rotation.z = Math.PI / 2;
-    topCross.position.set(0, 0, 220);
-    topCross.userData.partId = "UPPER_HALO";
-    haloGroup.add(topCross);
-    partGroups["UPPER_HALO"].add(haloGroup);
-
-    // 16. CLINICAL ERGONOMICS: 90° Swing-Away Utility Tray, Fold-Down Footrest Pegs & Side-Rail LiFePO4 Pods
-    // Pivot group anchored on the LEFT upper halo rail (-COL_X) so tray swings 90° OUT of the walking zone!
-    const trayPivotGroup = new THREE.Group();
-    const trayMesh = new THREE.Mesh(new THREE.BoxGeometry(370, 8, 210), mats.lexanTray);
-    trayMesh.position.set(185, 22, 0);
-    trayMesh.userData.partId = "KITCHEN_TRAY_AND_SENSORS";
-    trayPivotGroup.add(trayMesh);
-    partGroups["KITCHEN_TRAY_AND_SENSORS"].add(trayPivotGroup);
-
-    // Fold-Down Aluminum Footrest Pegs on Lower Carbon Base (for Seated Power-Glide!)
-    [-COL_X + 24, COL_X - 24].forEach(px => {
-      const peg = makeBox(48, 10, 32, mats.stainless, "CF_BASE");
-      peg.position.set(px, BASE_Y + 4, 115);
-    });
-
-    // Twin Slim Side-Rail LiFePO4 Battery Pods + Dual VL53L1X ToF + 2AM PIR Nightlight
-    // Mounted flush along the outer left & right base tubes so center floor stride channel is 100% open!
-    [-COL_X, COL_X].forEach(x => {
-      const pod = makeBox(34, 44, 150, mats.battery, "KITCHEN_TRAY_AND_SENSORS");
-      pod.position.set(x, BASE_Y + 34, 155);
-      const tofSensor = makeBox(28, 18, 24, mats.lidar, "KITCHEN_TRAY_AND_SENSORS");
-      tofSensor.position.set(x, BASE_Y + 24, 255);
+      rGroup.position.set(x + sign * 24, 0, REAR_Z);
+      partGroups["REAR_WHEEL_BOGIES"].add(rGroup);
     });
 
     // =========================================================================
-    // REAL-TIME KINEMATICS & EXPLODED VIEW UPDATE ENGINE
+    // 5 & 6. DYNAMIC PARALLELOGRAM STRUTS + DIAGONAL 24V LINEAR ACTUATORS
+    // =========================================================================
+    const sideLinkages = [];
+    [-SIDE_X, SIDE_X].forEach(x => {
+      const sign = Math.sign(x);
+      // Front twin carbon struts (pivoting from Z = -205 on lower rail)
+      const frontStrutGroup = new THREE.Group();
+      [-14, 14].forEach(ox => {
+        const s = addMesh(new THREE.CylinderGeometry(7, 7, 460, 16), mats.carbon, "PARALLELOGRAM_STRUTS", frontStrutGroup);
+        s.position.set(ox, 230, 0);
+      });
+      const frontMidTie = addMesh(new THREE.BoxGeometry(40, 14, 18), mats.aluSilver, "PARALLELOGRAM_STRUTS", frontStrutGroup);
+      frontMidTie.position.set(0, 230, 0);
+      partGroups["PARALLELOGRAM_STRUTS"].add(frontStrutGroup);
+
+      // Rear twin carbon struts (pivoting from Z = +155 on lower rail)
+      const rearStrutGroup = new THREE.Group();
+      [-14, 14].forEach(ox => {
+        const s = addMesh(new THREE.CylinderGeometry(7, 7, 460, 16), mats.carbon, "PARALLELOGRAM_STRUTS", rearStrutGroup);
+        s.position.set(ox, 230, 0);
+      });
+      const rearMidTie = addMesh(new THREE.BoxGeometry(40, 14, 18), mats.aluSilver, "PARALLELOGRAM_STRUTS", rearStrutGroup);
+      rearMidTie.position.set(0, 230, 0);
+      partGroups["PARALLELOGRAM_STRUTS"].add(rearStrutGroup);
+
+      // Diagonal 24V Inline Linear Actuator Assembly (Grey Parallel Motor + Cream Outer Tube + Extending Rod)
+      const actBaseGroup = new THREE.Group();
+      // Parallel grey DC motor cylinder (exact match to FreeStep photo!)
+      const motorCyl = addMesh(new THREE.CylinderGeometry(20, 20, 145, 24), mats.motorGrey, "DIAGONAL_ACTUATORS", actBaseGroup);
+      motorCyl.position.set(-sign * 22, 85, -24);
+      // Gearbox base block
+      const gearBox = addMesh(new THREE.BoxGeometry(52, 42, 65), mats.aluSilver, "DIAGONAL_ACTUATORS", actBaseGroup);
+      gearBox.position.set(-sign * 10, 18, -10);
+      // Outer cream/silver grooved actuator barrel
+      const outerBarrel = addMesh(new THREE.CylinderGeometry(16, 16, 260, 24), mats.creamWhite, "DIAGONAL_ACTUATORS", actBaseGroup);
+      outerBarrel.position.set(0, 140, 0);
+      partGroups["DIAGONAL_ACTUATORS"].add(actBaseGroup);
+
+      // Extending inner actuator rod
+      const actRodGroup = new THREE.Group();
+      const innerRod = addMesh(new THREE.CylinderGeometry(11, 11, 260, 20), mats.creamWhite, "DIAGONAL_ACTUATORS", actRodGroup);
+      innerRod.position.set(0, -130, 0);
+      const rodClevis = addMesh(new THREE.BoxGeometry(34, 28, 28), mats.aluSilver, "DIAGONAL_ACTUATORS", actRodGroup);
+      rodClevis.position.set(0, 0, 0);
+      partGroups["DIAGONAL_ACTUATORS"].add(actRodGroup);
+
+      sideLinkages.push({ x, sign, frontStrutGroup, rearStrutGroup, actBaseGroup, actRodGroup });
+    });
+
+    // =========================================================================
+    // 7. UPPER_U_HALO: Cream/White U-Shaped Upper Handlebar Frame + Sky-Blue Housings
+    // =========================================================================
+    const upperHaloGroup = new THREE.Group();
+    partGroups["UPPER_U_HALO"].add(upperHaloGroup);
+
+    [-SIDE_X, SIDE_X].forEach(x => {
+      const sign = Math.sign(x);
+      // Main Cream/White Upper Horizontal Side Tube (ø36mm)
+      const sideTube = addMesh(new THREE.CylinderGeometry(18, 18, 460, 28), mats.creamWhite, "UPPER_U_HALO", upperHaloGroup);
+      sideTube.rotation.x = Math.PI / 2;
+      sideTube.position.set(x, 0, -20);
+
+      // Parallel Black Leadscrew / Guide Rod underneath/beside the upper tube (visible in both FreeStep photos!)
+      const blackRod = addMesh(new THREE.CylinderGeometry(5, 5, 420, 16), mats.blackRod, "SLIDING_COLLARS", upperHaloGroup);
+      blackRod.rotation.x = Math.PI / 2;
+      blackRod.position.set(x - sign * 16, -18, -15);
+
+      // Front Sky-Blue End-Cap Housing + Round Orange Accent Cap (exact match to FreeStep photos!)
+      const frontCap = addMesh(new THREE.BoxGeometry(58, 52, 130), mats.skyBlue, "UPPER_U_HALO", upperHaloGroup);
+      frontCap.position.set(x, 4, -235);
+      const orangeDisc = addMesh(new THREE.CylinderGeometry(18, 18, 8, 24), mats.orangeCap, "UPPER_U_HALO", upperHaloGroup);
+      orangeDisc.rotation.x = Math.PI / 2;
+      orangeDisc.position.set(x, 6, -301);
+
+      // Rear Sky-Blue Corner Bracket where the rear struts & curved U-halo join
+      const rearCornerBox = addMesh(new THREE.BoxGeometry(62, 54, 115), mats.skyBlue, "UPPER_U_HALO", upperHaloGroup);
+      rearCornerBox.position.set(x, 4, 165);
+    });
+
+    // Curved Rear Cream/White U-Halo Bar connecting Left and Right Upper Rails at the back (Z = +220 to +290)
+    const rearHaloStraight = addMesh(new THREE.CylinderGeometry(18, 18, SIDE_X * 2 - 120, 28), mats.creamWhite, "UPPER_U_HALO", upperHaloGroup);
+    rearHaloStraight.rotation.z = Math.PI / 2;
+    rearHaloStraight.position.set(0, 0, 285);
+
+    // Left & Right Rear Curved Elbows of the U-Halo
+    [-1, 1].forEach(sign => {
+      const torus = new THREE.Mesh(new THREE.TorusGeometry(65, 18, 20, 32, Math.PI / 2), mats.creamWhite);
+      torus.rotation.x = Math.PI / 2;
+      torus.rotation.z = sign === 1 ? 0 : Math.PI / 2;
+      torus.position.set(sign * (SIDE_X - 65), 0, 220);
+      torus.userData.partId = "UPPER_U_HALO";
+      upperHaloGroup.add(torus);
+    });
+
+    // =========================================================================
+    // 8. THE RETRACTABLE U-SEAT BAR ("THE FLAP") & SLIDING COLLARS
+    //    Look at FreeStep_close.jpg vs FreeStep_open.jpg:
+    //    - 2 Sky-Blue Sliding Collars move along the upper white rails.
+    //    - Attached to each collar is a J-shaped Cream/White Tubular Seat Arm with a
+    //      Sky-Blue Center Latch Coupler at its tip.
+    //    - In FreeStep_close.jpg: Fold = 0° (hanging straight down, latched together in the center
+    //      forming a U-shaped seat loop under her hips!).
+    //    - In FreeStep_open.jpg: Fold = 90° (unlatched, rotated upward/outward, and slid back to
+    //      the rear corners behind the upper frame!).
+    // =========================================================================
+    const seatHalfAssemblies = [];
+    [-SIDE_X, SIDE_X].forEach((x, idx) => {
+      const sign = Math.sign(x);
+
+      // Sliding Collar on the Upper White Tube
+      const collarGroup = new THREE.Group();
+      const collarRing = addMesh(new THREE.CylinderGeometry(25, 25, 48, 28), mats.skyBlue, "SLIDING_COLLARS", collarGroup);
+      collarRing.rotation.x = Math.PI / 2;
+      const collarLug = addMesh(new THREE.BoxGeometry(44, 38, 44), mats.aluSilver, "SLIDING_COLLARS", collarGroup);
+      collarLug.position.set(-sign * 18, -12, 0);
+      partGroups["SLIDING_COLLARS"].add(collarGroup);
+
+      // Pivoting J-Shaped Seat Arm ("The Flap" Half)
+      const jArmPivot = new THREE.Group();
+      partGroups["U_SEAT_BAR"].add(jArmPivot);
+
+      // Vertical/angled drop leg of the J-arm (curves inward & downward from the sliding collar)
+      const dropLeg = addMesh(new THREE.BoxGeometry(18, 175, 28), mats.creamWhite, "U_SEAT_BAR", jArmPivot);
+      dropLeg.position.set(-sign * 28, -85, 0);
+      dropLeg.rotation.z = -sign * 0.18;
+
+      // Horizontal bottom seat bar half (meets the opposite half at X = 0!)
+      const horizLeg = addMesh(new THREE.BoxGeometry(155, 18, 30), mats.creamWhite, "U_SEAT_BAR", jArmPivot);
+      horizLeg.position.set(-sign * 115, -168, 0);
+
+      // Cushioned Ergonomic Seat Flap Pad on top of the horizontal U-bar half
+      const seatCushion = addMesh(new THREE.BoxGeometry(148, 22, 115), mats.orangeCap, "U_SEAT_BAR", jArmPivot);
+      seatCushion.position.set(-sign * 110, -152, 0);
+
+      // Sky-Blue Center Latch Coupler at the inner tip (visible in FreeStep_open.jpg at the rear corners!)
+      const blueTipLatch = addMesh(new THREE.BoxGeometry(42, 28, 38), mats.skyBlue, "U_SEAT_BAR", jArmPivot);
+      blueTipLatch.position.set(-sign * 195, -168, 0);
+
+      seatHalfAssemblies.push({ x, sign, collarGroup, jArmPivot, seatCushion });
+    });
+
+    // =========================================================================
+    // KINEMATICS ENGINE: EXACT FREESTEP_CLOSE vs FREESTEP_OPEN TRANSFORMATION
     // =========================================================================
     let selectedPartId = "ALL";
     let soloMode = false;
-    let xrayMode = false;
-    let glideDemo = false;
-    let kneeScooterMode = false;
-    let glidePhase = 0;
 
-    const slExplode = document.getElementById("slExplode");
     const slLift = document.getElementById("slLift");
-    const slSaddle = document.getElementById("slSaddle");
-    const slTray = document.getElementById("slTray");
+    const slFold = document.getElementById("slFold");
+    const slSlide = document.getElementById("slSlide");
+    const slExplode = document.getElementById("slExplode");
 
     function updateKinematics() {
+      const liftPct = parseFloat(slLift.value) / 100.0;   // 0.0 (Closed/Low) -> 1.0 (Open/Standing)
+      const foldDeg = parseFloat(slFold.value);           // 0° (Hanging Down) -> 90° (Folded Up/Back)
+      const slidePct = parseFloat(slSlide.value) / 100.0; // 0.0 (Center Seated Pos) -> 1.0 (Rear Stowed Pos)
       const exp = parseFloat(slExplode.value) / 100.0;
-      const lift = parseFloat(slLift.value); // 0..300 mm
-      const saddleDeg = parseFloat(slSaddle.value); // 0..180 deg (0° = Seat Flaps Closed/Latched, 180° = Folded Out for Walking)
-      const shinTrayDeg = parseFloat(slTray.value); // 0..180 deg (180° = Shin Pads & Tray Swung Out of Way, 0° = Braced In)
 
-      const saddleHeightMm = Math.round(420 + lift * Math.cos(RAKE_RAD));
-      const fwdShiftMm = Math.round(lift * Math.sin(RAKE_RAD));
+      // Parallelogram angle: at liftPct=0 (FreeStep_close), struts fold backward at ~56° from vertical;
+      // at liftPct=1 (FreeStep_open), struts stand nearly vertical (~8°).
+      const strutAngle = (1.0 - liftPct) * 0.92 + 0.12; // radians from vertical
+      const strutLen = 460;
+      const upperY = BASE_Y + Math.cos(strutAngle) * strutLen;
+      const upperZShift = Math.sin(strutAngle) * strutLen * 0.35;
 
+      const seatHeightMm = Math.round(upperY - 152);
+      document.getElementById("valLift").textContent = `${Math.round(liftPct * 100)}% (Halo: ${Math.round(upperY)}mm, Seat: ${seatHeightMm}mm)`;
+      document.getElementById("valFold").textContent = foldDeg < 10 ? `0° (U-Seat Bar Down & Latched)` : `${Math.round(foldDeg)}° (Unlatched & Swung Up)`;
+      document.getElementById("valSlide").textContent = slidePct < 0.15 ? `Forward (Seated Lift Pos)` : `${Math.round(slidePct * 100)}% (Slid Back to Rear Halo)`;
       document.getElementById("valExplode").textContent = `${Math.round(exp * 100)}%`;
-      document.getElementById("valLift").textContent = `${Math.round(lift)} mm (Seat: ${saddleHeightMm}mm, +${fwdShiftMm}mm FWD)`;
-      document.getElementById("valSaddle").textContent = kneeScooterMode
-        ? "90° Single-Leg Knee Scooter (1 Flap In, 1 Out)"
-        : `${Math.round(saddleDeg)}° ${saddleDeg < 15 ? "(Seat Flaps Closed — Ready to Sit!)" : "(Flaps Folded Out for Walking)"}`;
-      document.getElementById("valTray").textContent = `${Math.round(shinTrayDeg)}° ${shinTrayDeg > 45 ? "(Swung Clear of Legs)" : "(Braced In for Toilet Rise)"}`;
 
-      // Base elevation along 12° column rake
-      const plungerBaseDist = 250 + lift;
-      const topDist = 470 + lift;
+      // Update Upper U-Halo position
+      upperHaloGroup.position.set(0, upperY + exp * 120, -upperZShift);
 
-      // Update Inner Carbon Plungers
-      innerCols.forEach(({ mesh, x }) => {
-        const sign = Math.sign(x);
-        const d = plungerBaseDist + exp * 95;
-        mesh.position.set(
-          x + sign * exp * 35,
-          BASE_Y + 20 + Math.cos(RAKE_RAD) * d,
-          20 + Math.sin(RAKE_RAD) * d
-        );
+      // Update Side Parallelogram Struts & Diagonal Linear Actuators
+      sideLinkages.forEach(({ x, sign, frontStrutGroup, rearStrutGroup, actBaseGroup, actRodGroup }) => {
+        const xExp = x + sign * exp * 90;
+
+        // Front & Rear Parallelogram Struts
+        frontStrutGroup.position.set(xExp, BASE_Y, -195);
+        frontStrutGroup.rotation.x = -strutAngle * 0.55;
+
+        rearStrutGroup.position.set(xExp, BASE_Y, 155);
+        rearStrutGroup.rotation.x = -strutAngle * 0.55;
+
+        // Diagonal 24V Actuator: anchored at (xExp, BASE_Y + 10, -155) aiming at top of rear strut
+        const startPos = new THREE.Vector3(xExp - sign * 24, BASE_Y + 15, -155);
+        const endPos = new THREE.Vector3(xExp - sign * 24, upperY - 25, 155 - Math.sin(strutAngle * 0.55) * 420);
+
+        actBaseGroup.position.copy(startPos);
+        actBaseGroup.lookAt(endPos);
+        actBaseGroup.rotateX(Math.PI / 2);
+
+        actRodGroup.position.copy(endPos);
+        actRodGroup.lookAt(startPos);
+        actRodGroup.rotateX(Math.PI / 2);
       });
 
-      // Update Delrin Bushings
-      delrinMeshes.forEach(({ mesh, baseX, dPos }) => {
-        const sign = Math.sign(baseX);
-        const d = dPos + exp * 55;
-        mesh.position.set(
-          baseX + sign * exp * 65,
-          BASE_Y + 20 + Math.cos(RAKE_RAD) * d,
-          20 + Math.sin(RAKE_RAD) * d
-        );
+      // Update Sliding Collars & Retractable J-Arm U-Seat Bar ("The Flap")
+      // When slidePct = 0 (FreeStep_close), collar Z is at -35 mm (center of frame).
+      // When slidePct = 1 (FreeStep_open), collar Z slides back to +175 mm (rear corners of halo).
+      const collarZ = -35 + slidePct * 210 - upperZShift;
+      const foldRad = (foldDeg * Math.PI) / 180;
+
+      seatHalfAssemblies.forEach(({ x, sign, collarGroup, jArmPivot, seatCushion }) => {
+        const xCollar = x + sign * exp * 60;
+        const yCollar = upperY + exp * 80;
+
+        collarGroup.position.set(xCollar, yCollar, collarZ);
+
+        jArmPivot.position.set(xCollar, yCollar, collarZ);
+        // As foldRad goes 0 -> 90°, the two J-arms swing upward & backward (and unlatch outward slightly)
+        jArmPivot.rotation.x = foldRad;
+        jArmPivot.rotation.z = sign * foldRad * 0.65;
+
+        // Hide/slim the orange snap-on cushion when fully stowed at the rear corners (like FreeStep_open.jpg)
+        seatCushion.visible = foldDeg < 75;
       });
-
-      // Update Internal 24V Linear Actuator Cartridges & M8 Clevis Pins
-      actuatorParts.forEach(({ body, rod, pinBot, pinTop, x }) => {
-        const sign = Math.sign(x);
-        const dBody = 175 + exp * 40;
-        const dRod = 250 + lift + exp * 110;
-        const xOff = x + sign * exp * 115;
-
-        body.position.set(xOff, BASE_Y + 20 + Math.cos(RAKE_RAD) * dBody, 20 + Math.sin(RAKE_RAD) * dBody);
-        rod.position.set(xOff, BASE_Y + 20 + Math.cos(RAKE_RAD) * dRod, 20 + Math.sin(RAKE_RAD) * dRod);
-
-        pinBot.position.set(xOff + sign * exp * 45, BASE_Y + 35, 25);
-        pinTop.position.set(
-          xOff + sign * exp * 45,
-          BASE_Y + 20 + Math.cos(RAKE_RAD) * (topDist + exp * 120),
-          20 + Math.sin(RAKE_RAD) * (topDist + exp * 120)
-        );
-      });
-
-      // Update Top CNC Clevis Caps
-      topCaps.forEach(({ mesh, x }) => {
-        const sign = Math.sign(x);
-        const d = topDist + exp * 135;
-        mesh.position.set(
-          x + sign * exp * 35,
-          BASE_Y + 20 + Math.cos(RAKE_RAD) * d,
-          20 + Math.sin(RAKE_RAD) * d
-        );
-      });
-
-      // Update Rear 6.5" BLDC Hub Wheels
-      rearWheels.forEach(({ group, baseX, sign }) => {
-        group.position.set(baseX + sign * exp * 110, 82.5, -245 - exp * 60);
-      });
-
-      // Update Front 74mm Casters & Twin Skate Wheels
-      casterForks.forEach(({ group, baseX, sign }) => {
-        group.position.set(baseX + sign * exp * 50, 42 - exp * 35, 265 + exp * 55);
-      });
-      skateWheels.forEach(({ group, baseX, sign }) => {
-        group.position.set(baseX + sign * exp * 95, 32 - exp * 65, 255 + exp * 85);
-      });
-
-      // Update 180° Split-Saddle Hinges, Seat Flaps, Split Flip-Away Shin Pads & Center Latch
-      const saddleDist = 310 + lift;
-      const saddleY = BASE_Y + 20 + Math.cos(RAKE_RAD) * saddleDist;
-      const saddleZ = 20 + Math.sin(RAKE_RAD) * saddleDist;
-      const swingRad = (saddleDeg * Math.PI) / 180;
-      const shinSwingRad = (shinTrayDeg * Math.PI) / 180;
-
-      saddleHinges.forEach(({ mesh, x, sign }) => {
-        mesh.position.set(x + sign * exp * 60, saddleY, saddleZ - 10);
-      });
-
-      saddleArms.forEach(({ group, x, sign }, idx) => {
-        group.position.set(x + sign * exp * 45, saddleY, saddleZ - 10 - exp * 50);
-        const angle = kneeScooterMode ? (idx === 1 ? 0 : Math.PI) : sign * swingRad;
-        group.rotation.y = angle;
-      });
-
-      shinFlipPads.forEach(({ group, x, sign }) => {
-        group.position.set(x + sign * exp * 45, 340, 68 + exp * 35);
-        group.rotation.y = -sign * shinSwingRad;
-      });
-
-      latchParts.forEach(({ group, x, sign }, idx) => {
-        group.position.set(x + sign * exp * 25, saddleY + exp * 30, saddleZ - 10 - exp * 75);
-        const angle = kneeScooterMode ? (idx === 1 ? 0 : Math.PI) : sign * swingRad;
-        group.rotation.y = angle;
-      });
-
-      // Update Upper Halo & 90° Swing-Away Utility Tray
-      const haloY = BASE_Y + 20 + Math.cos(RAKE_RAD) * (topDist + 18) + exp * 165;
-      const haloZ = 20 + Math.sin(RAKE_RAD) * (topDist + 18);
-      haloGroup.position.set(0, haloY, haloZ);
-
-      trayPivotGroup.position.set(-COL_X, haloY + exp * 55, haloZ + 80);
-      trayPivotGroup.rotation.y = Math.min(Math.PI * 0.6, shinSwingRad * 0.6);
     }
 
-    function setWalkerMode(mode) {
-      document.getElementById("modeSeatBtn").classList.toggle("active", mode === "seat");
-      document.getElementById("modeWalkBtn").classList.toggle("active", mode === "walk");
-      document.getElementById("kneeBtn").classList.toggle("active", mode === "knee");
+    // 1-Click Preset States matching FreeStep_close.jpg, Sit-to-Stand Lift, and FreeStep_open.jpg
+    let animTarget = null;
+    function setFreeStepState(state) {
+      document.getElementById("btnStateClose").classList.toggle("active", state === "close");
+      document.getElementById("btnStateLift").classList.toggle("active", state === "lift");
+      document.getElementById("btnStateOpen").classList.toggle("active", state === "open");
 
-      if (mode === "seat") {
-        kneeScooterMode = false;
-        slSaddle.value = 0;   // Close & latch both seat flaps in the center!
-        slTray.value = 180;   // Keep shin pads & tray swung out of the way
-        selectPart("SADDLE_PADS", false);
-      } else if (mode === "walk") {
-        kneeScooterMode = false;
-        slSaddle.value = 180; // Fold both seat flaps 180° out flush with the side tubes!
-        slTray.value = 180;   // Keep shin pads & tray swung out of the way for 100% open stride
-      } else if (mode === "knee") {
-        kneeScooterMode = true;
-        slLift.value = 30;    // 450mm knee height for ankle fracture offloading
-        slTray.value = 180;
-        selectPart("SADDLE_PADS", false);
+      if (state === "close") {
+        // Exact match to FreeStep_close.jpg: Frame lowered, U-seat bar hanging down in center!
+        animTarget = { lift: 12, fold: 0, slide: 0 };
+      } else if (state === "lift") {
+        // Sit-to-Stand Lift: Frame rises to standing height while U-seat bar lifts Grandma up!
+        animTarget = { lift: 92, fold: 0, slide: 0 };
+      } else if (state === "open") {
+        // Exact match to FreeStep_open.jpg: Frame raised, U-seat bar folded 90° up & slid to rear corners!
+        animTarget = { lift: 95, fold: 90, slide: 100 };
       }
-      updateKinematics();
     }
 
-    [slExplode, slLift, slSaddle, slTray].forEach(s => s.addEventListener("input", updateKinematics));
+    [slLift, slFold, slSlide, slExplode].forEach(s => s.addEventListener("input", () => {
+      animTarget = null;
+      updateKinematics();
+    }));
 
     // =========================================================================
-    // UI TREE, PART SELECTION, X-RAY & SOLO MODE
+    // UI TREE, PART SELECTION & SOLO MODE
     // =========================================================================
     function renderPartTree() {
       const list = document.getElementById("partListContainer");
@@ -1301,21 +1090,9 @@
       const links = document.getElementById("inspLinks");
       links.innerHTML = item.links.map(l => `<a href="${l.url}" target="_blank">${l.label} ↗</a>`).join("");
 
-      // Update visibility / X-ray dimming in 3D scene
       Object.entries(partGroups).forEach(([id, group]) => {
-        if (partId === "ALL") {
-          group.visible = true;
-        } else if (soloMode) {
-          group.visible = (id === partId);
-        } else {
-          group.visible = true;
-        }
+        group.visible = (partId === "ALL" || !soloMode || id === partId);
       });
-
-      // Automatically turn on X-Ray if user selects internal actuator or Delrin bushing!
-      if ((partId === "ACTUATOR_24V" || partId === "DELRIN_BUSHING") && !xrayMode) {
-        toggleXray(true);
-      }
 
       if (moveCam && item.cam) {
         animateCamera(item.cam, item.target);
@@ -1330,41 +1107,13 @@
       selectPart(selectedPartId, false);
     }
 
-    function toggleXray(forceState) {
-      xrayMode = typeof forceState === "boolean" ? forceState : !xrayMode;
-      mats.carbonOuter.opacity = xrayMode ? 0.22 : 1.0;
-      mats.carbonInner.opacity = xrayMode ? 0.28 : 1.0;
-      const btn = document.getElementById("xrayBtn");
-      btn.textContent = `X-Ray Carbon Tubes: ${xrayMode ? "ON" : "OFF"}`;
-      btn.classList.toggle("active", xrayMode);
-    }
-
-    function toggleGlideDemo() {
-      glideDemo = !glideDemo;
-      const btn = document.getElementById("glideBtn");
-      btn.classList.toggle("active", glideDemo);
-      if (glideDemo) {
-        slSaddle.value = 0; // Latch saddle for Seated Power-Glide
-        slExplode.value = 0;
-        updateKinematics();
-      } else {
-        rootWalker.position.z = 0;
-      }
-    }
-
     function setCameraView(preset) {
       const views = {
-        iso: { pos: [950, 720, 950], tgt: [0, 360, 0] },
-        seatZoom: { pos: [0, 680, -520], tgt: [0, 440, -20] },
-        front: { pos: [0, 420, 1250], tgt: [0, 380, 0] },
-        side: { pos: [1250, 420, 20], tgt: [0, 380, 20] },
-        top: { pos: [0, 1450, 10], tgt: [0, 360, 0] },
-        caster: { pos: [420, 180, 520], tgt: [180, 45, 270] },
-        column: { pos: [520, 420, 460], tgt: [0, 350, 60] },
-        hub: { pos: [520, 220, -520], tgt: [0, 85, -250] }
+        iso: { pos: [-920, 620, -880], tgt: [0, 320, 0] },
+        seat: { pos: [-580, 480, -480], tgt: [0, 320, -35] },
+        side: { pos: [-1150, 420, 0], tgt: [0, 320, 0] },
+        top: { pos: [0, 1400, -10], tgt: [0, 320, 0] }
       };
-      if (preset === "column" && !xrayMode) toggleXray(true);
-      if (preset === "seatZoom") selectPart("SADDLE_PADS", false);
       const v = views[preset];
       if (v) animateCamera(v.pos, v.tgt);
     }
@@ -1380,7 +1129,7 @@
       document.getElementById("bpModal").style.display = "flex";
     }
 
-    // Raycaster: Click any 3D part in the viewport to select & inspect it!
+    // Raycaster: Click any 3D part in the viewport to select & inspect it
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let downPos = { x: 0, y: 0 };
@@ -1388,8 +1137,9 @@
     renderer.domElement.addEventListener("pointerdown", e => {
       downPos = { x: e.clientX, y: e.clientY };
     });
+
     renderer.domElement.addEventListener("pointerup", e => {
-      if (Math.hypot(e.clientX - downPos.x, e.clientY - downPos.y) > 5) return;
+      if (Math.hypot(e.clientX - downPos.x, e.clientY - downPos.y) > 6) return;
       const rect = renderer.domElement.getBoundingClientRect();
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
@@ -1398,9 +1148,7 @@
       if (hits.length > 0) {
         let obj = hits[0].object;
         while (obj && !obj.userData.partId) obj = obj.parent;
-        if (obj && obj.userData.partId) {
-          selectPart(obj.userData.partId, false);
-        }
+        if (obj && obj.userData.partId) selectPart(obj.userData.partId, false);
       }
     });
 
@@ -1410,21 +1158,29 @@
       renderer.setSize(container.clientWidth, container.clientHeight);
     });
 
-    // Initialize UI & Render Loop
-    renderPartTree();
-    selectPart("ALL", false);
-    updateKinematics();
-
     function animate() {
       requestAnimationFrame(animate);
-      if (glideDemo) {
-        glidePhase += 0.025;
-        rootWalker.position.z = Math.sin(glidePhase) * 220;
-        rearWheels.forEach(({ group }) => { group.rotation.x += Math.cos(glidePhase) * 0.05; });
+      if (animTarget) {
+        const lerp = (cur, tgt) => Math.abs(tgt - cur) < 0.4 ? tgt : cur + (tgt - cur) * 0.12;
+        slLift.value = lerp(parseFloat(slLift.value), animTarget.lift);
+        slFold.value = lerp(parseFloat(slFold.value), animTarget.fold);
+        slSlide.value = lerp(parseFloat(slSlide.value), animTarget.slide);
+        updateKinematics();
+        if (
+          Math.abs(slLift.value - animTarget.lift) < 0.5 &&
+          Math.abs(slFold.value - animTarget.fold) < 0.5 &&
+          Math.abs(slSlide.value - animTarget.slide) < 0.5
+        ) {
+          animTarget = null;
+        }
       }
       controls.update();
       renderer.render(scene, camera);
     }
+
+    renderPartTree();
+    selectPart("ALL", false);
+    updateKinematics();
     animate();
   </script>
 </body>
