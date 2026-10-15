@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112.0mm" height="76.0mm" viewBox="-12.0 -12.0 112.0 76.0">
+  <title>CNC 7075-T6 OD30 Carbon Tube Split-Clamp Lug</title>
+  <g fill="none" stroke="#0055ff" stroke-width="0.5">
+    <polygon points="0.000,52.000 88.000,52.000 88.000,26.000 58.000,0.000 0.000,0.000" />
+  </g>
+  <g fill="none" stroke="#e60000" stroke-width="0.4">
+    <circle cx="26.000" cy="26.000" r="15.100" />
+    <circle cx="72.000" cy="38.000" r="3.100" />
+    <circle cx="72.000" cy="14.000" r="4.100" />
+  </g>
+</svg>

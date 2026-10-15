@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="139.0mm" height="119.0mm" viewBox="-12.0 -12.0 139.0 119.0">
+  <title>CNC 7075-T6 Rear FOC Hub Motor Dropout + Cliff Sensor Mount</title>
+  <g fill="none" stroke="#0055ff" stroke-width="0.5">
+    <polygon points="0.000,95.000 115.000,95.000 115.000,30.000 75.000,0.000 0.000,0.000" />
+  </g>
+  <g fill="none" stroke="#e60000" stroke-width="0.4">
+    <circle cx="25.000" cy="25.000" r="15.100" />
+    <circle cx="80.000" cy="63.000" r="6.000" />
+    <circle cx="25.000" cy="73.000" r="3.100" />
+  </g>
+</svg>

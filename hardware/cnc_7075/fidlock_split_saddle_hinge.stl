@@ -1,0 +1,170 @@
+solid fidlock_split_saddle_hinge
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 55.0000 90.0000 0.0000
+      vertex 55.0000 0.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 90.0000 0.0000
+      vertex 55.0000 90.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 32.0000
+      vertex 55.0000 0.0000 32.0000
+      vertex 55.0000 90.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 32.0000
+      vertex 55.0000 90.0000 32.0000
+      vertex 0.0000 90.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 55.0000 0.0000 0.0000
+      vertex 55.0000 0.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 55.0000 0.0000 32.0000
+      vertex 0.0000 0.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 55.0000 90.0000 0.0000
+      vertex 0.0000 90.0000 0.0000
+      vertex 0.0000 90.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 55.0000 90.0000 0.0000
+      vertex 0.0000 90.0000 32.0000
+      vertex 55.0000 90.0000 32.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 0.0000 32.0000
+      vertex 0.0000 90.0000 32.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 90.0000 32.0000
+      vertex 0.0000 90.0000 0.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 55.0000 0.0000 0.0000
+      vertex 55.0000 90.0000 0.0000
+      vertex 55.0000 90.0000 32.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 55.0000 0.0000 0.0000
+      vertex 55.0000 90.0000 32.0000
+      vertex 55.0000 0.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 55.0000 15.0000 6.0000
+      vertex 130.0000 75.0000 6.0000
+      vertex 130.0000 15.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 55.0000 15.0000 6.0000
+      vertex 55.0000 75.0000 6.0000
+      vertex 130.0000 75.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 55.0000 15.0000 26.0000
+      vertex 130.0000 15.0000 26.0000
+      vertex 130.0000 75.0000 26.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 55.0000 15.0000 26.0000
+      vertex 130.0000 75.0000 26.0000
+      vertex 55.0000 75.0000 26.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 55.0000 15.0000 6.0000
+      vertex 130.0000 15.0000 6.0000
+      vertex 130.0000 15.0000 26.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 55.0000 15.0000 6.0000
+      vertex 130.0000 15.0000 26.0000
+      vertex 55.0000 15.0000 26.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 130.0000 75.0000 6.0000
+      vertex 55.0000 75.0000 6.0000
+      vertex 55.0000 75.0000 26.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 130.0000 75.0000 6.0000
+      vertex 55.0000 75.0000 26.0000
+      vertex 130.0000 75.0000 26.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 55.0000 15.0000 6.0000
+      vertex 55.0000 15.0000 26.0000
+      vertex 55.0000 75.0000 26.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 55.0000 15.0000 6.0000
+      vertex 55.0000 75.0000 26.0000
+      vertex 55.0000 75.0000 6.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 130.0000 15.0000 6.0000
+      vertex 130.0000 75.0000 6.0000
+      vertex 130.0000 75.0000 26.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 130.0000 15.0000 6.0000
+      vertex 130.0000 75.0000 26.0000
+      vertex 130.0000 15.0000 26.0000
+    endloop
+  endfacet
+endsolid fidlock_split_saddle_hinge

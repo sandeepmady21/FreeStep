@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144.0mm" height="99.0mm" viewBox="-12.0 -12.0 144.0 99.0">
+  <title>CNC 7075-T6 igus DryLin W Width-Morphing Carriage Block</title>
+  <g fill="none" stroke="#0055ff" stroke-width="0.5">
+    <polygon points="0.000,75.000 120.000,75.000 120.000,0.000 0.000,0.000" />
+  </g>
+  <g fill="none" stroke="#e60000" stroke-width="0.4">
+    <circle cx="20.000" cy="57.000" r="3.100" />
+    <circle cx="100.000" cy="57.000" r="3.100" />
+    <circle cx="20.000" cy="18.000" r="3.100" />
+    <circle cx="100.000" cy="18.000" r="3.100" />
+    <circle cx="60.000" cy="37.500" r="4.100" />
+  </g>
+</svg>

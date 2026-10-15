@@ -1,0 +1,170 @@
+solid od30_split_clamp_lug
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 52.0000 52.0000 0.0000
+      vertex 52.0000 0.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 52.0000 0.0000
+      vertex 52.0000 52.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 42.0000
+      vertex 52.0000 0.0000 42.0000
+      vertex 52.0000 52.0000 42.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 42.0000
+      vertex 52.0000 52.0000 42.0000
+      vertex 0.0000 52.0000 42.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 52.0000 0.0000 0.0000
+      vertex 52.0000 0.0000 42.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 52.0000 0.0000 42.0000
+      vertex 0.0000 0.0000 42.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 52.0000 52.0000 0.0000
+      vertex 0.0000 52.0000 0.0000
+      vertex 0.0000 52.0000 42.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 52.0000 52.0000 0.0000
+      vertex 0.0000 52.0000 42.0000
+      vertex 52.0000 52.0000 42.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 0.0000 42.0000
+      vertex 0.0000 52.0000 42.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 52.0000 42.0000
+      vertex 0.0000 52.0000 0.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 52.0000 0.0000 0.0000
+      vertex 52.0000 52.0000 0.0000
+      vertex 52.0000 52.0000 42.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 52.0000 0.0000 0.0000
+      vertex 52.0000 52.0000 42.0000
+      vertex 52.0000 0.0000 42.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 52.0000 0.0000 6.0000
+      vertex 88.0000 32.0000 6.0000
+      vertex 88.0000 0.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 52.0000 0.0000 6.0000
+      vertex 52.0000 32.0000 6.0000
+      vertex 88.0000 32.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 52.0000 0.0000 36.0000
+      vertex 88.0000 0.0000 36.0000
+      vertex 88.0000 32.0000 36.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 52.0000 0.0000 36.0000
+      vertex 88.0000 32.0000 36.0000
+      vertex 52.0000 32.0000 36.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 52.0000 0.0000 6.0000
+      vertex 88.0000 0.0000 6.0000
+      vertex 88.0000 0.0000 36.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 52.0000 0.0000 6.0000
+      vertex 88.0000 0.0000 36.0000
+      vertex 52.0000 0.0000 36.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 88.0000 32.0000 6.0000
+      vertex 52.0000 32.0000 6.0000
+      vertex 52.0000 32.0000 36.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 88.0000 32.0000 6.0000
+      vertex 52.0000 32.0000 36.0000
+      vertex 88.0000 32.0000 36.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 52.0000 0.0000 6.0000
+      vertex 52.0000 0.0000 36.0000
+      vertex 52.0000 32.0000 36.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 52.0000 0.0000 6.0000
+      vertex 52.0000 32.0000 36.0000
+      vertex 52.0000 32.0000 6.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 88.0000 0.0000 6.0000
+      vertex 88.0000 32.0000 6.0000
+      vertex 88.0000 32.0000 36.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 88.0000 0.0000 6.0000
+      vertex 88.0000 32.0000 36.0000
+      vertex 88.0000 0.0000 36.0000
+    endloop
+  endfacet
+endsolid od30_split_clamp_lug
