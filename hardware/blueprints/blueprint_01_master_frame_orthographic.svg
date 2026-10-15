@@ -18,16 +18,16 @@
   <rect x="20" y="20" width="1160" height="780" fill="url(#grid100)" stroke="#38bdf8" stroke-width="2"/>
   <!-- Title Block Header -->
   <rect x="20" y="20" width="1160" height="58" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
-  <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 01: MASTER CHASSIS ORTHOGRAPHIC & CLINICAL BIOMECHANICS</text>
-  <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">Side Elevation (12° Rake, Shin Block Pad, Fold-Down Footrests, 8° Forearm Troughs) + Front 495mm Bathroom Envelope</text>
+  <text x="40" y="46" fill="#38bdf8" font-family="monospace" font-size="18" font-weight="bold">BLUEPRINT 01: OPEN-STRIDE CHASSIS ORTHOGRAPHIC & CLINICAL BIOMECHANICS</text>
+  <text x="40" y="66" fill="#94a3b8" font-family="monospace" font-size="12">100% Open Floor-to-Hip Stride Channel (Zero Ankle Crossbar!) + High-Arch Portal (y=505mm) + Split 180° Flip-Away Shin Pads</text>
   <text x="1160" y="46" fill="#22c55e" font-family="monospace" font-size="16" font-weight="bold" text-anchor="end">SHEET 1 OF 6</text>
   <text x="1160" y="66" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">FREESTEP AIR (9.65 kg | ₹54,250 CLINICAL MASTERY EDITION) | UNITS: MM</text>
 
   <!-- SIDE VIEW (LEFT PANEL) -->
-  <text x="60" y="110" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] SIDE ELEVATION (SEATED 420MM vs STANDING 713MM + REHAB UPGRADES)</text>
+  <text x="60" y="110" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[A] SIDE ELEVATION (100% OPEN STRIDE + HIGH-ARCH PORTAL)</text>
   <!-- Floor Line -->
   <line x1="50" y1="660" x2="640" y2="660" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8,4"/>
-  <text x="55" y="680" fill="#94a3b8" font-family="monospace" font-size="11">FINISHED FLOOR LEVEL (0.0 MM)</text>
+  <text x="55" y="680" fill="#94a3b8" font-family="monospace" font-size="11">FINISHED FLOOR LEVEL (0.0 MM — ZERO LOW FRONT CROSSBAR!)</text>
 
   <!-- Rear 6.5" (165mm) Hub Wheel -->
   <circle cx="150" cy="594" r="66" fill="#1e293b" stroke="#f43f5e" stroke-width="3"/>
@@ -40,14 +40,14 @@
   <circle cx="515" cy="634" r="6" fill="#38bdf8"/>
   <text x="515" y="700" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">FRONT 64mm CASTER + 0° YAW LOCK</text>
 
-  <!-- Lower Carbon U-Base Leg (ø30mm) + Fold-Down Footrest Peg -->
+  <!-- Lower Carbon Side Rail (ø30mm) + Fold-Down Footrest Peg -->
   <rect x="150" y="600" width="370" height="16" rx="6" fill="#334155" stroke="#e2e8f0" stroke-width="2"/>
   <rect x="275" y="586" width="55" height="12" rx="4" fill="#a855f7" stroke="#f3e8ff" stroke-width="1.5"/>
   <text x="245" y="576" fill="#d8b4fe" font-family="monospace" font-size="10">FOLD-DOWN FOOTREST PEG</text>
 
-  <!-- LiFePO4 Battery Ballast + 2AM PIR Nightlight at Front Nose -->
+  <!-- Slim Side-Rail LiFePO4 Battery Pod + 2AM PIR Nightlight on Outer Side Rail -->
   <rect x="415" y="576" width="85" height="24" rx="4" fill="#166534" stroke="#22c55e" stroke-width="1.5"/>
-  <text x="457" y="592" fill="#dcfce7" font-family="monospace" font-size="9" text-anchor="middle">24V LiFePO4 + PIR LED</text>
+  <text x="457" y="592" fill="#dcfce7" font-family="monospace" font-size="9" text-anchor="middle">SIDE-RAIL LiFePO4 POD</text>
 
   <!-- 12-Deg Base Lug -->
   <polygon points="310,616 385,616 375,555 320,555" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
@@ -57,9 +57,13 @@
   <line x1="348" y1="595" x2="396" y2="370" stroke="#475569" stroke-width="22" stroke-linecap="round"/>
   <line x1="348" y1="595" x2="396" y2="370" stroke="#94a3b8" stroke-width="18" stroke-linecap="round"/>
 
-  <!-- Anterior Tibial Shin Block Pad (340mm Height) -->
-  <rect x="366" y="425" width="38" height="36" rx="8" fill="#0ea5e9" stroke="#e0f2fe" stroke-width="2"/>
-  <text x="415" y="446" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">SHIN BLOCK PAD (340mm: Zero-Quad Rise)</text>
+  <!-- High-Clearance Forward-Bowed Portal Arch (y=505mm, bowed +320mm forward to z=+320mm) -->
+  <rect x="396" y="360" width="160" height="14" rx="6" fill="#334155" stroke="#22c55e" stroke-width="2"/>
+  <text x="495" y="352" fill="#22c55e" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">HIGH PORTAL ARCH (y=505mm, z=+320mm)</text>
+
+  <!-- Split 180° Flip-Away Tibial Shin Pads (340mm Height) -->
+  <rect x="366" y="425" width="38" height="36" rx="8" fill="#0ea5e9" stroke="#e0f2fe" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="415" y="446" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">180° FLIP-AWAY SHIN PADS (340mm)</text>
 
   <!-- Inner Carbon Plunger Extended (+300mm along 12-deg = +293mm UP, +62mm FWD) -->
   <line x1="385" y1="420" x2="442" y2="155" stroke="#0284c7" stroke-width="14" stroke-linecap="round"/>
@@ -71,17 +75,17 @@
   <rect x="320" y="195" width="95" height="18" rx="8" fill="#f59e0b" stroke="#fef08a" stroke-width="2" stroke-dasharray="4,2"/>
   <text x="310" y="208" fill="#fef08a" font-family="monospace" font-size="11" text-anchor="end">SADDLE HIGH: 713mm (+293mm UP, +62mm FWD)</text>
 
-  <!-- Upper Deep-Bowed Torso Halo + 8° Forearm Troughs + Swing-Away Tray -->
-  <rect x="370" y="138" width="165" height="16" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <!-- Upper Deep-Bowed Torso Halo (z=+320mm) + 8° Forearm Troughs + 90° Swing-Away Tray -->
+  <rect x="370" y="138" width="195" height="16" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
   <rect x="385" y="122" width="115" height="14" rx="5" fill="#10b981" stroke="#d1fae5" stroke-width="1.5"/>
-  <text x="515" y="114" fill="#34d399" font-family="monospace" font-size="11" text-anchor="middle">8° EVA FOREARM TROUGHS + SWING-AWAY TRAY</text>
+  <text x="515" y="114" fill="#34d399" font-family="monospace" font-size="11" text-anchor="middle">DEEP-BOWED HALO (z=+320mm) + 8° TROUGHS</text>
 
   <!-- Wheelbase Dimension (580mm) -->
   <line x1="150" y1="720" x2="515" y2="720" stroke="#38bdf8" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  <text x="332" y="735" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">WHEELBASE: 580.0 MM</text>
+  <text x="332" y="735" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">WHEELBASE: 580.0 MM (100% OPEN FLOOR CHANNEL)</text>
 
   <!-- FRONT VIEW (RIGHT PANEL) -->
-  <text x="700" y="110" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[B] FRONT ELEVATION (495MM BATHROOM FIT)</text>
+  <text x="700" y="110" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">[B] FRONT ELEVATION (100% OPEN STRIDE CHANNEL)</text>
   <line x1="680" y1="660" x2="1150" y2="660" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8,4"/>
 
   <!-- 510mm Indian Bathroom Door Frame Reference -->
@@ -97,36 +101,38 @@
   <rect x="730" y="172" width="85" height="16" rx="5" fill="#10b981" stroke="#d1fae5" stroke-width="1.5"/>
   <rect x="1015" y="172" width="85" height="16" rx="5" fill="#10b981" stroke="#d1fae5" stroke-width="1.5"/>
 
-  <!-- Split Saddle Halves (Latched Center vs 90° Knee-Scooter / 180° Folded) -->
-  <rect x="744" y="370" width="168" height="22" rx="6" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
-  <rect x="918" y="370" width="168" height="22" rx="6" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
-  <circle cx="915" cy="381" r="7" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
-  <text x="915" y="358" fill="#22c55e" font-family="monospace" font-size="11" text-anchor="middle">N52 + 10mm SS LATCH + 90° KNEE DETENT</text>
+  <!-- High-Clearance Forward-Bowed Portal Arch at y = 505mm (ABOVE KNEES!) -->
+  <rect x="735" y="345" width="360" height="16" rx="6" fill="#334155" stroke="#22c55e" stroke-width="2"/>
+  <text x="915" y="336" fill="#22c55e" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">HIGH-CLEARANCE ARCH AT y=505mm (BOWED +320mm FWD)</text>
 
-  <!-- Contoured Anterior Tibial Shin Block Pad -->
-  <rect x="780" y="430" width="270" height="24" rx="8" fill="#0ea5e9" stroke="#e0f2fe" stroke-width="1.5"/>
-  <text x="915" y="446" fill="#0f172a" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">ANTERIOR TIBIAL SHIN BLOCK PAD (340mm)</text>
+  <!-- Split Saddle Halves + Split 180° Flip-Away Shin Pads (Shown Swung Out for Walking vs Dashed In for Toilet) -->
+  <rect x="690" y="425" width="30" height="55" rx="6" fill="#0ea5e9" stroke="#e0f2fe" stroke-width="2"/>
+  <rect x="1110" y="425" width="30" height="55" rx="6" fill="#0ea5e9" stroke="#e0f2fe" stroke-width="2"/>
+  <rect x="765" y="432" width="135" height="22" rx="6" fill="none" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <rect x="930" y="432" width="135" height="22" rx="6" fill="none" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="915" y="424" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">SPLIT 180° FLIP-AWAY SHIN PADS (OUT = WALK, IN = TOILET RISE)</text>
 
-  <!-- Lower Front Cross Bridge + Dual VL53L1X ToF + 2AM PIR Nightlight -->
-  <rect x="735" y="592" width="360" height="18" rx="6" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
-  <circle cx="915" cy="585" r="14" fill="#0f172a" stroke="#fef08a" stroke-width="2"/>
-  <text x="915" y="560" fill="#fef08a" font-family="monospace" font-size="10" text-anchor="middle">DUAL VL53L1X CLIFF + 2AM PIR NIGHTLIGHT</text>
+  <!-- Open Floor Stride Channel Callout (0 to 505mm Height has ZERO Crossbar!) -->
+  <rect x="755" y="495" width="320" height="155" rx="8" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="915" y="565" fill="#22c55e" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">100% OPEN STRIDE FLOOR CHANNEL</text>
+  <text x="915" y="585" fill="#dcfce7" font-family="monospace" font-size="11" text-anchor="middle">(Zero Ankle/Shin Crossbar from 0 to 505mm Height!)</text>
+  <text x="915" y="605" fill="#fef08a" font-family="monospace" font-size="10" text-anchor="middle">LiFePO4 Pods Mounted on Outer Side Rails (x = +-215mm)</text>
 
   <!-- Left & Right Wheels -->
   <rect x="716" y="580" width="28" height="80" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
   <rect x="1086" y="580" width="28" height="80" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
 
   <!-- Dimension Arrows (430mm Inside, 495mm Total Outer) -->
-  <line x1="744" y1="490" x2="1086" y2="490" stroke="#22c55e" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  <text x="915" y="482" fill="#22c55e" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">HIP / TOILET CLEARANCE: 430.0 MM</text>
+  <line x1="744" y1="482" x2="1086" y2="482" stroke="#22c55e" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="915" y="475" fill="#22c55e" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">UNOBSTRUCTED STRIDE & HIP CLEARANCE: 430.0 MM</text>
 
   <line x1="716" y1="720" x2="1114" y2="720" stroke="#38bdf8" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
   <text x="915" y="735" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">TOTAL OUTER WIDTH: 495.0 MM (19.5")</text>
   <!-- Engineering Title Block Footer -->
   <rect x="20" y="745" width="1160" height="55" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
   <line x1="620" y1="745" x2="620" y2="800" stroke="#38bdf8" stroke-width="1"/>
-  <text x="35" y="768" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold">ZERO-QUAD TOILET RISE: 12.0° Forward Rake + 340mm Anterior Tibial Shin Block Pad</text>
-  <text x="35" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Prevents forward knee buckling when lifting from low 400mm toilets; 8° Forearm Troughs offload wrists.</text>
+  <text x="35" y="768" fill="#e2e8f0" font-family="monospace" font-size="12" font-weight="bold">ZERO LEG/FOOT INTERFERENCE: Eliminated Low Ankle Crossbar + Split 180° Flip-Away Shin Pads</text>
+  <text x="35" y="788" fill="#94a3b8" font-family="monospace" font-size="11">High Portal Arch (y=505mm, z=+320mm) leaves the entire 0-505mm floor channel 100% open for walking!</text>
   <text x="635" y="768" fill="#38bdf8" font-family="monospace" font-size="12" font-weight="bold">WEIGHT & COST MASTERY: 9.65 kg Total Mass | ₹54,250 Complete Build</text>
-  <text x="635" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Cut heavy MGN9C rails & fragile spinning LiDAR (-200g, -₹8,550) while adding 9 clinical rehab upgrades.</text>
+  <text x="635" y="788" fill="#94a3b8" font-family="monospace" font-size="11">Side-rail LiFePO4 battery pods preserve front anti-tip ballast without blocking feet.</text>
 </svg>

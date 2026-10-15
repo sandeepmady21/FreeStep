@@ -367,12 +367,12 @@
           <input type="range" id="slLift" min="0" max="300" value="80" />
         </div>
         <div class="slider-group">
-          <label><span>180° SPLIT-SADDLE SWING</span><span id="valSaddle">0° (Latched)</span></label>
-          <input type="range" id="slSaddle" min="0" max="180" value="0" />
+          <label><span>180° SPLIT-SADDLE & SHIN PADS</span><span id="valSaddle">180° (Open Walk-In)</span></label>
+          <input type="range" id="slSaddle" min="0" max="180" value="180" />
         </div>
         <div class="slider-group">
-          <label><span>KITCHEN TRAY SLIDE</span><span id="valTray">0 mm</span></label>
-          <input type="range" id="slTray" min="0" max="300" value="0" />
+          <label><span>SWING-AWAY TRAY PIVOT</span><span id="valTray">90° (Swung Clear)</span></label>
+          <input type="range" id="slTray" min="0" max="110" value="90" />
         </div>
       </div>
     </div>
@@ -385,9 +385,9 @@
       </div>
       <div class="inspector-card">
         <h2 id="inspTitle">Full FreeStep Air Assembly</h2>
-        <div class="inspector-sub" id="inspSub">Complete 9.85 kg Standard-COTS Sit-to-Stand & Power-Glide Walker</div>
+        <div class="inspector-sub" id="inspSub">Complete 9.65 kg Open-Stride Sit-to-Stand, Knee-Scooter & Power-Glide Walker</div>
         <div class="desc-box" id="inspDesc">
-          Click any of the 16 sub-assemblies in the left tree (or click directly on any 3D part in the model) to inspect its exact dimensions, material spec, fastener torque, and downloadable DXF/STL CAD files. Turn on "Solo Mode" in the top-left to isolate a single part in 3D!
+          100% Open-Stride Floor Channel: Zero low front crossbar near the ankles or shins! Click any of the 16 sub-assemblies in the left tree (or click directly on any 3D part) to inspect its specs and CAD files.
         </div>
         <table class="spec-table" id="inspTable"></table>
         <div class="cad-links" id="inspLinks"></div>
@@ -416,16 +416,16 @@
       {
         id: "ALL",
         name: "00. Full FreeStep Air Assembly",
-        tag: "9.85 kg",
+        tag: "9.65 kg",
         color: "#38bdf8",
-        sub: "Complete 16-Part Standard-COTS Cartridge + 3K Carbon & 7075-T6 Walker",
-        desc: "Universal 495 mm (19.5\") width fits every 20\"+ Indian bathroom door. Combines 12° forward-inclined telescoping carbon columns (housing standard IP65 24V 300mm actuators) with standard 6.5\" IP65 BLDC hub wheels and 74mm low-profile twin-skate front casters.",
+        sub: "Complete 16-Part Open-Stride Standard-COTS Cartridge + 3K Carbon & 7075-T6 Walker",
+        desc: "100% Open-Stride Floor-to-Hip Channel! By eliminating the low ankle-height crossbar and bridging the stationary ø35mm outer columns at y = 505 mm (above the knees) with a Deep Forward-Bowed Arch (z = +320 mm), her feet and shins have 100% unobstructed walking stride clearance.",
         specs: [
           ["Outer Width / Inside Clear", "495.0 mm (19.5\") / 430.0 mm (17.0\")"],
+          ["Walking Stride Channel", "100% Open Floor (0 to 505 mm height, +320 mm fwd)"],
           ["Front Under-Bed Nose", "74.0 mm (2.9\" clearance)"],
           ["Saddle Lift Range", "420 mm (Toilet/Bed) -> 713 mm (Perch)"],
-          ["Handle & Tray Range", "580 mm -> 873 mm (+300mm Tray Slide)"],
-          ["Total Mass / Budget", "9.85 kg / ₹62,800 (₹53,600 Core)"]
+          ["Total Mass / Budget", "9.65 kg / ₹54,250 Complete Build"]
         ],
         links: [
           { label: "View Full BOM (CSV)", url: "../hardware/INDIA_BOM_SOURCING.csv" },
@@ -436,20 +436,20 @@
       },
       {
         id: "CF_BASE",
-        name: "01. Lower Carbon U-Base Tubes",
+        name: "01. Open-Stride Base Legs & High Arch",
         tag: "CF-03/04",
         color: "#334155",
-        sub: "3K Roll-Wrapped Twill Carbon Fiber (ø30mm OD x ø26mm ID)",
-        desc: "Forms the rigid 495 mm wide x 580 mm wheelbase lower horseshoe frame. Open at the rear so the user can step inside or back straight over a toilet commode; cross-bridged at the front nose.",
+        sub: "Open-Floor Side Rails (ø30mm) + High-Clearance Forward-Bowed Portal Arch (y=505mm, z=+320mm)",
+        desc: "Zero low crossbar at ankle height! The left and right ø30 mm lower carbon legs are completely open down the center floor channel so feet and ankles never hit a bar. Frame lateral rigidity is provided by the High-Clearance Forward-Bowed Arch clamped across the top of the ø35 mm outer barrels at y = 505 mm (above knee height, bowed +320 mm forward).",
         specs: [
-          ["Tube Spec", "ø30.0 mm OD x ø26.0 mm ID (2.0 mm wall)"],
-          ["Side Legs (CF-03)", "2x 540 mm cut length"],
-          ["Front Bridge (CF-04)", "1x 415 mm cut length"],
+          ["Side Base Legs (CF-03)", "2x 540 mm (ø30x26 mm, 100% open floor between legs)"],
+          ["High Portal Arch (CF-04)", "y = 505 mm height, bowed +320 mm ahead of columns"],
+          ["Fold-Down Footrests", "2x Anodized Aluminum Pegs for Seated Power-Glide"],
           ["Bonding Adhesive", "3M DP420 Epoxy + 110 µm Glass Beads"]
         ],
         links: [{ label: "Carbon Cutlist (CSV)", url: "../hardware/CARBON_TUBE_CUTLIST.csv" }],
         bp: "../hardware/blueprints/blueprint_01_master_frame_orthographic.svg",
-        cam: [650, 320, 650], target: [0, 80, 0]
+        cam: [650, 320, 650], target: [0, 180, 100]
       },
       {
         id: "CNC_BASE_LUG",
@@ -478,7 +478,7 @@
         tag: "CF-01",
         color: "#475569",
         sub: "3K Roll-Wrapped Carbon Tube (ø35mm OD x ø31mm ID x 460mm)",
-        desc: "The stationary outer telescoping barrels inclined at 12° forward. Tip: Click 'X-Ray Carbon Tubes' in the top bar to make these barrels transparent and see the internal 24V actuator & Delrin bushings inside!",
+        desc: "The stationary outer telescoping barrels inclined at 12° forward. Tip: Click 'X-Ray Carbon' in the top bar to make these barrels transparent and see the internal 24V actuator & Delrin bushings inside!",
         specs: [
           ["Dimensions", "ø35.0 mm OD x ø31.0 mm ID x 460 mm (x2)"],
           ["Role", "Absorbs 100% of lateral/bending load"],
@@ -587,7 +587,7 @@
         tag: "COTS IP65",
         color: "#f43f5e",
         sub: "Standard 6.5\" (165mm) 24V Hall-Sensor Sealed BLDC Hub Motors (DRV-01)",
-        desc: "Global commodity standard hoverboard/AMR robot wheel. Provides active forward walking assist, uphill boost, 40 Nm instant parking brake, UWB autonomous summon, and Seated Power-Glide—with 100% IP65 bathroom waterproofing and zero exposed belts to snag a saree!",
+        desc: "Global commodity standard hoverboard/AMR robot wheel. Provides active forward walking assist, uphill boost, 40 Nm instant parking brake, Valet Park/Fetch, and Seated Power-Glide—with 100% IP65 bathroom waterproofing and zero exposed belts to snag a saree!",
         specs: [
           ["Diameter / Tire", "165 mm (6.5\") Solid High-Grip Shock PU Rubber"],
           ["Motor & Control", "24V 3-Phase BLDC + 5-Pin Hall + Sinusoidal FOC"],
@@ -600,14 +600,14 @@
       },
       {
         id: "CNC_CASTER_FORK",
-        name: "10. Front 74mm CNC Caster Forks",
+        name: "10. Front 74mm Anti-Yaw Caster Forks",
         tag: "CNC 7075",
         color: "#3b82f6",
-        sub: "Low-Profile Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) + SKF 51104 Thrust Bearing",
-        desc: "Custom low-slung 7075-T6 swivel fork with an integrated pocket for a standard SKF 51104 axial thrust ball bearing (20x35x10 mm). Keeps total front nose height at just 74.0 mm (2.9\") so it slides under any low bed or sofa.",
+        sub: "Low-Profile Swivel Fork (inhouse_twin_64mm_caster_fork.dxf) + SKF 51104 + 0° Yaw Detent",
+        desc: "Custom low-slung 7075-T6 swivel fork with an SKF 51104 axial thrust bearing AND an M6 spring ball-plunger 0° directional detent so the walker tracks straight on wet sloped bathroom tiles without sideways fishtailing.",
         specs: [
           ["Total Nose Height", "74.0 mm (2.9\") from floor to top of carbon leg"],
-          ["Swivel Bearing", "SKF 51104 Axial Thrust Ball Bearing + M10 Kingpin"],
+          ["Anti-Yaw Detent", "0° Ball-Plunger (breaks out smoothly >18 N turn)"],
           ["Caster Trail", "18.0 mm trail for flutter-free tracking"]
         ],
         links: [
@@ -620,16 +620,16 @@
       },
       {
         id: "SKATE_WHEELS",
-        name: "11. Twin 64mm 82A Skate PU Wheels",
+        name: "11. Twin 64mm Wheels & Hair Shields",
         tag: "DECATHLON",
         color: "#10b981",
         colorHex: 0x10b981,
-        sub: "4x Oxelo 64mm 82A High-Rebound Inline Skate PU Wheels + ABEC-9 608RS Bearings",
-        desc: "Twin 64 mm soft 82A polyurethane skate wheels per front fork cut swivel scrubbing resistance in half on bathroom tiles, roll silently over grout lines, and climb 15–40 mm marble thresholds effortlessly.",
+        sub: "4x Oxelo 64mm 82A Inline Skate PU Wheels + ABEC-9 608RS + Labyrinth Anti-Hair Shields",
+        desc: "Twin 64 mm soft 82A polyurethane skate wheels per front fork with snap-fit Labyrinth Anti-Hair Axle Shields so floor hair never jams the bearings.",
         specs: [
           ["Wheel Spec", "64 mm Dia x 24 mm Width, 82A Durometer PU"],
-          ["Bearings", "Sealed ABEC-9 608RS (8 mm M8x75 stainless axle)"],
-          ["Cost (4 Wheels + Bearings)", "₹1,400 (Decathlon India + Amazon)"]
+          ["Bearings & Shield", "ABEC-9 608RS + Labyrinth Anti-Hair Caps"],
+          ["Cost (4 Wheels + Bearings)", "₹1,550 (Decathlon India + Amazon)"]
         ],
         links: [{ label: "View Sheet 4 Blueprint", url: "../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg" }],
         bp: "../hardware/blueprints/blueprint_04_front_74mm_twin_skate_caster.svg",
@@ -637,15 +637,15 @@
       },
       {
         id: "CNC_SADDLE_HINGE",
-        name: "12. 180° Split-Saddle Pivot Hinges",
+        name: "12. 3-Mode Saddle & Shin Pivot Hinges",
         tag: "CNC 7075",
         color: "#2563eb",
-        sub: "Clamping Bearing Pivot (saddle_180_pivot_hinge.dxf) + Dual 608RS Flanged Bearings",
-        desc: "Clamps onto the ø30 mm inner telescoping carbon tubes so the seat rises and lowers from 420 mm to 713 mm. Houses dual 608RS flanged bearings and spring ball detents at 0° (latched) and 180° (flushed outward).",
+        sub: "3-Position Detent Hinge (0° Seated / 90° Knee-Scooter / 180° Open) — saddle_180_pivot_hinge.dxf",
+        desc: "Clamps onto the carbon columns with 3 precision pin-detent positions: 180° (swung flush outward against the side tubes for 100% open walking stride), 90° (Single-Leg Ankle-Fracture Knee-Scooter mode), and 0° (latched seat/shin support).",
         specs: [
           ["Material", "7075-T6 Aluminum (12 mm) + 4x 608RS Bearings"],
-          ["Rotation Range", "0° (Seated) to 180° (Open Walk-In / Commode)"],
-          ["Weight Sensing", "4x 50 kg Half-Bridge Strain Gauges (HX711)"]
+          ["3 Detent Angles", "0° (Seated) / 90° (Knee-Scooter) / 180° (Walking)"],
+          ["Seat Switch", "Waterproof IP67 Cushion Micro-Switch + Reed Switch"]
         ],
         links: [
           { label: "Download DXF", url: "../hardware/cnc_7075/saddle_180_pivot_hinge.dxf" },
@@ -657,15 +657,15 @@
       },
       {
         id: "SADDLE_PADS",
-        name: "13. 180° Cushioned Split-Saddle Pads",
-        tag: "PAD-01",
+        name: "13. 180° Split-Saddle & Flip-Away Shin Pads",
+        tag: "PAD-01/03",
         color: "#f59e0b",
-        sub: "Closed-Cell EVA Foam + Wipe-Clean Antibacterial Marine Vinyl (Left & Right)",
-        desc: "Use the '180° Split-Saddle Swing' slider below to swing the two halves outward! When open (180°), the user walks straight in or backs over the toilet with zero canvas straps. Swing them together behind the hips to sit or perch.",
+        sub: "Split EVA Saddle Pads + Split 180° Flip-Away Anterior Tibial Shin Pads (Zero Leg Obstruction!)",
+        desc: "Both the Split-Saddle Pads AND the Anterior Tibial Shin Pads swing 180° outward flush against the side columns during walking so your legs, knees, and shins NEVER hit a front bar! Swing them inward (0°) only when rising from a low toilet or sitting.",
         specs: [
-          ["Height Range", "420 mm (Toilet/Bed) to 713 mm (Kitchen Perch)"],
-          ["Upholstery", "Waterproof Antibacterial Marine Vinyl over EVA"],
-          ["Cost (Pair)", "₹1,200 (Local Car Seat Upholsterer)"]
+          ["Walking Mode (180°)", "Swung flush against side tubes (100% open stride)"],
+          ["Toilet Rise Mode (0°)", "Shin pads brace tibia at 340mm; saddle lifts to 713mm"],
+          ["Knee-Scooter (90°)", "1 pad locked at 450mm for fractured ankle offloading"]
         ],
         links: [{ label: "View Sheet 5 Blueprint", url: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg" }],
         bp: "../hardware/blueprints/blueprint_05_split_saddle_180_hinge_and_latch.svg",
@@ -693,15 +693,15 @@
       },
       {
         id: "UPPER_HALO",
-        name: "15. Upper ø25mm Halo & Grip Pods",
+        name: "15. Deep-Bowed Halo & 8° Forearm Troughs",
         tag: "CF-05/06",
         color: "#38bdf8",
-        sub: "ø25x21mm Carbon Halo + Ergonomic Nylon PA12 Handle Pods (FSR406 + Thumb Rocker)",
-        desc: "Rigid forearm & hand support halo at the top of the lifting columns (580 mm -> 873 mm height). Houses the FSR406 grip pressure sensors (for effortless power-assist walking) and the Thumb Glide Rocker (for Seated Power-Glide).",
+        sub: "Deep-Bowed ø25mm Torso Halo (z=+320mm) + Contoured 8° EVA Forearm Support Troughs (PWB Coach)",
+        desc: "Bowed +320 mm forward at the front so the user can step deep inside the frame without chest or knee interference. Features contoured 8° EVA Forearm Troughs with embedded FSR406 sensors for the Graduated Weight-Bearing (PWB) Rehab Coach.",
         specs: [
-          ["Carbon Tube", "ø25 mm OD x ø21 mm ID (2x 420mm + 1x 415mm)"],
-          ["Handle Pods", "ergo_handle_pod_left_right.stl (PA12 Nylon)"],
-          ["Embedded Sensors", "2x FSR406 Grip + 2x Qorvo DW3000 UWB Anchors"]
+          ["Forward Bow Depth", "+320 mm ahead of columns (deep torso clearance)"],
+          ["Forearm Troughs", "8° Upward Tilt EVA Cuffs + Velcro Straps"],
+          ["Embedded Sensors", "2x FSR406 PWB Rehab Coach + Thumb Glide Rocker"]
         ],
         links: [
           { label: "Download Handle Pod STL", url: "../hardware/3d_print/ergo_handle_pod_left_right.stl" }
@@ -711,18 +711,17 @@
       },
       {
         id: "KITCHEN_TRAY_AND_SENSORS",
-        name: "16. MGN9C Kitchen Tray, LiDAR & LiFePO4",
-        tag: "TRY/BAT/LID",
+        name: "16. Swing-Away Tray, Side LiFePO4 & 2AM LED",
+        tag: "TRY/BAT/TOF",
         color: "#06b6d4",
-        sub: "Dual MGN9C 300mm Stainless Linear Rails + 6mm Lexan Tray + LD19 LiDAR + 24V LiFePO4",
-        desc: "Use the 'Kitchen Tray Slide' slider below to extend the 6 mm clear polycarbonate tray +300 mm forward over a kitchen counter! Also includes the front nose LD19 360° LiDAR, VL53L1X cliff sensors, and 1.04 kg 24V 6Ah LiFePO4 anti-tip battery ballast.",
+        sub: "90° Swing-Away Polycarbonate Tray + Twin Side-Rail LiFePO4 Pods + Dual VL53L1X + 2AM PIR LED",
+        desc: "The 5 mm polycarbonate utility tray pivots 90° outward to the side so it never blocks torso lean or foot visibility! And the 24V LiFePO4 battery is split into two slim side-rail pods along the outer left/right base tubes so the center floor walking channel is 100% open.",
         specs: [
-          ["Linear Rails", "2x Standard MGN9C 300 mm Stainless Rails & Carriages"],
-          ["Tray Dimensions", "420 mm x 280 mm x 6 mm Clear Polycarbonate"],
-          ["Sensors & Battery", "LD19 360° LiDAR + VL53L1X Cliff + 24V 6Ah LiFePO4"]
+          ["Swing-Away Tray", "380 x 220 x 5 mm Lexan (pivots 0° to 110° aside)"],
+          ["Side-Rail Battery Pods", "2x Slim 500g LiFePO4 Pods on outer side rails"],
+          ["Safety & Nightlight", "Dual VL53L1X ToF + RF Valet Remote + 2AM PIR LED"]
         ],
         links: [
-          { label: "Download LiDAR Shroud STL", url: "../hardware/3d_print/lidar_nose_shroud.stl" },
           { label: "View Sheet 6 Wiring", url: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg" }
         ],
         bp: "../hardware/blueprints/blueprint_06_kitchen_tray_and_electronics_wiring.svg",
@@ -789,6 +788,7 @@
       skatePU: new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.2, metalness: 0.1, transparent: true, opacity: 0.88 }),
       thrustBrg: new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.25, metalness: 0.85 }),
       saddlePad: new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.45, metalness: 0.1 }),
+      shinPadMat: new THREE.MeshStandardMaterial({ color: 0x0ea5e9, roughness: 0.4, metalness: 0.1 }),
       latchGreen: new THREE.MeshStandardMaterial({ color: 0x16a34a, roughness: 0.25, metalness: 0.75 }),
       lexanTray: new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.1, metalness: 0.1, transparent: true, opacity: 0.55 }),
       battery: new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.35, metalness: 0.3 }),
@@ -822,22 +822,26 @@
     }
 
     // Key Walker Dimensions (1 unit = 1 mm)
-    // X: Left (-215) to Right (+215) -> 430mm center-to-center column spacing, 495mm total outer width
-    // Y: Vertical height from floor (0 = floor)
-    // Z: Rear (-250) to Front (+280) -> 530-580mm wheelbase
     const COL_X = 215;
     const BASE_Y = 66;
     const RAKE_RAD = (12 * Math.PI) / 180;
 
-    // 1. CF_BASE: Lower ø30mm U-Base Legs (Left, Right, and Front Nose Bridge)
+    // 1. CF_BASE: Open-Stride Lower ø30mm Side Base Rails (ZERO low front crossbar at ankle height!)
+    //    Instead, left & right stationary outer barrels are bridged at y = 505 mm (above knee height)
+    //    by a Deep Forward-Bowed Carbon Portal Arch (z = +320 mm) so feet & shins have 100% open stride clearance!
     [-COL_X, COL_X].forEach(x => {
       const leg = makeTube(15, 520, mats.carbon, "CF_BASE");
       leg.rotation.x = Math.PI / 2;
       leg.position.set(x, BASE_Y, 10);
+
+      // Forward-extending side arms of the High-Clearance Portal Arch (at y = 505 mm, top of ø35mm outer barrel)
+      const highArchSide = makeTube(13, 210, mats.carbon, "CF_BASE");
+      highArchSide.rotation.x = Math.PI / 2;
+      highArchSide.position.set(x, 505, 215);
     });
-    const frontBridge = makeTube(15, 430, mats.carbon, "CF_BASE");
-    frontBridge.rotation.z = Math.PI / 2;
-    frontBridge.position.set(0, BASE_Y, 265);
+    const highArchFront = makeTube(13, 430, mats.carbon, "CF_BASE");
+    highArchFront.rotation.z = Math.PI / 2;
+    highArchFront.position.set(0, 505, 320);
 
     // 2. CNC_BASE_LUG: 12-Deg Forward-Inclined CNC 7075-T6 Base Lugs (Left & Right)
     [-COL_X, COL_X].forEach(x => {
@@ -978,9 +982,10 @@
       skateWheels.push({ group: swGroup, baseX: x, sign });
     });
 
-    // 12, 13, 14. 180° SPLIT-SADDLE HINGES, PADS & N52 CONICAL SHEAR LATCH
+    // 12, 13, 14. 180° SPLIT-SADDLE HINGES, PADS, SPLIT FLIP-AWAY SHIN PADS & N52 CONICAL LATCH
     const saddleHinges = [];
     const saddleArms = [];
+    const shinFlipPads = [];
     const latchParts = [];
 
     [-COL_X, COL_X].forEach((x, idx) => {
@@ -1001,6 +1006,20 @@
       partGroups["SADDLE_PADS"].add(pivotGroup);
       saddleArms.push({ group: pivotGroup, x, sign });
 
+      // Split 180° Flip-Away Anterior Tibial Shin Pads (on outer column at y=340mm)
+      // Swings 180° OUT flush with the side tubes when walking so shins NEVER hit a bar!
+      const shinGroup = new THREE.Group();
+      const shinArm = new THREE.Mesh(new THREE.BoxGeometry(135, 12, 24), mats.stainless);
+      shinArm.position.set(-sign * 72, 0, 38);
+      shinArm.userData.partId = "SADDLE_PADS";
+      const sPad = new THREE.Mesh(new THREE.BoxGeometry(125, 52, 24), mats.shinPadMat);
+      sPad.position.set(-sign * 76, 0, 26);
+      sPad.userData.partId = "SADDLE_PADS";
+      shinGroup.add(shinArm, sPad);
+      shinGroup.position.set(x, 340, 68);
+      partGroups["SADDLE_PADS"].add(shinGroup);
+      shinFlipPads.push({ group: shinGroup, x, sign });
+
       // Center N52 + Conical Stainless Shear-Pin Latch Half
       const lGroup = new THREE.Group();
       const latchBlock = new THREE.Mesh(new THREE.BoxGeometry(28, 26, 68), mats.latchGreen);
@@ -1008,7 +1027,6 @@
       latchBlock.userData.partId = "CNC_SADDLE_LATCH";
       lGroup.add(latchBlock);
       if (idx === 0) {
-        // Add twin 10mm 304SS 45-deg Conical Shear Pins + N52 Magnet
         [-18, 18].forEach(pz => {
           const pin = new THREE.Mesh(new THREE.ConeGeometry(6, 22, 16), mats.stainless);
           pin.rotation.z = -Math.PI / 2;
@@ -1021,12 +1039,12 @@
       latchParts.push({ group: lGroup, x, sign });
     });
 
-    // 15. UPPER_HALO: ø25mm Carbon Support Halo, Contoured 8° EVA Forearm Support Troughs & Upright Grip Posts
+    // 15. UPPER_HALO: Deep-Bowed ø25mm Carbon Support Halo (z = +320mm), 8° EVA Forearm Troughs & Grip Posts
     const haloGroup = new THREE.Group();
     [-COL_X, COL_X].forEach(x => {
-      const sideArm = new THREE.Mesh(new THREE.CylinderGeometry(12.5, 12.5, 360, 24), mats.carbon);
+      const sideArm = new THREE.Mesh(new THREE.CylinderGeometry(12.5, 12.5, 480, 24), mats.carbon);
       sideArm.rotation.x = Math.PI / 2;
-      sideArm.position.set(x, 0, -40);
+      sideArm.position.set(x, 0, -20);
       sideArm.userData.partId = "UPPER_HALO";
       // Contoured 8-Deg EVA Forearm Support Gutter Trough
       const trough = new THREE.Mesh(new THREE.BoxGeometry(74, 18, 220), mats.saddlePad);
@@ -1035,43 +1053,41 @@
       trough.userData.partId = "UPPER_HALO";
       // Upright Hand Grip Post with FSR406 PWB Rehab Coach Sensor
       const gripPost = new THREE.Mesh(new THREE.CylinderGeometry(14, 14, 95, 20), mats.hubShell);
-      gripPost.position.set(x, 58, 10);
+      gripPost.position.set(x, 58, 35);
       gripPost.userData.partId = "UPPER_HALO";
       haloGroup.add(sideArm, trough, gripPost);
     });
+    // Deep-bowed front torso bar at z = +220mm relative to column top (= +320mm ahead of base)
     const topCross = new THREE.Mesh(new THREE.CylinderGeometry(12.5, 12.5, 430, 24), mats.carbon);
     topCross.rotation.z = Math.PI / 2;
-    topCross.position.set(0, 0, 155);
+    topCross.position.set(0, 0, 220);
     topCross.userData.partId = "UPPER_HALO";
     haloGroup.add(topCross);
     partGroups["UPPER_HALO"].add(haloGroup);
 
-    // 16. CLINICAL ERGONOMICS: Swing-Away Tray, Anterior Shin Block Pad, Fold-Down Footrest Pegs, LiFePO4 & 2AM Nightlight
-    const railsGroup = new THREE.Group();
-    const trayMesh = new THREE.Mesh(new THREE.BoxGeometry(380, 8, 220), mats.lexanTray);
-    trayMesh.position.set(0, 18, 45);
+    // 16. CLINICAL ERGONOMICS: 90° Swing-Away Utility Tray, Fold-Down Footrest Pegs & Side-Rail LiFePO4 Pods
+    // Pivot group anchored on the LEFT upper halo rail (-COL_X) so tray swings 90° OUT of the walking zone!
+    const trayPivotGroup = new THREE.Group();
+    const trayMesh = new THREE.Mesh(new THREE.BoxGeometry(370, 8, 210), mats.lexanTray);
+    trayMesh.position.set(185, 22, 0);
     trayMesh.userData.partId = "KITCHEN_TRAY_AND_SENSORS";
-    railsGroup.add(trayMesh);
-    partGroups["KITCHEN_TRAY_AND_SENSORS"].add(railsGroup);
-
-    // Anterior Tibial Shin Block Pad (prevents knee buckling during toilet sit-to-stand!)
-    const shinBar = makeTube(10, 430, mats.carbon, "KITCHEN_TRAY_AND_SENSORS");
-    shinBar.rotation.z = Math.PI / 2;
-    shinBar.position.set(0, 340, 95);
-    const shinPad = makeBox(310, 56, 28, mats.saddlePad, "KITCHEN_TRAY_AND_SENSORS");
-    shinPad.position.set(0, 340, 82);
+    trayPivotGroup.add(trayMesh);
+    partGroups["KITCHEN_TRAY_AND_SENSORS"].add(trayPivotGroup);
 
     // Fold-Down Aluminum Footrest Pegs on Lower Carbon Base (for Seated Power-Glide!)
-    [-COL_X + 28, COL_X - 28].forEach(px => {
-      const peg = makeBox(65, 12, 34, mats.stainless, "CF_BASE");
+    [-COL_X + 24, COL_X - 24].forEach(px => {
+      const peg = makeBox(48, 10, 32, mats.stainless, "CF_BASE");
       peg.position.set(px, BASE_Y + 4, 115);
     });
 
-    // Front Nose LiFePO4 Battery Pack + Dual VL53L1X ToF + 2AM Amber Motion Nightlight
-    const batteryBox = makeBox(190, 48, 82, mats.battery, "KITCHEN_TRAY_AND_SENSORS");
-    batteryBox.position.set(0, BASE_Y + 22, 225);
-    const lidarPuck = makeBox(120, 22, 28, mats.lidar, "KITCHEN_TRAY_AND_SENSORS");
-    lidarPuck.position.set(0, BASE_Y + 32, 272);
+    // Twin Slim Side-Rail LiFePO4 Battery Pods + Dual VL53L1X ToF + 2AM PIR Nightlight
+    // Mounted flush along the outer left & right base tubes so center floor stride channel is 100% open!
+    [-COL_X, COL_X].forEach(x => {
+      const pod = makeBox(34, 44, 150, mats.battery, "KITCHEN_TRAY_AND_SENSORS");
+      pod.position.set(x, BASE_Y + 34, 155);
+      const tofSensor = makeBox(28, 18, 24, mats.lidar, "KITCHEN_TRAY_AND_SENSORS");
+      tofSensor.position.set(x, BASE_Y + 24, 255);
+    });
 
     // =========================================================================
     // REAL-TIME KINEMATICS & EXPLODED VIEW UPDATE ENGINE
@@ -1092,7 +1108,7 @@
       const exp = parseFloat(slExplode.value) / 100.0;
       const lift = parseFloat(slLift.value); // 0..300 mm
       const saddleDeg = parseFloat(slSaddle.value); // 0..180 deg
-      const traySlide = parseFloat(slTray.value); // 0..300 mm
+      const trayDeg = parseFloat(slTray.value); // 0..110 deg swing-away angle
 
       const saddleHeightMm = Math.round(420 + lift * Math.cos(RAKE_RAD));
       const fwdShiftMm = Math.round(lift * Math.sin(RAKE_RAD));
@@ -1101,8 +1117,8 @@
       document.getElementById("valLift").textContent = `${Math.round(lift)} mm (Saddle: ${saddleHeightMm}mm, +${fwdShiftMm}mm FWD)`;
       document.getElementById("valSaddle").textContent = kneeScooterMode
         ? "90° Single-Leg Knee Scooter"
-        : `${Math.round(saddleDeg)}° ${saddleDeg < 5 ? "(Latched)" : "(Open Walk-In)"}`;
-      document.getElementById("valTray").textContent = `+${Math.round(traySlide)} mm`;
+        : `${Math.round(saddleDeg)}° ${saddleDeg < 15 ? "(Latched Seat & Shin)" : "(100% Open Stride!)"}`;
+      document.getElementById("valTray").textContent = `${Math.round(trayDeg)}° ${trayDeg > 45 ? "(Swung Clear)" : "(In Use)"}`;
 
       // Base elevation along 12° column rake
       const plungerBaseDist = 250 + lift;
@@ -1172,7 +1188,7 @@
         group.position.set(baseX + sign * exp * 95, 32 - exp * 65, 255 + exp * 85);
       });
 
-      // Update 180° Split-Saddle Hinges, Saddle Arms & Center Conical Latch
+      // Update 180° Split-Saddle Hinges, Saddle Arms, Split Flip-Away Shin Pads & Center Latch
       const saddleDist = 310 + lift;
       const saddleY = BASE_Y + 20 + Math.cos(RAKE_RAD) * saddleDist;
       const saddleZ = 20 + Math.sin(RAKE_RAD) * saddleDist;
@@ -1184,9 +1200,14 @@
 
       saddleArms.forEach(({ group, x, sign }, idx) => {
         group.position.set(x + sign * exp * 45, saddleY, saddleZ - 10 - exp * 50);
-        // In 90° Single-Leg Knee-Scooter Mode: Right pad locks at 0° center for injured knee; Left pad swings 180° open!
         const angle = kneeScooterMode ? (idx === 1 ? 0 : Math.PI) : sign * swingRad;
         group.rotation.y = angle;
+      });
+
+      shinFlipPads.forEach(({ group, x, sign }) => {
+        group.position.set(x + sign * exp * 45, 340, 68 + exp * 35);
+        // Flip outward 180° when walking or in knee-scooter mode so shins have 100% open clearance!
+        group.rotation.y = kneeScooterMode ? -sign * Math.PI * 0.85 : -sign * swingRad;
       });
 
       latchParts.forEach(({ group, x, sign }, idx) => {
@@ -1195,13 +1216,13 @@
         group.rotation.y = angle;
       });
 
-      // Update Upper Halo & Swing-Away Utility Tray
+      // Update Upper Halo & 90° Swing-Away Utility Tray
       const haloY = BASE_Y + 20 + Math.cos(RAKE_RAD) * (topDist + 18) + exp * 165;
       const haloZ = 20 + Math.sin(RAKE_RAD) * (topDist + 18);
       haloGroup.position.set(0, haloY, haloZ);
 
-      railsGroup.position.set(0, haloY + exp * 55, haloZ);
-      trayMesh.position.z = 45 + traySlide;
+      trayPivotGroup.position.set(-COL_X, haloY + exp * 55, haloZ + 80);
+      trayPivotGroup.rotation.y = (trayDeg * Math.PI) / 180;
     }
 
     function toggleKneeScooterMode() {
