@@ -343,13 +343,13 @@
     <!-- CENTER: INTERACTIVE 3D THREE.JS VIEWPORT -->
     <div class="viewport-wrap">
       <div class="cam-bar">
-        <button class="btn active" onclick="setCameraView('iso')">3D Isometric</button>
-        <button class="btn" onclick="setCameraView('front')">Front (495mm Doorway)</button>
+        <button class="btn active" id="modeSeatBtn" onclick="setWalkerMode('seat')">🪑 Mode: Seated / Lift (Flaps Closed)</button>
+        <button class="btn" id="modeWalkBtn" onclick="setWalkerMode('walk')">🚶 Mode: Open Walk-In (Flaps Folded 180°)</button>
+        <button class="btn amber" id="kneeBtn" onclick="setWalkerMode('knee')">🦵 Mode: 90° Knee-Scooter</button>
+        <button class="btn" onclick="setCameraView('iso')">3D Isometric</button>
+        <button class="btn" onclick="setCameraView('seatZoom')">Zoom: Seat Flaps & Latch</button>
         <button class="btn" onclick="setCameraView('side')">Side (12° Rake)</button>
-        <button class="btn" onclick="setCameraView('top')">Top (Saddle & Troughs)</button>
-        <button class="btn" onclick="setCameraView('caster')">Zoom: 74mm Anti-Yaw Caster</button>
-        <button class="btn" onclick="setCameraView('column')">Zoom: Actuator Column</button>
-        <button class="btn amber" id="kneeBtn" onclick="toggleKneeScooterMode()">Mode: 90° Knee-Scooter</button>
+        <button class="btn" onclick="setCameraView('top')">Top View</button>
         <button class="btn amber" id="xrayBtn" onclick="toggleXray()">X-Ray Carbon: OFF</button>
         <button class="btn green" id="glideBtn" onclick="toggleGlideDemo()">Demo: Seated Power-Glide</button>
       </div>
@@ -363,16 +363,16 @@
           <input type="range" id="slExplode" min="0" max="100" value="0" />
         </div>
         <div class="slider-group">
-          <label><span>LIFT STROKE (12° RAKE)</span><span id="valLift">80 mm (Saddle: 498mm)</span></label>
+          <label><span>SEAT LIFT HEIGHT (12° RAKE)</span><span id="valLift">80 mm (Seat: 498mm)</span></label>
           <input type="range" id="slLift" min="0" max="300" value="80" />
         </div>
         <div class="slider-group">
-          <label><span>180° SPLIT-SADDLE & SHIN PADS</span><span id="valSaddle">180° (Open Walk-In)</span></label>
-          <input type="range" id="slSaddle" min="0" max="180" value="180" />
+          <label><span>SEAT FLAPS SWING (0°=SIT, 180°=WALK)</span><span id="valSaddle">0° (Flaps Closed — Ready to Sit!)</span></label>
+          <input type="range" id="slSaddle" min="0" max="180" value="0" />
         </div>
         <div class="slider-group">
-          <label><span>SWING-AWAY TRAY PIVOT</span><span id="valTray">90° (Swung Clear)</span></label>
-          <input type="range" id="slTray" min="0" max="110" value="90" />
+          <label><span>SHIN PADS & TRAY SWING-AWAY</span><span id="valTray">180° (Swung Clear of Legs)</span></label>
+          <input type="range" id="slTray" min="0" max="180" value="180" />
         </div>
       </div>
     </div>
@@ -994,20 +994,33 @@
       const hinge = makeBox(48, 36, 56, mats.cncBlue, "CNC_SADDLE_HINGE");
       saddleHinges.push({ mesh: hinge, x, sign });
 
-      // Pivoting Saddle Pad Group
+      // Pivoting Cushioned Seat Flap Group (Left & Right Split-Saddle Seat Halves)
       const pivotGroup = new THREE.Group();
-      const armBar = new THREE.Mesh(new THREE.BoxGeometry(175, 14, 44), mats.stainless);
-      armBar.position.set(-sign * 92, 0, -35);
+      const armBar = new THREE.Mesh(new THREE.BoxGeometry(185, 16, 60), mats.stainless);
+      armBar.position.set(-sign * 95, 0, -45);
       armBar.userData.partId = "SADDLE_PADS";
-      const pad = new THREE.Mesh(new THREE.BoxGeometry(165, 28, 125), mats.saddlePad);
-      pad.position.set(-sign * 95, 16, -35);
+
+      // Main Contoured Seat Flap Cushion (180mm wide x 38mm thick x 210mm front-to-back depth)
+      const pad = new THREE.Mesh(new THREE.BoxGeometry(178, 38, 210), mats.saddlePad);
+      pad.position.set(-sign * 98, 24, -45);
       pad.userData.partId = "SADDLE_PADS";
-      pivotGroup.add(armBar, pad);
+
+      // Raised Rear Pelvic / Lower-Back Support Lip on the back of each Seat Flap
+      const backLip = new THREE.Mesh(new THREE.BoxGeometry(174, 48, 28), mats.saddlePad);
+      backLip.position.set(-sign * 98, 52, -136);
+      backLip.userData.partId = "SADDLE_PADS";
+
+      // Raised Outer Hip-Bolster Side Edge
+      const sideBolster = new THREE.Mesh(new THREE.BoxGeometry(24, 22, 195), mats.actuatorBody);
+      sideBolster.position.set(-sign * 22, 46, -45);
+      sideBolster.userData.partId = "SADDLE_PADS";
+
+      pivotGroup.add(armBar, pad, backLip, sideBolster);
       partGroups["SADDLE_PADS"].add(pivotGroup);
       saddleArms.push({ group: pivotGroup, x, sign });
 
       // Split 180° Flip-Away Anterior Tibial Shin Pads (on outer column at y=340mm)
-      // Swings 180° OUT flush with the side tubes when walking so shins NEVER hit a bar!
+      // Controlled by Slider #4 so they stay swung 180° OUT of the way unless braced in for Toilet Rise!
       const shinGroup = new THREE.Group();
       const shinArm = new THREE.Mesh(new THREE.BoxGeometry(135, 12, 24), mats.stainless);
       shinArm.position.set(-sign * 72, 0, 38);
@@ -1020,17 +1033,17 @@
       partGroups["SADDLE_PADS"].add(shinGroup);
       shinFlipPads.push({ group: shinGroup, x, sign });
 
-      // Center N52 + Conical Stainless Shear-Pin Latch Half
+      // Center N52 + Conical Stainless Shear-Pin Latch Half (locks the 2 Seat Flaps together in the middle)
       const lGroup = new THREE.Group();
-      const latchBlock = new THREE.Mesh(new THREE.BoxGeometry(28, 26, 68), mats.latchGreen);
-      latchBlock.position.set(-sign * 182, 6, -35);
+      const latchBlock = new THREE.Mesh(new THREE.BoxGeometry(32, 34, 90), mats.latchGreen);
+      latchBlock.position.set(-sign * 184, 14, -45);
       latchBlock.userData.partId = "CNC_SADDLE_LATCH";
       lGroup.add(latchBlock);
       if (idx === 0) {
-        [-18, 18].forEach(pz => {
-          const pin = new THREE.Mesh(new THREE.ConeGeometry(6, 22, 16), mats.stainless);
+        [-22, 22].forEach(pz => {
+          const pin = new THREE.Mesh(new THREE.ConeGeometry(7, 26, 16), mats.stainless);
           pin.rotation.z = -Math.PI / 2;
-          pin.position.set(168, 6, -35 + pz);
+          pin.position.set(170, 14, -45 + pz);
           pin.userData.partId = "CNC_SADDLE_LATCH";
           lGroup.add(pin);
         });
@@ -1107,18 +1120,18 @@
     function updateKinematics() {
       const exp = parseFloat(slExplode.value) / 100.0;
       const lift = parseFloat(slLift.value); // 0..300 mm
-      const saddleDeg = parseFloat(slSaddle.value); // 0..180 deg
-      const trayDeg = parseFloat(slTray.value); // 0..110 deg swing-away angle
+      const saddleDeg = parseFloat(slSaddle.value); // 0..180 deg (0° = Seat Flaps Closed/Latched, 180° = Folded Out for Walking)
+      const shinTrayDeg = parseFloat(slTray.value); // 0..180 deg (180° = Shin Pads & Tray Swung Out of Way, 0° = Braced In)
 
       const saddleHeightMm = Math.round(420 + lift * Math.cos(RAKE_RAD));
       const fwdShiftMm = Math.round(lift * Math.sin(RAKE_RAD));
 
       document.getElementById("valExplode").textContent = `${Math.round(exp * 100)}%`;
-      document.getElementById("valLift").textContent = `${Math.round(lift)} mm (Saddle: ${saddleHeightMm}mm, +${fwdShiftMm}mm FWD)`;
+      document.getElementById("valLift").textContent = `${Math.round(lift)} mm (Seat: ${saddleHeightMm}mm, +${fwdShiftMm}mm FWD)`;
       document.getElementById("valSaddle").textContent = kneeScooterMode
-        ? "90° Single-Leg Knee Scooter"
-        : `${Math.round(saddleDeg)}° ${saddleDeg < 15 ? "(Latched Seat & Shin)" : "(100% Open Stride!)"}`;
-      document.getElementById("valTray").textContent = `${Math.round(trayDeg)}° ${trayDeg > 45 ? "(Swung Clear)" : "(In Use)"}`;
+        ? "90° Single-Leg Knee Scooter (1 Flap In, 1 Out)"
+        : `${Math.round(saddleDeg)}° ${saddleDeg < 15 ? "(Seat Flaps Closed — Ready to Sit!)" : "(Flaps Folded Out for Walking)"}`;
+      document.getElementById("valTray").textContent = `${Math.round(shinTrayDeg)}° ${shinTrayDeg > 45 ? "(Swung Clear of Legs)" : "(Braced In for Toilet Rise)"}`;
 
       // Base elevation along 12° column rake
       const plungerBaseDist = 250 + lift;
@@ -1188,11 +1201,12 @@
         group.position.set(baseX + sign * exp * 95, 32 - exp * 65, 255 + exp * 85);
       });
 
-      // Update 180° Split-Saddle Hinges, Saddle Arms, Split Flip-Away Shin Pads & Center Latch
+      // Update 180° Split-Saddle Hinges, Seat Flaps, Split Flip-Away Shin Pads & Center Latch
       const saddleDist = 310 + lift;
       const saddleY = BASE_Y + 20 + Math.cos(RAKE_RAD) * saddleDist;
       const saddleZ = 20 + Math.sin(RAKE_RAD) * saddleDist;
       const swingRad = (saddleDeg * Math.PI) / 180;
+      const shinSwingRad = (shinTrayDeg * Math.PI) / 180;
 
       saddleHinges.forEach(({ mesh, x, sign }) => {
         mesh.position.set(x + sign * exp * 60, saddleY, saddleZ - 10);
@@ -1206,8 +1220,7 @@
 
       shinFlipPads.forEach(({ group, x, sign }) => {
         group.position.set(x + sign * exp * 45, 340, 68 + exp * 35);
-        // Flip outward 180° when walking or in knee-scooter mode so shins have 100% open clearance!
-        group.rotation.y = kneeScooterMode ? -sign * Math.PI * 0.85 : -sign * swingRad;
+        group.rotation.y = -sign * shinSwingRad;
       });
 
       latchParts.forEach(({ group, x, sign }, idx) => {
@@ -1222,15 +1235,28 @@
       haloGroup.position.set(0, haloY, haloZ);
 
       trayPivotGroup.position.set(-COL_X, haloY + exp * 55, haloZ + 80);
-      trayPivotGroup.rotation.y = (trayDeg * Math.PI) / 180;
+      trayPivotGroup.rotation.y = Math.min(Math.PI * 0.6, shinSwingRad * 0.6);
     }
 
-    function toggleKneeScooterMode() {
-      kneeScooterMode = !kneeScooterMode;
-      const btn = document.getElementById("kneeBtn");
-      btn.classList.toggle("active", kneeScooterMode);
-      if (kneeScooterMode) {
-        slLift.value = 30; // Ideal 450mm knee height for ankle fracture offloading
+    function setWalkerMode(mode) {
+      document.getElementById("modeSeatBtn").classList.toggle("active", mode === "seat");
+      document.getElementById("modeWalkBtn").classList.toggle("active", mode === "walk");
+      document.getElementById("kneeBtn").classList.toggle("active", mode === "knee");
+
+      if (mode === "seat") {
+        kneeScooterMode = false;
+        slSaddle.value = 0;   // Close & latch both seat flaps in the center!
+        slTray.value = 180;   // Keep shin pads & tray swung out of the way
+        selectPart("SADDLE_PADS", false);
+      } else if (mode === "walk") {
+        kneeScooterMode = false;
+        slSaddle.value = 180; // Fold both seat flaps 180° out flush with the side tubes!
+        slTray.value = 180;   // Keep shin pads & tray swung out of the way for 100% open stride
+      } else if (mode === "knee") {
+        kneeScooterMode = true;
+        slLift.value = 30;    // 450mm knee height for ankle fracture offloading
+        slTray.value = 180;
+        selectPart("SADDLE_PADS", false);
       }
       updateKinematics();
     }
@@ -1329,6 +1355,7 @@
     function setCameraView(preset) {
       const views = {
         iso: { pos: [950, 720, 950], tgt: [0, 360, 0] },
+        seatZoom: { pos: [0, 680, -520], tgt: [0, 440, -20] },
         front: { pos: [0, 420, 1250], tgt: [0, 380, 0] },
         side: { pos: [1250, 420, 20], tgt: [0, 380, 20] },
         top: { pos: [0, 1450, 10], tgt: [0, 360, 0] },
@@ -1337,6 +1364,7 @@
         hub: { pos: [520, 220, -520], tgt: [0, 85, -250] }
       };
       if (preset === "column" && !xrayMode) toggleXray(true);
+      if (preset === "seatZoom") selectPart("SADDLE_PADS", false);
       const v = views[preset];
       if (v) animateCamera(v.pos, v.tgt);
     }
