@@ -1,0 +1,338 @@
+solid forearm_cockpit_mount
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 180.0000 95.0000 0.0000
+      vertex 180.0000 0.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 95.0000 0.0000
+      vertex 180.0000 95.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 6.0000
+      vertex 180.0000 0.0000 6.0000
+      vertex 180.0000 95.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 6.0000
+      vertex 180.0000 95.0000 6.0000
+      vertex 0.0000 95.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 180.0000 0.0000 0.0000
+      vertex 180.0000 0.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 180.0000 0.0000 6.0000
+      vertex 0.0000 0.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 180.0000 95.0000 0.0000
+      vertex 0.0000 95.0000 0.0000
+      vertex 0.0000 95.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 180.0000 95.0000 0.0000
+      vertex 0.0000 95.0000 6.0000
+      vertex 180.0000 95.0000 6.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 0.0000 6.0000
+      vertex 0.0000 95.0000 6.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 0.0000
+      vertex 0.0000 95.0000 6.0000
+      vertex 0.0000 95.0000 0.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 180.0000 0.0000 0.0000
+      vertex 180.0000 95.0000 0.0000
+      vertex 180.0000 95.0000 6.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 180.0000 0.0000 0.0000
+      vertex 180.0000 95.0000 6.0000
+      vertex 180.0000 0.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 6.0000
+      vertex 180.0000 10.0000 6.0000
+      vertex 180.0000 0.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 0.0000 6.0000
+      vertex 0.0000 10.0000 6.0000
+      vertex 180.0000 10.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 32.0000
+      vertex 180.0000 0.0000 32.0000
+      vertex 180.0000 10.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 0.0000 32.0000
+      vertex 180.0000 10.0000 32.0000
+      vertex 0.0000 10.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 6.0000
+      vertex 180.0000 0.0000 6.0000
+      vertex 180.0000 0.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 6.0000
+      vertex 180.0000 0.0000 32.0000
+      vertex 0.0000 0.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 180.0000 10.0000 6.0000
+      vertex 0.0000 10.0000 6.0000
+      vertex 0.0000 10.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 180.0000 10.0000 6.0000
+      vertex 0.0000 10.0000 32.0000
+      vertex 180.0000 10.0000 32.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 6.0000
+      vertex 0.0000 0.0000 32.0000
+      vertex 0.0000 10.0000 32.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 0.0000 6.0000
+      vertex 0.0000 10.0000 32.0000
+      vertex 0.0000 10.0000 6.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 180.0000 0.0000 6.0000
+      vertex 180.0000 10.0000 6.0000
+      vertex 180.0000 10.0000 32.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 180.0000 0.0000 6.0000
+      vertex 180.0000 10.0000 32.0000
+      vertex 180.0000 0.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 85.0000 6.0000
+      vertex 180.0000 95.0000 6.0000
+      vertex 180.0000 85.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 0.0000 85.0000 6.0000
+      vertex 0.0000 95.0000 6.0000
+      vertex 180.0000 95.0000 6.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 85.0000 32.0000
+      vertex 180.0000 85.0000 32.0000
+      vertex 180.0000 95.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 0.0000 85.0000 32.0000
+      vertex 180.0000 95.0000 32.0000
+      vertex 0.0000 95.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 85.0000 6.0000
+      vertex 180.0000 85.0000 6.0000
+      vertex 180.0000 85.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 0.0000 85.0000 6.0000
+      vertex 180.0000 85.0000 32.0000
+      vertex 0.0000 85.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 180.0000 95.0000 6.0000
+      vertex 0.0000 95.0000 6.0000
+      vertex 0.0000 95.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 180.0000 95.0000 6.0000
+      vertex 0.0000 95.0000 32.0000
+      vertex 180.0000 95.0000 32.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 85.0000 6.0000
+      vertex 0.0000 85.0000 32.0000
+      vertex 0.0000 95.0000 32.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 0.0000 85.0000 6.0000
+      vertex 0.0000 95.0000 32.0000
+      vertex 0.0000 95.0000 6.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 180.0000 85.0000 6.0000
+      vertex 180.0000 95.0000 6.0000
+      vertex 180.0000 95.0000 32.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 180.0000 85.0000 6.0000
+      vertex 180.0000 95.0000 32.0000
+      vertex 180.0000 85.0000 32.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 180.0000 15.0000 0.0000
+      vertex 225.0000 80.0000 0.0000
+      vertex 225.0000 15.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 -1.0000
+    outer loop
+      vertex 180.0000 15.0000 0.0000
+      vertex 180.0000 80.0000 0.0000
+      vertex 225.0000 80.0000 0.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 180.0000 15.0000 28.0000
+      vertex 225.0000 15.0000 28.0000
+      vertex 225.0000 80.0000 28.0000
+    endloop
+  endfacet
+  facet normal 0.0000 0.0000 1.0000
+    outer loop
+      vertex 180.0000 15.0000 28.0000
+      vertex 225.0000 80.0000 28.0000
+      vertex 180.0000 80.0000 28.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 180.0000 15.0000 0.0000
+      vertex 225.0000 15.0000 0.0000
+      vertex 225.0000 15.0000 28.0000
+    endloop
+  endfacet
+  facet normal 0.0000 -1.0000 0.0000
+    outer loop
+      vertex 180.0000 15.0000 0.0000
+      vertex 225.0000 15.0000 28.0000
+      vertex 180.0000 15.0000 28.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 225.0000 80.0000 0.0000
+      vertex 180.0000 80.0000 0.0000
+      vertex 180.0000 80.0000 28.0000
+    endloop
+  endfacet
+  facet normal 0.0000 1.0000 0.0000
+    outer loop
+      vertex 225.0000 80.0000 0.0000
+      vertex 180.0000 80.0000 28.0000
+      vertex 225.0000 80.0000 28.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 180.0000 15.0000 0.0000
+      vertex 180.0000 15.0000 28.0000
+      vertex 180.0000 80.0000 28.0000
+    endloop
+  endfacet
+  facet normal -1.0000 0.0000 0.0000
+    outer loop
+      vertex 180.0000 15.0000 0.0000
+      vertex 180.0000 80.0000 28.0000
+      vertex 180.0000 80.0000 0.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 225.0000 15.0000 0.0000
+      vertex 225.0000 80.0000 0.0000
+      vertex 225.0000 80.0000 28.0000
+    endloop
+  endfacet
+  facet normal 1.0000 0.0000 0.0000
+    outer loop
+      vertex 225.0000 15.0000 0.0000
+      vertex 225.0000 80.0000 28.0000
+      vertex 225.0000 15.0000 28.0000
+    endloop
+  endfacet
+endsolid forearm_cockpit_mount

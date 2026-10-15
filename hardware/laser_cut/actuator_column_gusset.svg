@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="170.0mm" height="150.0mm" viewBox="-15.0 -15.0 170.0 150.0">
+  <title>Vertical Actuator & Column Base Gusset (5mm Steel)</title>
+  <g fill="none" stroke="#0055ff" stroke-width="0.5">
+    <polygon points="0.000,120.000 140.000,120.000 140.000,75.000 60.000,0.000 0.000,0.000" />
+  </g>
+  <g fill="none" stroke="#ff0000" stroke-width="0.4">
+    <circle cx="20.000" cy="100.000" r="4.200" />
+    <circle cx="65.000" cy="100.000" r="4.200" />
+    <circle cx="115.000" cy="100.000" r="4.200" />
+    <circle cx="20.000" cy="55.000" r="3.200" />
+    <circle cx="20.000" cy="20.000" r="3.200" />
+    <circle cx="95.000" cy="78.000" r="4.100" />
+  </g>
+</svg>

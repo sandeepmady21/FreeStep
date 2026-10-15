@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="165.0mm" height="120.0mm" viewBox="-15.0 -15.0 165.0 120.0">
+  <title>Split-Saddle Hinge Bracket (6mm Al6061 / Steel)</title>
+  <g fill="none" stroke="#0055ff" stroke-width="0.5">
+    <polygon points="0.000,90.000 110.000,90.000 135.000,65.000 135.000,25.000 110.000,0.000 0.000,0.000" />
+  </g>
+  <g fill="none" stroke="#ff0000" stroke-width="0.4">
+    <circle cx="18.000" cy="72.000" r="3.200" />
+    <circle cx="52.000" cy="72.000" r="3.200" />
+    <circle cx="18.000" cy="18.000" r="3.200" />
+    <circle cx="52.000" cy="18.000" r="3.200" />
+    <circle cx="105.000" cy="45.000" r="5.100" />
+    <circle cx="73.000" cy="45.000" r="4.100" />
+    <circle cx="105.000" cy="13.000" r="4.100" />
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+Subsystem,Item Name,Specification,Qty,Preferred India Source,Unit Price (INR),Total Price (INR)
+Vertical Lift,Heavy-Duty Electric Linear Actuator,"24V DC, 1500N (150kgf), 250mm Stroke, IP65, Hall Sensor Feedback",2,Robu.in / IndiaMART,2600,5200
+Width Morph,Compact Linear Actuator,"24V DC, 1000N, 130mm Stroke, Built-in Limit Switches",1,Robu.in,1900,1900
+Width Morph,Hardened Chrome Linear Shafts + Bearings,16mm Dia x 650mm SFC16 Shaft (x2) + LMF16LUU Flanged Bearings (x4),1,Robu.in / Local CNC,1800,1800
+Chassis,Telescoping Square Tubes + Wear Pads,6061-T6 Al / SS304 40x40x2.5mm & 35x35x2.5mm + UHMW-PE Strips,1,Local Metal Market / IndiaMART,2800,2800
+Brackets,Laser-Cut Structural Gussets & Saddle Hinges,5mm/6mm Mild Steel / Al6061 (from hardware/laser_cut/*.dxf),12,Robu Laser Cutting Service,185,2220
+Drivetrain,6.5-inch Geared/Direct BLDC Hub Motor Wheels,24V 250W High-Torque Hub Motors with Hall Sensors & E-Brake,2,IndiaMART / EV Suppliers,1800,3600
+Front Casters,6-inch Heavy-Duty Medical Swivel Casters,"PU Tread, Sealed Precision Ball Bearings, 360-Deg Swivel",2,Kosmochem / IndiaMART,550,1100
+Electronics,ESP32-S3 DevKitC-1 + MPU6050 6-Axis IMU,Dual-Core MCU + I2C Accelerometer/Gyroscope for Stumble Lock,1,Robu.in,650,650
+Motor Drivers,BTS7960 43A H-Bridge Drivers + ZS-X11H BLDC Drivers,3x BTS7960 (Actuators) + 2x ZS-X11H (Rear Hub Motors),1,Robu.in,1750,1750
+Sensors & UI,Forearm FSR402 Force Sensors + Waterproof Rockers,2x FSR402 + 3x IP65 Momentary Rocker Switches + 2x Limit Switches,1,Robu.in,950,950
+Power System,24V 8Ah LiFePO4 Battery Pack + BMS + Charger,Lightweight Lithium Iron Phosphate Pack + Emergency Stop Switch,1,Robu.in / Local EV Pack Builder,3200,3200
+Ergonomics,Padded Forearm Troughs + Split Saddle + Knee Cradle,High-Density Memory Foam + Wipeable Medical Vinyl + Tray,1,Local Upholstery / KosmoCare,1800,1800
+3D Prints,Non-Structural Sensor Covers & Switch Cockpit,"PETG/ABS Filament (~600g, from hardware/3d_print/*.stl)",1,Self / Robu 3D Printing,650,650
